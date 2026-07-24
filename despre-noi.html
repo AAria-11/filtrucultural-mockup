@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+  <meta charset='utf-8' />
+  <title>Despre noi — Filtru Cultural București</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+
+  <link href="https://fonts.googleapis.com/css2?family=Afacad:wght@700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="site.css" />
+</head>
+
+<body>
+
+  <!-- ===== Shared nav (same block as index.html) ===== -->
+  <div class="nav-container">
+    <a href="index.html" class="home-link">
+      <img src="logo-filtru-cultural.png" alt="Filtru Cultural" class="nav-logo">
+    </a>
+    <div class="nav-links">
+      <nav>
+        <a href="evenimente.html" id="events-link">Evenimente</a>
+        <a href="articole.html" id="articles-link">Articole</a>
+        <a href="arhiva.html" id="archive-link">Arhivă</a>
+        <a href="despre-noi.html" id="about-us-link">Despre noi</a>
+        <a href="#" id="language-link">EN<img src="lang.svg" style="vertical-align: middle; margin-left: 4px;"></a>
+        <a href="participa.html" id="engage-link">Participă</a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="mobile-nav">
+    <a href="index.html" class="mobile-nav-button">
+      <img src="logo-filtru-cultural.png" alt="Filtru Cultural" class="nav-logo">
+    </a>
+    <button class="mobile-menu-button" id="mobileMenuBtn">
+      <img src="hamburger-menu.svg">
+    </button>
+  </div>
+
+  <div class="mobile-menu" id="mobileMenu" style="display: none;">
+    <a href="evenimente.html" class="menu-button">Evenimente</a>
+    <a href="articole.html" class="menu-button">Articole</a>
+    <a href="arhiva.html" class="menu-button">Arhivă</a>
+    <a href="despre-noi.html" class="menu-button">Despre noi</a>
+    <a href="participa.html" class="menu-button">Participă</a>
+    <a href="#" class="menu-button" id="mobileLanguageLink">EN</a>
+  </div>
+  <!-- ===== End shared nav ===== -->
+
+  <div class="page-content">
+    <h1>Despre noi</h1>
+    <p>Filtru Cultural este o platformă online care cartografiază și documentează spațiile culturale din București.</p>
+    <div class="page-placeholder-note">
+      Placeholder — full Despre noi page content comes next, once the navigation and shared layout are confirmed working across all pages.
+    </div>
+  </div>
+
+  <!-- ===== Shared footer (same block as index.html) ===== -->
+  <footer class="footer-container">
+    <div class="footer-inner">
+      <div class="footer-text">
+        <h2 class="footer-title">
+          Administrezi un spațiu cultural?<br>
+          <span class="footer-highlight">Devino partener Filtru Cultural!</span>
+        </h2>
+        <p class="footer-subtitle">
+          Adaugă gratuit spațiul tău și evenimentele tale în platformă.<br>
+          Ajută-ne să creștem harta culturală a orașului, pas cu pas.
+        </p>
+        <div class="engage-button-container">
+          <a href="participa.html" class="engage-button">Devino partener</a>
+          <div class="engage-button-shadow"></div>
+        </div>
+      </div>
+      <div class="footer-illustration">
+        <img src="tomita-footer.png" alt="Cultural partnership illustration" class="footer-image" />
+        <div class="footer-social">
+          <a href="mailto:filtrucultural@gmail.com" class="social-link"><div class="footer-social-icon"><img src="EnvelopeOpen.svg" alt="Email" /></div></a>
+          <a href="#" class="social-link"><div class="footer-social-icon"><img src="InstagramLogo.svg" alt="Instagram" /></div></a>
+          <a href="#" class="social-link"><div class="footer-social-icon"><img src="FacebookLogo.svg" alt="Facebook" /></div></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- ===== End shared footer ===== -->
+
+  <script>
+    document.getElementById('mobileMenuBtn').addEventListener('click', function () {
+      const menu = document.getElementById('mobileMenu');
+      menu.style.display = menu.style.display === 'none' ? 'flex' : 'none';
+    });
+  </script>
+
+</body>
+</html>

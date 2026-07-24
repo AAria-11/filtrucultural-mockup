@@ -57,9 +57,9 @@ body {
 }
 
 .nav-title {
-    font-family: 'Anton', sans-serif; /* Uses Anton font, with a sans-serif fallback */
+    font-family: 'Afacad', sans-serif;
+    font-weight: 700;
     font-size: 30px; /* Sets the font size to 30px */
-    font-weight: 400; /* Although Anton typically comes in only one weight, this ensures consistency */
     line-height: 45px; /* Sets the line height, which affects the spacing above and below the text */
     letter-spacing: -0.022em; /* Adjusts the spacing between characters slightly tighter */
     text-align: left; /* Aligns the text to the left */
@@ -68,7 +68,7 @@ body {
 }
 
 .nav-subtitle {
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 18px;
     font-weight: 400;
     line-height: 27px;
@@ -101,7 +101,7 @@ body {
 
 .nav-links nav a {
     text-decoration: none;
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 16px;
     font-weight: 500;
     line-height: 74px;
@@ -176,7 +176,7 @@ body {
 }
 
 .icon-btn-active {
-    background: #AD537C;
+    background: #CC4205;
 }
 
 .icon-btn img {
@@ -214,7 +214,7 @@ body {
 }
 
 .side-panel-title {
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 18px;
     font-weight: 500;
     line-height: 23.4px;
@@ -237,7 +237,7 @@ body {
     position: relative;
     padding-left: 26px; /* Space for custom bullet */
     margin-bottom: 8px; /* Spacing between list items */
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 16px;
     font-weight: 300;
     line-height: 20.8px;
@@ -309,7 +309,7 @@ body {
 
 .search-bar-events input[type="search"]::placeholder {
     color: #717171;
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 16px;
     font-weight: 400;
     line-height: 20.8px;
@@ -331,7 +331,7 @@ body {
 
 .search-bar input[type="search"]::placeholder {
     color: #717171;
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 16px;
     font-weight: 400;
     line-height: 20.8px;
@@ -351,7 +351,7 @@ body {
 }
 
 .gallery-item-title {
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 16px;
     font-weight: 400;
     text-align: left;
@@ -366,7 +366,7 @@ body {
     height: 67px;
     border: 1.5px dashed transparent; /* Set initial borders transparent */
     border-bottom: 1.5px dashed #25121B; /* Always visible border-bottom */
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 16px;
     font-weight: 400;
     text-align: left;
@@ -376,18 +376,18 @@ body {
 }
 
 .gallery-item.active .label, .gallery-item.active .gallery-item-title {
-    color: #AD537C; /* Text color for active state */
-    border-color: #AD537C;
+    color: #CC4205; /* Text color for active state */
+    border-color: #CC4205;
 }
 
 .gallery-item.active {
     border: 1.5px dashed;
-    border-color: #AD537C; /* Bottom border color for active state */
+    border-color: #CC4205; /* Bottom border color for active state */
 }
 
 .label-container {
     display: inline-block; /* Allows for the text to be centered in the parent */
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 14px;
     font-weight: 400;
     line-height: 14px;
@@ -447,7 +447,7 @@ body {
     display: inline-block;
     border: 0.5px solid;
     padding: 2px 4px;
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 14px;
     font-weight: 400;
     line-height: 18.2px;
@@ -457,7 +457,7 @@ body {
 .card-title {
     margin-top: 2px;
     margin-bottom: 4px;
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 22px;
     font-weight: 500;
     line-height: 28.6px;
@@ -469,7 +469,7 @@ body {
 }
 
 .address-text {
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 14px;
     font-weight: 400;
     line-height: 18.2px;
@@ -494,7 +494,7 @@ body {
     justify-content: space-around;
     align-items: center;
     margin-bottom: 24px;
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 14px;
     font-weight: 400;
     line-height: 18.2px;
@@ -509,7 +509,7 @@ body {
     align-items: center; /* Center children horizontally */
     justify-content: flex-start; /* Center children vertically */
     text-align: center;
-    color: #AD537C;
+    color: #CC4205;
     text-decoration: none; /* Removes underline from links */
     font-size: 14px;
     margin: 8px; /* Add space around links */
@@ -539,7 +539,7 @@ body {
 }
 
 .social-link:hover .social-icon {
-    box-shadow: 0 0 0 1px #AD537C;
+    box-shadow: 0 0 0 1px #CC4205;
     background-color: rgba(173, 83, 124, 0.20); /* Halo effect on hover */
 }
 
@@ -548,7 +548,7 @@ body {
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     overflow: hidden;
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 16px;
     font-weight: 300;
     line-height: 19.2px;
@@ -560,13 +560,13 @@ body {
 .card-read-more {
     background: none; /* Remove any button background */
     border: none; /* Remove borders */
-    color: #AD537C;
+    color: #CC4205;
     text-decoration: underline; /* Underline like a hyperlink */
     cursor: pointer; /* Changes the mouse pointer to suggest this is clickable */
     padding: 0; /* Remove padding */
     margin: 0; /* Remove margin */
     display: inline; /* Make the button display inline with text content */
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 16px;
     font-weight: 300;
     line-height: 20.8px;
@@ -576,7 +576,7 @@ body {
 .section-title {
     margin-left: 24px;
     margin-top: 16px;
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 16px;
     font-weight: 500;
     line-height: 20.8px;
@@ -590,7 +590,7 @@ body {
     padding-left: 74px;
     margin-bottom: 12px;
     cursor: pointer;
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 16px;
     font-weight: 400;
     line-height: 20.8px;
@@ -602,7 +602,7 @@ body {
 #mobileSelectAllCheckbox {
     margin-bottom: 24px;
     padding-left: 52px;
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 16px;
     font-weight: 300;
     line-height: 20.8px;
@@ -642,8 +642,8 @@ body {
 
   /* When the checkbox is checked, change the background color */
 .custom-checkbox input:checked ~ .checkmark {
-    background-color: #AD537C;
-    border-color: #AD537C;
+    background-color: #CC4205;
+    border-color: #CC4205;
 }
 
 .checkmark:after {
@@ -677,7 +677,7 @@ body {
     background-color: #FBF7F2; /* Light background color from the image */
     color: #000;
     text-align: center;
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     line-height: 20.8px;
     font-size: 16px;
     font-weight: 400;
@@ -701,14 +701,14 @@ body {
     height: 45px;
     box-shadow: 0px 4px 10px 0px #0000001A;
     margin: 24px;
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 16px;
     font-weight: 500;
     line-height: 20.8px;
 }
 
 .anuleaza-button-active {
-    background-color: #AD537C;
+    background-color: #CC4205;
     color: white;
 }
 
@@ -723,7 +723,7 @@ body {
 }
 
 .dynamic-label {
-    background-color: #AD537C;
+    background-color: #CC4205;
     margin-right: 8px;
     display: flex;
     align-items: center; /* This will vertically center the text and close button within the label */
@@ -734,7 +734,7 @@ body {
 }
 
 .dynamic-label-text {
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 14px;
     font-weight: 500;
     line-height: 18.2px;
@@ -933,7 +933,7 @@ body {
 #categoryRelatedFeaturesContainerDesktop .event-time {
     color: #3C3830;
     font-size: 16px;
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-weight: 500;
     text-transform: none;
     word-wrap: break-word;
@@ -942,7 +942,7 @@ body {
 #categoryRelatedFeaturesContainerMobile .event-time {
     color: #3C3830;
     font-size: 16px;
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-weight: 500;
     word-wrap: break-word;
     text-transform: none;
@@ -1007,16 +1007,16 @@ body {
 }
 
 .link-decorator {
-    color: #AD537C;
+    color: #CC4205;
     text-decoration: none;
 }
 
 .expand-text {
-    color: #AD537C;
+    color: #CC4205;
     text-decoration: underline;
     background: none;
     border: none;
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 17px;
     font-weight: bold;
     line-height: 27.2px;
@@ -1153,7 +1153,7 @@ body {
     color: #000000;
     font-size: 18px;
     transform: translateX(-50%);
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-weight: 500;
     line-height: 23.4px;
     text-align: left;
@@ -1171,7 +1171,7 @@ body {
 }
 
 .photosby {
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 16px;
     font-weight: 500;
     line-height: 20.8px;
@@ -1200,7 +1200,7 @@ body {
 
 .read-more-category {
     display: inline-block;
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 16px;
     font-weight: 400;
     line-height: 20.8px;
@@ -1212,9 +1212,9 @@ body {
 }
 
 .read-more-title, .read-more-section-title {
-    font-family: Anton;
+    font-family: "Afacad";
+    font-weight: 700;
     font-size: 24px;
-    font-weight: 400;
     line-height: 26px;
     letter-spacing: -0.02em;
     text-align: left;
@@ -1223,7 +1223,7 @@ body {
 }
 
 .read-more-org {
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 16px;
     font-weight: 400;
     line-height: 20.8px;
@@ -1233,7 +1233,7 @@ body {
 }
 
 .read-more-address {
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 16px;
     font-weight: 400;
     line-height: 20.8px;
@@ -1268,12 +1268,12 @@ body {
     flex-direction: column; /* Stack the icon and text vertically */
     align-items: center; /* Center children horizontally */
     justify-content: flex-start; /* Center children vertically */
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 16px;
     font-weight: 400;
     line-height: 20.8px;
     text-align: center;
-    color: #AD537C;
+    color: #CC4205;
     text-decoration: none; /* Removes underline from links */
     margin: 8px; /* Add space around links */
     min-height: 72px;
@@ -1298,12 +1298,12 @@ body {
 }
 
 .read-more-social-link:hover .read-more-social-icon {
-    box-shadow: 0 0 0 1px #AD537C;
+    box-shadow: 0 0 0 1px #CC4205;
     background-color: rgba(173, 83, 124, 0.20); /* Halo effect on hover */
 }
 
 .read-more-text {
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 17px;
     font-weight: 400;
     line-height: 27.2px;
@@ -1314,7 +1314,7 @@ body {
 }
 
 .read-more-share {
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 16px;
     font-weight: 600;
     line-height: 20.8px;
@@ -1332,7 +1332,7 @@ body {
     height: 29px;
     margin-right: 8px;
 
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 16px;
     font-weight: 500;
     line-height: 20.8px;
@@ -1404,10 +1404,10 @@ body {
 .events-header-title {
     width: 100%;
     text-align: center;
-    color: #3E1928;
+    color: #2A1115;
     font-size: 24px;
-    font-family: 'Anton', sans-serif;
-    font-weight: 400;
+    font-family: 'Afacad', sans-serif;
+    font-weight: 700;
     word-wrap: break-word;
     margin: 0; /* Remove extra margins */
 }
@@ -1416,7 +1416,7 @@ body {
 .events-header-subtitle {
     width: 100%;
     text-align: center;
-    color: #3E1928;
+    color: #2A1115;
     font-size: 16px;
     font-family: 'IBM Plex Mono', monospace;
     font-weight: 400;
@@ -1446,12 +1446,12 @@ body {
     justify-content: flex-start;
     align-items: center;
     gap: 4px;
-    font-family: "IBM Plex Sans", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: 16px;
     font-weight: 500;
     word-wrap: break-word;
     box-sizing: border-box;
-    color: #3E1928;
+    color: #2A1115;
 }
 
 #search-bar-events-mobile {
@@ -1459,7 +1459,7 @@ body {
 }
 
 .filter-item:not(.red):hover {
-    background-color: #AD537C33 !important;
+    background-color: #CC420533 !important;
 }
 
 .filter-bar > .filter-item:first-child:hover {
@@ -1505,7 +1505,7 @@ body {
     height: auto;
     padding: 16px 12px;
     box-shadow: 0px 4px 10px 0px rgba(173, 83, 124, 0.18);
-    font-family: "IBM Plex Sans", sans-serif;
+    font-family: "Inter", sans-serif;
     background-color: #fefdfb;
     z-index: 45;
     box-sizing: border-box;
@@ -1519,20 +1519,20 @@ body {
 
 .nav-tab {
     padding: 6px 16px;
-    color: #3e1928;
+    color: #2A1115;
     font-size: 12px;
     font-weight: 500;
     background-color: #fbf7f2;
     border: none;
     cursor: pointer;
     height: 44px;
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     line-height: 100%;
     letter-spacing: 0%;
 }
 
 .nav-tab.active {
-    background-color: #ad537c;
+    background-color: #CC4205;
     color: #fefdfb;
 }
 
@@ -1542,8 +1542,9 @@ body {
     justify-content: space-between;
     width: 100%;
     margin: 16px 0;
-    color: #3e1928;
-    font-family: "Anton", sans-serif;
+    color: #2A1115;
+    font-family: "Afacad", sans-serif;
+    font-weight: 700;
     font-size: 17px;
 }
 
@@ -1571,7 +1572,7 @@ body {
 
 .weekday {
     padding: 1.907px 7.628px;
-    color: #3e1928;
+    color: #2A1115;
     font-size: 12px;
     font-weight: 500;
     text-transform: uppercase;
@@ -1593,14 +1594,14 @@ body {
 .calendar-day {
     width: 42px;
     height: 42px;
-    color: #3e1928;
+    color: #2A1115;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     padding: 10px;
     box-sizing: border-box;
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-weight: 500;
     font-size: 16px;
     line-height: 22px;
@@ -1613,7 +1614,7 @@ body {
 }
 
 .calendar-day.highlighted {
-    color: #ad537c;
+    color: #CC4205;
 }
 
 .calendar-day.today {
@@ -1622,7 +1623,7 @@ body {
 }
 
 .calendar-day.selected {
-    background-color: #ad537c;
+    background-color: #CC4205;
     color: #fefdfb;
     border-radius: 0%;
 }
@@ -1716,9 +1717,9 @@ body {
     align-items: center;
     gap: 8px;
     padding: 8px 12px;
-    font-family: "IBM Plex Sans";
+    font-family: "Inter";
     font-size: 16px;
-    color: #3E1928;
+    color: #2A1115;
     cursor: pointer;
     font-weight: 400;
     font-size: 16px;
@@ -1736,7 +1737,7 @@ body {
     width: 18px;
     height: 18px;
     margin: 0;
-    accent-color: #ad537c;
+    accent-color: #CC4205;
     vertical-align: middle;
 }
 
@@ -1748,7 +1749,7 @@ body {
 .dropdown-panel {
     /* make scrollbar thinner and set thumb + track colors */
     scrollbar-width: thin;
-    scrollbar-color: #AD537C #FBF6EF; /* thumbColor trackColor */
+    scrollbar-color: #CC4205 #FBF6EF; /* thumbColor trackColor */
 }
   
   /* Chrome, Edge, Safari */
@@ -1759,7 +1760,7 @@ body {
     background: #FBF6EF;      /* match your panel background */
 }
 .dropdown-panel::-webkit-scrollbar-thumb {
-    background-color: #AD537C;/* your custom thumb color */
+    background-color: #CC4205;/* your custom thumb color */
     border-radius: 4px;       /* rounded corners if you like */
 }
 
@@ -1814,8 +1815,8 @@ body {
 
 .recent-events-title {
     margin-bottom: 0px;
-    font-family: Anton;
-    font-weight: 400;
+    font-family: "Afacad";
+    font-weight: 700;
     font-size: 24px;
     line-height: 100%;
     letter-spacing: 0%;
@@ -1848,12 +1849,12 @@ body {
     font-family: inherit;
     font-size: inherit;
     font-weight: inherit;
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-weight: 500;
     font-size: 14px;
     line-height: 100%;
     letter-spacing: 0%;
-    color: #3E1928;
+    color: #2A1115;
 }
 
 #filterLabelsContainer .dynamic-label:not([data-cancel-all]) {
@@ -1894,7 +1895,7 @@ body {
 .calendar-range-bar {
     position: absolute;
     height: 100%;
-    background-color: #AD537C;
+    background-color: #CC4205;
     border-radius: 2px;
 }
 
@@ -1904,10 +1905,10 @@ body {
     gap: 8px;                  /* space if you ever add an icon */
     height: 44px;              /* fixed row-height */
     padding: 0 16px;           /* horizontal padding */
-    background: #AD537C;
+    background: #CC4205;
     color: #F6F4EA;
     border: none;
-    font-family: "IBM Plex Sans", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: 16px;
     cursor: pointer;
     font-weight: 500;
@@ -1924,7 +1925,7 @@ body {
     max-width: 284px;
     overflow: hidden;
     font-family:
-      IBM Plex Sans,
+      Inter,
       -apple-system,
       Roboto,
       Helvetica,
@@ -2012,13 +2013,13 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     color: rgba(62, 25, 40, 1);
     font-size: 18px;
     font-family:
-      Anton,
+      Afacad,
       -apple-system,
       Roboto,
       Helvetica,
       sans-serif;
+    font-weight: 700;
     margin: 0;
-    font-weight: normal;
     white-space: normal;
     overflow-wrap: anywhere;
 }
@@ -2046,7 +2047,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 }
 
 .results-count {
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-weight: 500;
     font-size: 16px;
     line-height: 100%;
@@ -2067,7 +2068,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 
 .recent-events-separator {
     border: none;
-    border-bottom: 3px dashed #AD537C;
+    border-bottom: 3px dashed #CC4205;
     width: 190px;      /* adjust to taste—just long enough under the text */
     margin-left: 0;
     margin-right: 0;
@@ -2085,7 +2086,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     padding-bottom: 32px;
     padding-left: 24px;
     padding-right: 24px;
-    font-family: IBM Plex Sans, -apple-system, Roboto, Helvetica, sans-serif;
+    font-family: Inter, -apple-system, Roboto, Helvetica, sans-serif;
     position: relative;
     z-index: 0;               /* establish a new stacking context */
     margin-top: 32px;
@@ -2110,10 +2111,10 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 }
   
 .footer-title {
-    font-family: Anton;
+    font-family: "Afacad";
+    font-weight: 700;
     color: rgba(161, 161, 161, 1);
     margin: 0;
-    font-weight: 400;
     font-size: 26px;
     line-height: 150%;
     letter-spacing: -2.2%;
@@ -2124,8 +2125,8 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     margin-top: 8px;
     color: rgba(251, 247, 242, 1);
 
-    font-family: Anton;
-    font-weight: 400;
+    font-family: "Afacad";
+    font-weight: 700;
     font-size: 26px;
     line-height: 150%;
     letter-spacing: -2.2%;
@@ -2134,7 +2135,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 .footer-subtitle {
     margin: 16px 0;
     color: rgba(251, 247, 242, 1);
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-weight: 400;
     font-size: 17px;
     line-height: 150%;
@@ -2215,9 +2216,9 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 .about-us-section-title {
     margin-top: 48px;
     margin-bottom: 32px;
-    font-family: Anton;
+    font-family: "Afacad";
+    font-weight: 700;
     font-size: 24px;
-    font-weight: 400;
     line-height: 38.4px;
     letter-spacing: -0.02em;
     text-align: center;
@@ -2227,7 +2228,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 
 .about-us-section {
     width: 684px;
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 17px;
     font-weight: 500;
     line-height: 27.2px;
@@ -2299,7 +2300,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     width: 100%;
     height: 340px;
     background-color: #FBF7F2;
-    border-top: 2px solid #AD537C;
+    border-top: 2px solid #CC4205;
     box-shadow: 0px 4px 10px 0px #0000031A;
     top: 73px;
     z-index: 16;
@@ -2325,7 +2326,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 
 .article-scroll-arrow {
     background: #FBF7F2;
-    border: 1px solid #AD537C;
+    border: 1px solid #CC4205;
     border-radius: 50%;
     width: 52px;
     height: 52px;
@@ -2376,11 +2377,11 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 }
 
 .article-card:hover {
-    border: 1px dashed #AD537C;
+    border: 1px dashed #CC4205;
 }
 
 .footnotes {
-    border: 2px dashed #AD537C;
+    border: 2px dashed #CC4205;
     margin-top: 48px;
     padding: 16px;
 }
@@ -2405,7 +2406,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #AD537C80; /* Semi-transparent background color */
+    background-color: #CC420580; /* Semi-transparent background color */
     pointer-events: none; /* Allow clicks to pass through */
     z-index: 18; /* Ensure overlay is above the image */
     object-fit: cover;
@@ -2420,9 +2421,9 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 }
 
 .article-card-title {
-    font-family: Anton;
+    font-family: "Afacad";
+    font-weight: 700;
     font-size: 22px;
-    font-weight: 400;
     line-height: 24px;
     letter-spacing: -0.02em;
     text-align: left;
@@ -2431,13 +2432,13 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 }
 
 .article-card-description {
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 16px;
     font-weight: 400;
     line-height: 22px;
     letter-spacing: -0.02em;
     text-align: left;
-    color: #AD537C;
+    color: #CC4205;
 }
 
 .article-container {
@@ -2473,7 +2474,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 
 .progress-bar {
     height: 6px;
-    background-color: #AD537C;
+    background-color: #CC4205;
     width: 0%;
     z-index: 17;
 }
@@ -2487,9 +2488,9 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 }
 
 .article-title {
-    font-family: Anton;
+    font-family: "Afacad";
+    font-weight: 700;
     font-size: 32px;
-    font-weight: 400;
     line-height: 51.2px;
     letter-spacing: -0.02em;
     text-align: center;
@@ -2498,7 +2499,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 }
 
 .article-authors-date {
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 22px;
     font-weight: 300;
     line-height: 35.2px;
@@ -2519,7 +2520,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 }
 
 .article-photo-author {
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 16px;
     font-weight: 500;
     line-height: 20.8px;
@@ -2536,7 +2537,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 }
 
 .article-content-text p, .article-bibl-content p {
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 17px;
     font-weight: 400;
     line-height: 27.2px;
@@ -2550,7 +2551,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 }
 
 .article-section-title {
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 24px;
     font-weight: 600;
     line-height: 38.4px;
@@ -2561,7 +2562,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 }
 
 .article-intro-text {
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 22px;
     font-style: italic;
     font-weight: 400;
@@ -2572,7 +2573,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 }
 
 .article-bibl-title {
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 17px;
     font-style: italic;
     font-weight: 300;
@@ -2591,7 +2592,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     right: 10px;
     background-color: #FBF7F2;
     padding: 5px 10px;
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 14px;
     font-weight: 500;
     line-height: 18.2px;
@@ -2626,9 +2627,9 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 }
 
 .continue-read-text {
-    font-family: Anton;
+    font-family: "Afacad";
+    font-weight: 700;
     font-size: 24px;
-    font-weight: 400;
     line-height: 36.13px;
     text-align: left;
     color: #25121B;
@@ -2714,9 +2715,9 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 }
 
 .mobile-nav-title {
-    font-family: Anton;
+    font-family: "Afacad";
+    font-weight: 700;
     font-size: 22px;
-    font-weight: 400;
     line-height: 33px;
     letter-spacing: -0.022em;
     text-align: left;
@@ -2724,7 +2725,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 }
 
 .mobile-nav-subtitle {
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;
@@ -2735,7 +2736,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 }
 
 .mobile-nav-active {
-    background-color: #AD537C;
+    background-color: #CC4205;
     color: #F6F4EA;
     border-color: #F6F4EA;
 }
@@ -2745,7 +2746,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     width: 100%;
     height: calc(100svh - 62px);
     top: 62px;
-    background-color: #AD537C;
+    background-color: #CC4205;
     box-sizing: border-box;
     padding: 16px;
     display: flex;
@@ -2755,7 +2756,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 }
 
 .language-switch {
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 16px;
     font-weight: 500;
     line-height: 20.8px;
@@ -2782,7 +2783,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     background: none;
     border: none;
     padding: 0;
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 20px;
     font-weight: 500;
     line-height: 26px;
@@ -2804,7 +2805,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
   
 .menu-footer {
     text-align: left;
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 20px;
     font-weight: 500;
     line-height: 24px;
@@ -2949,9 +2950,9 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 }
 
 .engage-title {
-    font-family: 'Anton', sans-serif;
+    font-family: 'Afacad', sans-serif;
+    font-weight: 700;
     font-size: 22px;
-    font-weight: 400;
     line-height: 1.4;
     color: #25121B;
     margin-top: 0;
@@ -2959,7 +2960,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 }
 
 .engage-container p {
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-weight: 400;
     font-style: Medium;
     font-size: 17px;
@@ -3007,7 +3008,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     width: 265px;
     text-align: center;
     text-decoration: none;
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-size: 17px;
     font-weight: 500;
     line-height: 22.1px;
@@ -3038,7 +3039,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 
 /* Basic styling for the new paragraphs inside the event detail description */
 .event-detail-panel .event-detail-description p {
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 17px;
     font-weight: 400;
     line-height: 1.6;
@@ -3135,7 +3136,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     padding-top: 32px; 
     min-height: 361px;
     box-sizing: border-box;
-    font-family: 'IBM Plex Sans', sans-serif; 
+    font-family: 'Inter', sans-serif; 
     color: #25121B; 
 }
 
@@ -3161,30 +3162,31 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     margin-right: 6px; 
     margin-bottom: 6px; 
     text-transform: uppercase;
-    color: #3E1928;
+    color: #2A1115;
     font-size: 14px;
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-weight: 400;
     word-wrap: break-word;
 }
 .event-detail-title { 
-    font-family: 'Anton', sans-serif; font-size: 24px; font-weight: 400; 
-    line-height: 1.08; letter-spacing: -0.02em; color: #3E1928; 
+    font-family: 'Afacad', sans-serif;
+    font-weight: 700; font-size: 24px; 
+    line-height: 1.08; letter-spacing: -0.02em; color: #2A1115; 
     margin-top: 0; margin-bottom: 8px; 
 }
 .event-detail-quote { 
-    font-family: 'IBM Plex Sans', sans-serif; font-style: italic; font-size: 16px; 
-    color: #5A5A5A; margin-bottom: 20px; padding-left: 15px; border-left: 3px solid #AD537C; 
+    font-family: 'Inter', sans-serif; font-style: italic; font-size: 16px; 
+    color: #5A5A5A; margin-bottom: 20px; padding-left: 15px; border-left: 3px solid #CC4205; 
 }
 .event-detail-info-item { 
     display: flex; align-items: center;
-    font-family: 'IBM Plex Sans', sans-serif; 
+    font-family: 'Inter', sans-serif; 
     font-size: 16px; 
     font-weight: 400; 
     line-height: 1.3;
     color: #585858;
     padding-bottom: 32px;
-    border-bottom: 1px #3E1928 dashed; 
+    border-bottom: 1px #2A1115 dashed; 
 }
 .event-detail-info-item img { 
     width: 16px; 
@@ -3193,9 +3195,9 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 }
 
 #eventDetailDateTimeItem {
-    color: #3E1928;
+    color: #2A1115;
     font-size: 18px;
-    font-family: 'IBM Plex Sans', sans-serif; /* Ensure font consistency */
+    font-family: 'Inter', sans-serif; /* Ensure font consistency */
     font-weight: 500;
     padding-top: 32px; /* Keep existing top padding */
     /* The padding-bottom and border-bottom are managed by .event-detail-info-item default */
@@ -3218,7 +3220,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 }
 
 #eventDetailTicketButtonContainer .engage-button-shadow {
-    background: #AD537C; /* Set the desired permanent background color */
+    background: #CC4205; /* Set the desired permanent background color */
 }
 
 .event-detail-ticket-button-container {
@@ -3230,7 +3232,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 #eventDetailLocationText {
     color: #717171;
     font-size: 16px;
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-weight: 500;
     text-decoration: underline;
     word-wrap: break-word;
@@ -3238,15 +3240,17 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 
 /* Section titles within the main content area */
 .event-detail-content-wrapper > .event-detail-section-title { 
-    font-family: 'Anton', sans-serif; font-size: 24px; font-weight: 400;
-    line-height: 1.08; letter-spacing: -0.02em; color: #3E1928; 
+    font-family: 'Afacad', sans-serif;
+    font-weight: 700; font-size: 24px;
+    line-height: 1.08; letter-spacing: -0.02em; color: #2A1115; 
     margin-top: 32px; margin-bottom: 8px; 
     padding-bottom: 10px;
 }
 /* Section title for "Alte evenimente" which is now in its own wrapper */
 .event-detail-related-section-wrapper > .event-detail-section-title {
-     font-family: 'Anton', sans-serif; font-size: 24px; font-weight: 400;
-    line-height: 1.08; letter-spacing: -0.02em; color: #3E1928; 
+     font-family: 'Afacad', sans-serif;
+    font-weight: 700; font-size: 24px;
+    line-height: 1.08; letter-spacing: -0.02em; color: #2A1115; 
     margin-top: 24px; /* Adjusted top margin as it's a new section */
     margin-bottom: 24px; 
     border-bottom: 1px dashed #B6B6B6; 
@@ -3254,7 +3258,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 }
 
 .event-detail-description {
-    border-bottom: 1px #3E1928 dashed;
+    border-bottom: 1px #2A1115 dashed;
 }
 
 #eventDetailOrganizerSocialLinks {
@@ -3264,7 +3268,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 
 .event-detail-description p, 
 .event-detail-organizer-description p { 
-    font-family: 'IBM Plex Sans', sans-serif; 
+    font-family: 'Inter', sans-serif; 
     font-size: 17px; 
     font-weight: 400; 
     line-height: 1.6;
@@ -3275,9 +3279,9 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 }
 
 #eventDetailOrganizerDescription {
-    color: #AD537C;
+    color: #CC4205;
     font-size: 17px;
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-weight: 400;
     line-height: 23.80px;
     word-wrap: break-word;
@@ -3297,7 +3301,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 }
 
 .event-detail-description .read-more-text-btn { 
-    color: #AD537C;
+    color: #CC4205;
     text-decoration: underline;
     background: none;
     border: none;
@@ -3327,10 +3331,10 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 }
 
 .event-detail-organizer-name { 
-    font-family: 'IBM Plex Sans', sans-serif; 
+    font-family: 'Inter', sans-serif; 
     font-weight: 600; 
     font-size: 20px; 
-    color: #AD537C; 
+    color: #CC4205; 
     text-decoration: underline;
     line-height: 1.3;
 }
@@ -3353,8 +3357,8 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 }
 .event-detail-organizer .read-more-social-link { 
     display: flex; flex-direction: column; align-items: center; justify-content: flex-start; 
-    text-align: center; color: #AD537C; text-decoration: none; font-size: 16px; 
-    font-family: 'IBM Plex Sans', sans-serif; font-weight: 400; min-height: auto; margin: 0; 
+    text-align: center; color: #CC4205; text-decoration: none; font-size: 16px; 
+    font-family: 'Inter', sans-serif; font-weight: 400; min-height: auto; margin: 0; 
 }
  .event-detail-organizer .read-more-social-icon { 
     width: 32px; height: 32px; 
@@ -3370,12 +3374,12 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     height: 18px; 
 }
 .event-detail-organizer .read-more-social-link:hover .read-more-social-icon { 
-     box-shadow: 0 0 0 1px #AD537C; 
+     box-shadow: 0 0 0 1px #CC4205; 
      background-color: rgba(173, 83, 124, 0.20);
 }
 .event-detail-organizer .social-text { display: none; }
 .event-detail-share-text { 
-    font-family: 'IBM Plex Sans', sans-serif; font-size: 16px; font-weight: 600;
+    font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 600;
     line-height: 1.3; color: #5A5A5A; margin-bottom: 14px;
 }
 .event-detail-share .fb-share-button { margin-bottom: 10px; }
@@ -3417,7 +3421,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     bottom: 24px;
     left: 24px;
     width: 2px;
-    background-image: linear-gradient(to bottom, #AD537C 4px, transparent 4px);
+    background-image: linear-gradient(to bottom, #CC4205 4px, transparent 4px);
     background-size: 2px 8px;
 }
 
@@ -3432,14 +3436,14 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     left: -41px;
     width: 18px;
     height: 18px;
-    background-color: #AD537C;
+    background-color: #CC4205;
     border: 3px solid #FBF7F2;
     border-radius: 50%;
     z-index: 1;
 }
 
 .archive-date {
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-weight: 400;
     font-style: Regular;
     font-size: 16px;
@@ -3449,8 +3453,8 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 }
 
 .archive-title {
-    font-family: Anton;
-    font-weight: 400;
+    font-family: "Afacad";
+    font-weight: 700;
     font-style: Regular;
     font-size: 24px;
     line-height: 160%;
@@ -3459,7 +3463,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 }
 
 .archive-subtitle {
-    font-family: IBM Plex Sans;
+    font-family: Inter;
     font-weight: 400;
     font-style: Italic;
     font-size: 16px;
@@ -3475,7 +3479,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 }
 
 .archive-description p {
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 17px;
     line-height: 1.6;
     color: #25121B;
@@ -3508,7 +3512,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 }
 
 .link-decorator {
-    color: #AD537C;
+    color: #CC4205;
     text-decoration: underline;
 }
 
@@ -3558,12 +3562,12 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 
 @media (min-width: 1000px) {
     .engage-button-container:hover .engage-button-shadow {
-        background-color: #AD537C;
-        border-color: #AD537C;
+        background-color: #CC4205;
+        border-color: #CC4205;
     }
 
     .engage-button-container:hover .engage-button {
-        color: #AD537C;
+        color: #CC4205;
     }
 }
 
@@ -3621,9 +3625,9 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     .about-us-section-title {
         margin-top: 32px;
         margin-bottom: 32px;
-        font-family: Anton;
+        font-family: "Afacad";
+    font-weight: 700;
         font-size: 24px;
-        font-weight: 400;
         line-height: 38.4px;
         letter-spacing: -0.02em;
         text-align: center;
@@ -3633,7 +3637,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 
     .about-us-section {
         width: 343px;
-        font-family: IBM Plex Sans;
+        font-family: Inter;
         font-size: 17px;
         font-weight: 500;
         line-height: 27.2px;
@@ -3677,7 +3681,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     }
 
     #mobileObjList {
-        color: #3E1928;
+        color: #2A1115;
         text-align: left !important;
         font-size: 18px;
         font-weight: 500;
@@ -3784,7 +3788,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     }
 
     .card-title {
-        font-family: IBM Plex Sans;
+        font-family: Inter;
         font-size: 18px;
         font-weight: 600;
         line-height: 23.4px;
@@ -3944,7 +3948,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
         color: #F6F4EA;
         text-decoration: none;
         margin-bottom: 16px;
-        font-family: IBM Plex Sans;
+        font-family: Inter;
         font-size: 17px;
         font-weight: 400;
         line-height: 21.93px;
@@ -3986,7 +3990,8 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
         margin: 0;
         padding: 16px;
         font-size: 20px;
-        font-family: 'Anton', sans-serif;
+        font-family: 'Afacad', sans-serif;
+    font-weight: 700;
     }
 
     #engage-container-mobile .engage-sparkles {
@@ -4004,7 +4009,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     }
 
     #engage-container-mobile p {
-        font-family: IBM Plex Sans;
+        font-family: Inter;
         font-weight: 400;
         font-style: Medium;
         font-size: 16px;
@@ -4030,12 +4035,12 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     }
 
     .engage-button-shadow.clicked {
-        background-color: #AD537C !important;
-        border-color: #AD537C !important;
+        background-color: #CC4205 !important;
+        border-color: #CC4205 !important;
     }
 
     .engage-button.clicked {
-        color: #AD537C !important;
+        color: #CC4205 !important;
     }
 
     .mapboxgl-ctrl-geolocate {
@@ -4073,9 +4078,9 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     }
 
     .article-title {
-        font-family: Anton;
+        font-family: "Afacad";
+    font-weight: 700;
         font-size: 22px;
-        font-weight: 400;
         line-height: 35.2px;
         margin-top: 32px;
     }
@@ -4109,7 +4114,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
         margin-bottom: 0px;
         top: auto;
         left: auto;
-        font-family: IBM Plex Sans;
+        font-family: Inter;
         font-size: 14px;
         font-weight: 400;
         line-height: 18.2px;
@@ -4304,15 +4309,15 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
         display: block;
         width: 100%;
         background: #F9F7F4;
-        color: #AD537C;
+        color: #CC4205;
         border: 0.5px dashed #25121B;
         z-index: 1;
     }
 
     .engage-button-shadow {
         /* make that offset “shadow” your accent color */
-        background-color: #AD537C;
-        border-color: #AD537C;
+        background-color: #CC4205;
+        border-color: #CC4205;
         bottom: -8px;
         right: -8px;
     }
@@ -4378,7 +4383,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
         left: 0;
         right: 0;
         bottom: 0;
-        background: #3E192833;
+        background: #2A111533;
         z-index: 21;
     }
 
@@ -4434,9 +4439,9 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     #mobile-events-categories-panel h3 {
         margin-top: 24px;
         margin-bottom: 8px;
-        color: #3E1928;
+        color: #2A1115;
         font-size: 16px;
-        font-family: IBM Plex Sans;
+        font-family: Inter;
         font-weight: 600;
         word-wrap: break-word;
     }
@@ -4464,7 +4469,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
       /* your title styling */
     .mobile-categories-header h3 {
         margin: 0 !important;
-        font-family: "IBM Plex Sans", sans-serif;
+        font-family: "Inter", sans-serif;
         font-weight: 600 !important;
         font-size: 20px !important;
         line-height: 100% !important;
@@ -4498,7 +4503,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
   /* 2) Only draw the background & checkmark when checked */
     #mobile-events-categories-panel 
     .dropdown-option input[type="checkbox"]:checked {
-        background-color: #AD537C;
+        background-color: #CC4205;
     }
   
   /* 3) Only show the “✓” when checked */
@@ -4526,7 +4531,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
         height: 44px;        /* match your filter-item height */
         box-shadow: none;    /* kill the desktop drop shadow */
         border-radius: 2px;  /* keep your corner radius */
-        font-family: IBM Plex Sans;
+        font-family: Inter;
         font-size: 16px;
         font-weight: 500;
         display: inline-flex;
@@ -4536,12 +4541,12 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 
     #mobile-cancel-categories {
         background: #fff !important;
-        border: 1px solid #AD537C !important;
-        color: #AD537C !important;
+        border: 1px solid #CC4205 !important;
+        color: #CC4205 !important;
     }
     
     #mobile-apply-categories {
-        background: #AD537C !important;
+        background: #CC4205 !important;
         border: none !important;
         color: #F6F4EA !important;
     }
@@ -4724,12 +4729,12 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     
     /* 5. Category Tags (to match styling of .read-more-category in .read-more-container-mobile) */
     .event-detail-categories .category-tag {
-        font-family: 'IBM Plex Sans', sans-serif; /* From .read-more-category */
+        font-family: 'Inter', sans-serif; /* From .read-more-category */
         font-size: 14px;       /* From .read-more-category */
         font-weight: 400;      /* From .read-more-category */
         line-height: 1.3;      /* Approximate from .read-more-category */
-        color: #3E1928;        /* Your existing color */
-        border: 1px solid #3E1928; /* Your existing border, ensure color matches */
+        color: #2A1115;        /* Your existing color */
+        border: 1px solid #2A1115; /* Your existing border, ensure color matches */
         padding: 3px 6px;      /* Slightly adjusted padding */
         border-radius: 2px 0px 0px 0px; /* Your existing radius */
         margin-right: 8px;
@@ -4739,12 +4744,12 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     }
 
     .event-detail-title {
-        font-family: 'Anton', sans-serif; /* From .read-more-title */
-        font-size: 22px;        /* From .read-more-title */
-        font-weight: 400;       /* From .read-more-title */
+        font-family: 'Afacad', sans-serif;
+    font-weight: 700; /* From .read-more-title */
+        font-size: 22px;        /* From .read-more-title */       /* From .read-more-title */
         line-height: 1.3;       /* From .read-more-title (approximated from 26px on 22px font) */
         letter-spacing: -0.02em;/* From .read-more-title */
-        color: #3E1928;         /* From .read-more-title */
+        color: #2A1115;         /* From .read-more-title */
         margin-top: 0;          /* Reset margin if categories are directly above */
         margin-bottom: 8px;    /* Consistent spacing */
     }
@@ -4771,7 +4776,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     
     /* Location Text (to match .read-more-address-text-content) */
     #eventDetailLocationItem #eventDetailLocationText {
-        font-family: 'IBM Plex Sans', sans-serif; /* From .read-more-address */
+        font-family: 'Inter', sans-serif; /* From .read-more-address */
         font-size: 16px;        /* From .read-more-address */
         font-weight: 400;       /* From .read-more-address */
         line-height: 1.3;       /* From .read-more-address */
@@ -4782,11 +4787,11 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     
     /* Date/Time Text */
     #eventDetailDateTimeItem .datetime-original-content span {
-        font-family: 'IBM Plex Sans', sans-serif;
+        font-family: 'Inter', sans-serif;
         font-size: 18px;
         font-weight: 500;       /* Date/time can be slightly more prominent */
         line-height: 1.3;
-        color: #3E1928;
+        color: #2A1115;
     }
     #eventDetailDateTimeItem { /* Container for date/time and ticket button */
         padding-top: 32px; /* Consistent with other info items */
@@ -4832,7 +4837,8 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 
     /* 6. Description Section Title (e.g., "Descriere") */
     .event-detail-content-wrapper > .event-detail-section-title { /* For "Descriere", "Organizator" etc. */
-        font-family: 'Anton', sans-serif; /* Match .read-more-section-title */
+        font-family: 'Afacad', sans-serif;
+    font-weight: 700; /* Match .read-more-section-title */
         font-size: 20px; /* Slightly smaller than desktop, matches .read-more-section-title-descr-mob */
         margin-top: 24px;
         margin-bottom: 8px;
@@ -4862,9 +4868,9 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
         height: 24px;
     }
     .event-detail-organizer-name {
-        color: #AD537C;
+        color: #CC4205;
         font-size: 18px;
-        font-family: IBM Plex Sans;
+        font-family: Inter;
         font-weight: 500;
         text-decoration: underline;
         line-height: 25.20px;
@@ -4874,7 +4880,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     /* Organizer Description Preview (to match .read-more-text mobile) */
     #eventDetailOrganizerDescription {
         font-size: 17px;       /* Matches .read-more-text */
-        color: #AD537C;        /* Your existing color for this */
+        color: #CC4205;        /* Your existing color for this */
         margin-left: 0;        /* Remove indent if icon stacks or aligns left */
         margin-top: 4px;
         padding-bottom: 0px; /* Space before social links */
@@ -4920,7 +4926,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
         margin-top: 24px;
         color: #5A5A5A;
         font-size: 16px;
-        font-family: IBM Plex Sans;
+        font-family: Inter;
         font-weight: 600;
         word-wrap: break-word;
     }
@@ -4956,13 +4962,14 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 
     /* Ensure related events title is also styled consistently */
     .event-detail-related-section-wrapper > .event-detail-section-title {
-        font-family: 'Anton', sans-serif;
+        font-family: 'Afacad', sans-serif;
+    font-weight: 700;
         font-size: 20px;
         border-bottom: none;
         padding-bottom: 8px;
         margin-bottom: 16px;
         margin-top: 0px;
-        border-top: 1px #3E1928 dashed;
+        border-top: 1px #2A1115 dashed;
         padding-top: 24px;
     }
 
@@ -4986,9 +4993,9 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     }
 
     .mobile-page-title {
-        color: #3E1928;
-        font-family: Anton;
-        font-weight: 400;
+        color: #2A1115;
+        font-family: "Afacad";
+    font-weight: 700;
         font-size: 24px;
         line-height: 100%;
         letter-spacing: 0%;
@@ -4997,7 +5004,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     }
 
     .mobile-page-subtitle {
-        color: #3E1928;
+        color: #2A1115;
         font-size: 16px;
         font-family: 'IBM Plex Mono', monospace;
         font-weight: 400;
@@ -5042,11 +5049,11 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     }
 
     .discover-title {
-        font-family: 'Anton', sans-serif;
+        font-family: 'Afacad', sans-serif;
+    font-weight: 700;
         font-size: 24px;
-        font-weight: 400;
         text-align: center;
-        color: #3E1928;
+        color: #2A1115;
         margin-top: 24px;
         margin-bottom: 16px;
         padding: 0 16px;
@@ -5063,11 +5070,11 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 
     #mobile-discover-panel .discover-title,
     #mobile-filters-panel #mobile-filters-panel-name {
-        font-family: 'Anton', sans-serif;
+        font-family: 'Afacad', sans-serif;
+    font-weight: 700;
         font-size: 24px;
-        font-weight: 400;
         line-height: 100%;
-        color: #3E1928;
+        color: #2A1115;
         padding: 0;
         margin: 0;
         margin-top: 78px;
@@ -5106,7 +5113,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 1px solid #AD537C;
+    border: 1px solid #CC4205;
 }
 
 .player-controls {
@@ -5133,13 +5140,13 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 }
 
 .progress-bar::-webkit-slider-runnable-track {
-    background: linear-gradient(to right, #AD537C var(--progress, 0%), #e0e0e0 var(--progress, 0%)); /* Progress fill */
+    background: linear-gradient(to right, #CC4205 var(--progress, 0%), #e0e0e0 var(--progress, 0%)); /* Progress fill */
     border-radius: 5px;
     height: 8px;
 }
 
 .progress-bar::-moz-range-track {
-    background: linear-gradient(to right, #AD537C var(--progress, 0%), #e0e0e0 var(--progress, 0%));
+    background: linear-gradient(to right, #CC4205 var(--progress, 0%), #e0e0e0 var(--progress, 0%));
     border-radius: 5px;
     height: 8px;
 }
@@ -5149,7 +5156,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     height: 20px;
     width: 20px;
     border-radius: 50%;
-    background: #AD537C;
+    background: #CC4205;
     cursor: pointer;
     margin-top: -6px;
     box-shadow: 0 0 5px rgba(0,0,0,0.2);
@@ -5159,7 +5166,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     height: 20px;
     width: 20px;
     border-radius: 50%;
-    background: #AD537C;
+    background: #CC4205;
     cursor: pointer;
     border: none;
     box-shadow: 0 0 5px rgba(0,0,0,0.2);
@@ -5196,7 +5203,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 .play-pause-button {
     width: 60px;
     height: 60px;
-    border: 2px solid #AD537C;
+    border: 2px solid #CC4205;
     border-radius: 50%;
     position: relative;
     background-color: transparent;
@@ -5208,7 +5215,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     top: 50%;
     left: 55%;
     transform: translate(-50%, -50%);
-    border-left: 18px solid #AD537C;
+    border-left: 18px solid #CC4205;
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
 }
@@ -5217,7 +5224,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 .play-pause-button.pause::after {
     content: '';
     position: absolute;
-    background-color: #AD537C;
+    background-color: #CC4205;
     height: 20px;
     width: 6px;
     top: 50%;
@@ -5238,7 +5245,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     height: 0;
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
-    border-right: 18px solid #AD537C;
+    border-right: 18px solid #CC4205;
     position: relative;
     left: 0;
     top: 0;
@@ -5251,7 +5258,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     height: 0;
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
-    border-left: 18px solid #AD537C;
+    border-left: 18px solid #CC4205;
     position: relative;
     right: 0;
     top: 0;
@@ -5286,7 +5293,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     }
 
     .play-pause-button.play::before {
-        border-left: 15px solid #AD537C;
+        border-left: 15px solid #CC4205;
         border-top: 8px solid transparent;
         border-bottom: 8px solid transparent;
     }
@@ -5310,12 +5317,12 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     .rewind-button::before {
         border-top: 8px solid transparent;
         border-bottom: 8px solid transparent;
-        border-right: 15px solid #AD537C;
+        border-right: 15px solid #CC4205;
     }
 
     .forward-button::before {
         border-top: 8px solid transparent;
         border-bottom: 8px solid transparent;
-        border-left: 15px solid #AD537C;
+        border-left: 15px solid #CC4205;
     }
 }

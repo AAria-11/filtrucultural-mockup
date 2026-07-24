@@ -1,0 +1,52 @@
+/* site.css — small additions for the new multi-page structure.
+   Kept separate from the original styles.css so it's easy to see
+   what we've added versus the original site's styling. */
+
+.nav-logo {
+  height: 48px;
+  width: auto;
+  display: block;
+}
+
+@media (max-width: 550px) {
+  .nav-logo {
+    height: 36px;
+  }
+}
+
+.page-content {
+  max-width: 900px;
+  margin: 108px auto 80px auto;
+  padding: 0 24px;
+  box-sizing: border-box;
+  font-family: 'IBM Plex Sans', sans-serif;
+  color: #25121B;
+}
+
+.page-content h1 {
+  font-family: Anton;
+  font-size: 40px;
+  font-weight: 400;
+  margin-bottom: 16px;
+}
+
+.page-content p {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.page-placeholder-note {
+  margin-top: 24px;
+  padding: 16px;
+  background: #FBF7F2;
+  border: 1px dashed #AD537C;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #6b6b6b;
+}
+
+@media (max-width: 550px) {
+  .page-content {
+    margin-top: 74px;
+  }
+}
