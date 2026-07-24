@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZZJP570ZPV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-ZZJP570ZPV');
+  </script>
+  <meta charset='utf-8' />
+  <title>Filtru Cultural</title>
+
+  <link rel="preconnect" href="https://api.mapbox.com">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <meta property="og:type" content="article"/>
+  <meta property="og:title" content="Filtru Cultural București"/>
+  <meta property="og:description" content="Descoperă orașul prin cultură."/>
+  <meta property="og:image" content="https://filtrucultural.ro/fb-share.jpg" />
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
+  <script src='https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.css' rel='stylesheet' />
+  <script src='https://npmcdn.com/csv2geojson@latest/csv2geojson.js'></script>
+  <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <template id="calendar-template">
+    <div class="calendar-wrapper">
+      <button class="filter-item" id="calendar-btn" onclick="toggleCalendar()">
+        <img src="CalendarBlank.svg" alt="Calendar Icon" class="filter-icon"/>
+        <span class="filter-text">Calendar</span>
+        <img src="x-white.svg" class="calendar-clear-btn" alt="Clear" style="display:none;"/>
+      </button>
+      
+      <div class="calendar-container" id="calendar-container">
+        <nav class="nav-tabs">
+          <button class="nav-tab" id="today-tab">ASTAZI</button>
+          <button class="nav-tab" id="tomorrow-tab">MAINE</button>
+          <button class="nav-tab" id="weekend-tab">WEEKEND</button>
+        </nav>
+  
+        <header class="month-navigation">
+          <button class="nav-button" id="prev-month">
+            <img
+              src="chevron-left.svg"
+              alt="Previous Month"
+              class="nav-icon"
+            />
+          </button>
+          <div id="month-year"></div>
+          <button class="nav-button" id="next-month">
+            <img src="chevron-right.svg" alt="Next Month" class="nav-icon" />
+          </button>
+        </header>
+  
+        <section class="weekday-header">
+          <div class="weekday">LUN</div>
+          <div class="weekday">MAR</div>
+          <div class="weekday">MIE</div>
+          <div class="weekday">JOI</div>
+          <div class="weekday">VIN</div>
+          <div class="weekday">SAM</div>
+          <div class="weekday">DUM</div>
+        </section>
+  
+        <section class="calendar-grid" id="calendar-grid">
+          <!-- Calendar will be generated dynamically with JavaScript -->
+        </section>
+        <div id="range-bar-container"></div>
+      </div>
+    </div>
+  </template>
+
+  <div class="nav-container">
+      <a href="" class="home-link">
+        <div class="nav-title">Filtru Cultural
+            <div class="nav-subtitle">București</div>
+        </div>
+      </a>
+      <div class="nav-links">
+          <nav>
+              <a href="#events" id="events-link" style="color:#AD537C" onclick="toggleEvents(event)"><img src="fairy.svg" style="vertical-align: middle; margin-bottom: 4px; margin-right: 4px;">Evenimente</a>
+              <a href="#articles" id="articles-link" onclick="toggleArticlesHeader(event)">Articole</a>
+              <a href="#archive" id="archive-link" onclick="toggleArchive(event)">Arhivă</a>
+              <a href="#about-us" id="about-us-link" onclick="toggleAboutUsDesktop(event)">Despre noi</a>
+              <a href="#" id="language-link" onclick="changeLanguage(event)">EN<img src="lang.svg" style="vertical-align: middle; margin-left: 4px;"></a>
+              <a href="#engage" id="engage-link" onclick="toggleEngage(event)">Participă</a>
+          </nav>
+      </div>
+  </div>
+
+  <div class="mobile-nav">
+    <div class="mobile-nav-button" onclick="closeMobileMenu()">
+      <div class="mobile-nav-title no-select"> Filtru Cultural
+          <div class="mobile-nav-subtitle no-select">București</div>
+      </div>
+    </div>
+    <button class = "mobile-menu-button" onclick="expandOrCloseMobileMenu()" style="display: '';">
+      <img src="hamburger-menu.svg">
+    </button>
+  </div>
+
+  <div class="main-container">
+    <div class="side-panel" id="sidePanel">
+      <div class="icon-buttons">
+          <button class="icon-btn icon-btn1 icon-btn-active" id="iconBtn1"><img id="iconBtn1Image" src="Stairs.svg"></button>
+          <button class="icon-btn icon-btn2" id="iconBtn2"><img id="iconBtn2Image" src="Sliders.svg"></button>
+      </div>
+      <div id="obiective-panel" class="desktop-only-panel">
+        <div class="side-panel-title" id="locations-panel-title">Obiective
+          <button class="mobile-panel-close-button" onclick="closeMobilePanel()">
+            <img src="Close.svg"/>
+          </button>
+        </div>
+        <ul id="custom-bulleted-list"></ul>
+        <label class="custom-checkbox" id="selectAllCheckbox" style="display: none;">
+          <span id="selectAllLabelText">Selectează toate</span>
+          <input type="checkbox" id="selectAllInput" checked onclick="handleSelectAll()">
+          <span class="checkmark" id="selectAllCheckmark"></span>
+        </label>
+        <div class="sep-line"></div>
+        <div class="search-bar">
+            <input type="search" id="searchInput" placeholder="Caută obiective" oninput="handleSearch(this.value)">
+        </div>
+        <div class="sep-line"></div>
+        <div class="side-panel-title" id="objList">Listă obiective</div>
+        <div id="gallery-container">
+            </div>
+      </div>
+      <div id="filtre-panel" class="desktop-only-panel" style="display: none;">
+        <div class="side-panel-title" id="filters-panel-name">Filtre
+          <button class="mobile-panel-close-button" onclick="closeMobilePanel()">
+            <img src="Close.svg"/>
+          </button>
+        </div>
+        <div class="section-title" id="filtre-organizatii">A. Organizații</div>
+        <div>
+          <label class="custom-checkbox"><span id="fund-txt">Fundație</span><input type="checkbox" id="fund"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="priv-inst-txt">Inițiativă privată</span><input type="checkbox" id="priv-inst"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="pub-inst-txt">Instituție publică</span><input type="checkbox" id="pub-inst"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="ong-txt">ONG</span><input type="checkbox" id="ong"><span class="checkmark"></span></label>
+        </div>
+        <div class="sep-line-dashed"></div>
+        <div class="section-title" id="prop-class">B. Clasarea imobilului</div>
+        <div class="clasare-container">
+          <div id="historicalMonument" class="button-clasare" onclick="buttonClasareClicked(this);">Monument istoric</div>
+          <div id="unclassified" class="button-clasare" onclick="buttonClasareClicked(this);">Neclasat</div>
+        </div>
+        <div class="sep-line-dashed"></div>
+        <div class="section-title" id="constr-period-title">C. Perioada construcției</div>
+        <div id="construction-period-filters">
+          <label class="custom-checkbox"><span id="period-1401-txt">1401 - 1500</span><input type="checkbox" id="period-1401"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="period-1701-txt">1701 - 1800</span><input type="checkbox" id="period-1701"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="period-1801-txt">1801 - 1866</span><input type="checkbox" id="period-1801"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="period-1867-txt">1867 - 1918</span><input type="checkbox" id="period-1867"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="period-1919-txt">1919 - 1947</span><input type="checkbox" id="period-1919"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="period-1948-txt">1948 - 1989</span><input type="checkbox" id="period-1948"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="period-1990-txt">1990 - prezent</span><input type="checkbox" id="period-1990"><span class="checkmark"></span></label>
+        </div>
+        
+        <div class="sep-line-dashed"></div>
+        <div class="section-title" id="arch-style-title">D. Stil arhitectural</div>
+        <div id="architectural-style-filters">
+          <label class="custom-checkbox"><span id="style-neogotic-txt">Neogotic</span><input type="checkbox" id="style-neogotic"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="style-neoclasic-txt">Neoclasic</span><input type="checkbox" id="style-neoclasic"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="style-artnouveau-txt">Art Nouveau/ Secession</span><input type="checkbox" id="style-artnouveau"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="style-eclectic-txt">Eclectic</span><input type="checkbox" id="style-eclectic"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="style-neoromanesc-txt">Neoromânesc</span><input type="checkbox" id="style-neoromanesc"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="style-industrial-txt">Arhitectură industrială</span><input type="checkbox" id="style-industrial"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="style-modernism-txt">Modernism</span><input type="checkbox" id="style-modernism"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="style-artdeco-txt">Art-Deco</span><input type="checkbox" id="style-artdeco"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="style-pitoresc-txt">Pitoresc mediteraneean</span><input type="checkbox" id="style-pitoresc"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="style-realism-txt">Realism Socialist</span><input type="checkbox" id="style-realism"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="style-modernism-soc-txt">Modernism socialist</span><input type="checkbox" id="style-modernism-soc"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="style-brutalism-txt">Brutalism</span><input type="checkbox" id="style-brutalism"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="style-contemporan-txt">Contemporan</span><input type="checkbox" id="style-contemporan"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="style-postmodern-txt">Postmodern</span><input type="checkbox" id="style-postmodern"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="style-altele-txt">Altele</span><input type="checkbox" id="style-altele"><span class="checkmark"></span></label>
+        </div>
+        <div class="sep-line" id="filtre-sep-line"></div>
+        <button class="anuleaza-button" id="cancelbtn" onclick="onAnuleazaClick(this)">Anulează</button>
+      </div>
+
+      <div id="mobile-discover-panel" class="mobile-only-panel">
+        <div class="side-panel-title discover-title">Descoperă
+          <button class="mobile-panel-close-button" onclick="closeMobilePanel()">
+            <img src="Close.svg"/>
+          </button>
+        </div>
+        <div class="search-bar">
+          <input type="search" id="mobileSearchInput" placeholder="Caută obiective" oninput="handleSearch(this.value)">
+        </div>
+        <div class="side-panel-title" id="mobileObjList">Listă obiective</div>
+        <div id="mobileGalleryContainer"></div>
+      </div>
+      <div id="mobile-filters-panel" class="mobile-only-panel" style="display: none;">
+        <div class="side-panel-title" id="mobile-filters-panel-name">Filtre
+            <button class="mobile-panel-close-button" onclick="closeMobilePanel()">
+              <img src="Close.svg"/>
+            </button>
+        </div>
+        <ul id="mobileCustomBulletedList"></ul>
+        <label class="custom-checkbox" id="mobileSelectAllCheckbox" onclick="handleSelectAll(true)">
+            <span id="mobileSelectAllLabelText">Selectează toate</span>
+            <input type="checkbox" id="mobileSelectAllInput" checked>
+            <span class="checkmark" id="mobileSelectAllCheckmark"></span>
+        </label>
+        <div class="sep-line-dashed"></div>
+        <div class="section-title" id="mobile-filtre-organizatii">A. Organizații</div>
+        <div>
+            <label class="custom-checkbox"><span id="mobile-fund-txt">Fundație</span><input type="checkbox" id="mobile-fund"><span class="checkmark"></span></label>
+            <label class="custom-checkbox"><span id="mobile-priv-inst-txt">Inițiativă privată</span><input type="checkbox" id="mobile-priv-inst"><span class="checkmark"></span></label>
+            <label class="custom-checkbox"><span id="mobile-pub-inst-txt">Instituție publică</span><input type="checkbox" id="mobile-pub-inst"><span class="checkmark"></span></label>
+            <label class="custom-checkbox"><span id="mobile-ong-txt">ONG</span><input type="checkbox" id="mobile-ong"><span class="checkmark"></span></label>
+        </div>
+        <div class="sep-line-dashed"></div>
+        <div class="section-title" id="mobile-prop-class">B. Clasarea imobilului</div>
+        <div class="clasare-container">
+            <div id="mobile-historicalMonument" class="button-clasare" onclick="buttonClasareClicked(this);">Monument istoric</div>
+            <div id="mobile-unclassified" class="button-clasare" onclick="buttonClasareClicked(this);">Neclasat</div>
+        </div>
+        <div class="sep-line-dashed"></div>
+        <div class="section-title" id="mobile-constr-period-title">C. Perioada construcției</div>
+        <div id="mobile-construction-period-filters">
+          <label class="custom-checkbox"><span id="mobile-period-1401-txt">1401 - 1500</span><input type="checkbox" id="mobile-period-1401"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-period-1701-txt">1701 - 1800</span><input type="checkbox" id="mobile-period-1701"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-period-1801-txt">1801 - 1866</span><input type="checkbox" id="mobile-period-1801"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-period-1867-txt">1867 - 1918</span><input type="checkbox" id="mobile-period-1867"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-period-1919-txt">1919 - 1947</span><input type="checkbox" id="mobile-period-1919"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-period-1948-txt">1948 - 1989</span><input type="checkbox" id="mobile-period-1948"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-period-1990-txt">1990 - prezent</span><input type="checkbox" id="mobile-period-1990"><span class="checkmark"></span></label>
+        </div>
+        
+        <div class="sep-line-dashed"></div>
+        <div class="section-title" id="mobile-arch-style-title" style="padding-bottom: 0px;">D. Stil arhitectural</div>
+        <div id="mobile-architectural-style-filters" style="padding-bottom: 32px;">
+          <label class="custom-checkbox"><span id="mobile-style-neogotic-txt">Neogotic</span><input type="checkbox" id="mobile-style-neogotic"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-style-neoclasic-txt">Neoclasic</span><input type="checkbox" id="mobile-style-neoclasic"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-style-artnouveau-txt">Art Nouveau/ Secession</span><input type="checkbox" id="mobile-style-artnouveau"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-style-eclectic-txt">Eclectic</span><input type="checkbox" id="mobile-style-eclectic"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-style-neoromanesc-txt">Neoromânesc</span><input type="checkbox" id="mobile-style-neoromanesc"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-style-industrial-txt">Arhitectură industrială</span><input type="checkbox" id="mobile-style-industrial"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-style-modernism-txt">Modernism</span><input type="checkbox" id="mobile-style-modernism"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-style-artdeco-txt">Art-Deco</span><input type="checkbox" id="mobile-style-artdeco"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-style-pitoresc-txt">Pitoresc mediteraneean</span><input type="checkbox" id="mobile-style-pitoresc"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-style-realism-txt">Realism Socialist</span><input type="checkbox" id="mobile-style-realism"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-style-modernism-soc-txt">Modernism socialist</span><input type="checkbox" id="mobile-style-modernism-soc"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-style-brutalism-txt">Brutalism</span><input type="checkbox" id="mobile-style-brutalism"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-style-contemporan-txt">Contemporan</span><input type="checkbox" id="mobile-style-contemporan"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-style-postmodern-txt">Postmodern</span><input type="checkbox" id="mobile-style-postmodern"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-style-altele-txt">Altele</span><input type="checkbox" id="mobile-style-altele"><span class="checkmark"></span></label>
+        </div>
+      </div>
+    </div>
+    <button class="side-panel-btn" id="iconBtn3"><img id="iconBtn3Image" src="CaretLeft.svg"></button>
+
+    <div id="map-container" class="map-container">
+      <div id='map'></div>
+      <div class="card hidden-element">
+        <div class="card-header">
+          <div class="card-category" id="card-cat"></div>
+          <div class="card-title"></div>
+          <div class="card-address">
+            <div class="address-text">
+              <img src="Pin.svg" class="address-icon" id="card-address-icon"/>
+              <span id="address-text-content"></span>
+            </div>
+          </div>
+        </div>
+        <div class="card-social-links">
+          <a href="" class="social-link" id="site-link">
+            <div class="social-icon">
+              <img src="Site.svg"/>
+            </div>
+            Site
+          </a>
+          <a href="" class="social-link" id="insta-link">
+            <div class="social-icon">
+              <img src="Instagram.svg"/>
+            </div>
+            Instagram
+          </a>
+          <a href="" class="social-link" id="fb-link">
+            <div class="social-icon">
+              <img src="Facebook.svg"/>
+            </div>
+            Facebook
+          </a>
+          <a href="" class="social-link" id="maps-link">
+            <div class="social-icon">
+              <img src="Maps.svg"/>
+            </div>
+            <div class="social-text">Google Maps</div>
+          </a>
+        </div>
+        <div class="sep-line-dashed" id="card-sep-line"></div>
+        <p class="card-text">
+        </p>
+        <button class="card-read-more" id="card-read-more" onclick="openReadMore(this)">Continuați să citiți</button>
+      </div>
+    </div>
+
+    <div class="articles-header" id="articles-header" style="display: none;">
+      <button id="scroll-left-btn" class="article-scroll-arrow left-arrow">
+        <img src="arrow-left.svg" alt="Scroll Left">
+      </button>
+      <div class="article-header-scroll-wrapper">
+        <div class="article-card-container" id="article-card-container-top">
+          <a href="" class="article-card" onclick="openArticle(event, 'Suprainfinit Gallery')">
+            <img src="suprainfinit.png" alt="Article Card Image">
+            <div class="article-card-content">
+                <div class="article-card-title">Suprainfinit Gallery</div>
+                <div class="article-card-description">Raluca Bujor & Nicoleta Moise</div>
+            </div>
+          </a>
+          <a href="" class="article-card" onclick="openArticle(event, 'Centrul de Resurse în Fotografie')">
+            <img src="cdrf.png" alt="Article Card Image" class="article-image">
+            <div class="article-card-content">
+                <div class="article-card-title">Centrul de Resurse în Fotografie</div>
+                <div class="article-card-description">Raluca Bujor & Nicoleta Moise</div>
+            </div>
+          </a>
+          <a href="" class="article-card" onclick="openArticle(event, 'Atelierele Scânteia')">
+            <img src="atsc.png" alt="Article Card Image" class="article-image">
+            <div class="article-card-content">
+                <div class="article-card-title">Atelierele Scânteia</div>
+                <div class="article-card-description">Nicoleta Moise & Raluca Bujor</div>
+            </div>
+          </a>
+          <a href="" class="article-card" onclick="openArticle(event, 'Paper Traffic')">
+            <img src="pprt.png" alt="Article Card Image" class="article-image">
+            <div class="article-card-content">
+                <div class="article-card-title">Paper Traffic</div>
+                <div class="article-card-description">Octavian Puric</div>
+            </div>
+          </a>
+          <a href="" class="article-card" onclick="openArticle(event, 'Teatrul Masca')">
+            <img src="masca.png" alt="Article Card Image" class="article-image">
+            <div class="article-card-content">
+                <div class="article-card-title">Teatrul Masca</div>
+                <div class="article-card-description">Nicoleta Moise</div>
+            </div>
+          </a>
+         <a href="" class="article-card" onclick="openArticle(event, 'Casa Memorială Tudor Arghezi — Mărțișor')">
+            <img src="arghezi.png" alt="Article Card Image" class="article-image">
+            <div class="article-card-content">
+                <div class="article-card-title">Casa Memorială Tudor Arghezi — Mărțișor</div>
+                <div class="article-card-description">Raluca Bujor</div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <button id="scroll-right-btn" class="article-scroll-arrow right-arrow">
+        <img src="arrow-right.svg" alt="Scroll Right">
+      </button>
+    </div>
+
+    <div class="article-container" id="article-container" style="display: none;" onscroll="scrollFun()">
+      <div class="progress-container">
+        <div class="progress-bar" id="myBar"></div>
+      </div>
+      <button class="about-us-close-button" onclick="closeArticle()">
+        <img src="Close.svg">
+      </button>
+      <button id="scrollTopBtn" onclick="scrollToTop()">
+        <img id="scrollImg" src="ArrowDown.svg" alt="Go to top" />
+      </button>
+      <div class="read-more-category desktop-only" id="article-category-desktop" style="color: rgb(165, 136, 42);">GALERII</div>
+      <div class="article-content" id="article-content-id">
+          <!-- Added from JS -->
+      </div>
+      <div class="read-more-share read-more-share-article" id="article-share-txt">Distribuie acest articol</div>
+      <div class="fb-share-button" id="fb-share-article" data-href="" data-layout="button" data-size="large">
+      </div>
+      <div class="continue-read-container">
+        <div class="continue-read-text" id="continue-read-txt">Continuați să citiți</div>
+        <div class="dashed-line"></div>
+      </div>
+      <div class="article-card-container" id="article-card-container-bottom">
+        <a href="" class="article-card" onclick="openArticle(event, 'Suprainfinit Gallery')">
+          <img src="suprainfinit.png" alt="Article Card Image">
+          <div class="article-card-content">
+              <div class="article-card-title">Suprainfinit Gallery</div>
+              <div class="article-card-description">Raluca Bujor & Nicoleta Moise</div>
+          </div>
+        </a>
+        <a href="" class="article-card" onclick="openArticle(event, 'Centrul de Resurse în Fotografie')">
+            <img src="cdrf.png" alt="Article Card Image" class="article-image">
+            <div class="article-card-content">
+                <div class="article-card-title">Centrul de Resurse în Fotografie</div>
+                <div class="article-card-description">Raluca Bujor & Nicoleta Moise</div>
+            </div>
+        </a>
+        <a href="" class="article-card" onclick="openArticle(event, 'Atelierele Scânteia')">
+            <img src="atsc.png" alt="Article Card Image" class="article-image">
+            <div class="article-card-content">
+                <div class="article-card-title">Atelierele Scânteia</div>
+                <div class="article-card-description">Nicoleta Moise & Raluca Bujor</div>
+            </div>
+        </a>
+        <a href="" class="article-card" onclick="openArticle(event, 'Paper Traffic')">
+          <img src="pprt.png" alt="Article Card Image" class="article-image">
+          <div class="article-card-content">
+              <div class="article-card-title">Paper Traffic</div>
+              <div class="article-card-description">Octavian Puric</div>
+          </div>
+        </a>
+        <a href="" class="article-card" onclick="openArticle(event, 'Teatrul Masca')">
+          <img src="masca.png" alt="Article Card Image" class="article-image">
+          <div class="article-card-content">
+              <div class="article-card-title">Teatrul Masca</div>
+              <div class="article-card-description">Nicoleta Moise</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="dynamic-label-container" id="dynamicLabelContainer" style="display: none">
+      <!-- Labels will be added here -->
+    </div>
+
+    <div class="zoom-button-container">
+      <button class="zoom-button plus" onclick="mapZoomIn();"></button>
+      <button class="zoom-button minus" onclick="mapZoomOut();"></button>
+    </div>
+
+    <div class="logo-container">
+      <img src="logoAFCN.png">
+    </div>
+
+    <div class="read-more-container" style="display: none;">
+      <div class="read-more-container-fixed">
+        <div class="image-gallery-container">
+          <div class="main-image">
+            <img src="">
+          </div>
+          <div class="thumbnails">
+            <div class="thumbnail" id="thumb0">
+              <img src="">
+            </div>
+            <div class="thumbnail" id="thumb1">
+              <img src="">
+            </div>
+            <div class="thumbnail" id="thumb2">
+              <img src="">
+            </div>
+            <div class="thumbnail" id="thumb3">
+              <img src="">
+            </div>
+          </div>
+          <div class="photosby" id="photosby-desktop">Fotografii: Rareș Toma</div>
+        </div>
+
+        <div class="read-more-content-container">
+          <!-- Right side content here -->
+          <button class="read-more-close-button" onclick="closeReadMore()">
+            <img src="Close.svg"/>
+          </button>
+          <div class="read-more-category"></div>
+          <div class="read-more-title"></div>
+          <div class="read-more-org">Tip organizație</div>
+          <div class="read-more-address">
+            <img src="Pin.svg" class="read-more-address-icon" id="read-more-address-icon"/>
+            <span class="read-more-address-text-content"></span>
+          </div>
+          <div class="read-more-social-links">
+            <a href="" class="read-more-social-link" id="site-link">
+              <div class="read-more-social-icon">
+                <img src="Site.svg"/>
+              </div>
+              Site
+            </a>
+            <a href="" class="read-more-social-link" id="insta-link">
+              <div class="read-more-social-icon">
+                <img src="Instagram.svg"/>
+              </div>
+              Instagram
+            </a>
+            <a href="" class="read-more-social-link" id="fb-link">
+              <div class="read-more-social-icon">
+                <img src="Facebook.svg"/>
+              </div>
+              Facebook
+            </a>
+            <a href="" class="read-more-social-link" id="maps-link">
+              <div class="read-more-social-icon">
+                <img src="Maps.svg"/>
+              </div>
+              <div class="social-text">Google Maps</div>
+            </a>
+          </div>
+          <div class="read-more-section-title" id="read-more-section-title-descr">Descriere</div>
+          <p class="read-more-text" id="read-more-description"></p>
+          <div class="read-more-section-title" id="read-more-section-title-offer">Ofertă culturală</div>
+          <p class="read-more-text" id="read-more-offer"></p>
+          <p class="read-more-text" id="read-more-uploaded" style="display: none;"></p>
+          <div class="read-more-share" id="read-more-share-txt">Distribuie acest articol</div>
+          <div class="fb-share-button" id="fb-share-read-more-desktop" data-href="" data-layout="button" data-size="large"></div>
+        </div>
+      </div>
+      <div class="event-detail-related-section-wrapper" id="readMoreRelatedEventsWrapperDesktop" style="display: none;">
+        <h2 class="event-detail-section-title" id="readMoreRelatedSectionTitleDesktop">Alte evenimente la această locație</h2>
+        <div class="event-detail-related-events-container" id="readMoreRelatedEventsContainerDesktop">
+            </div>
+      </div>
+      <div class="event-detail-related-section-wrapper" id="categoryRelatedFeaturesWrapperDesktop" style="display: none;">
+        <h2 class="event-detail-section-title" id="categoryRelatedFeaturesTitleDesktop">Obiective similare din apropriere</h2>
+        <div class="event-detail-related-events-container" id="categoryRelatedFeaturesContainerDesktop">
+            </div>
+      </div>
+      <div class="custom-dashed-separator"></div>
+      <footer class="footer-container">
+        <div class="footer-inner">
+          <!-- left‑hand text & button -->
+          <div class="footer-text">
+            <h2 class="footer-title">
+              Administrezi un spațiu cultural?<br>
+              <span class="footer-highlight">Devino partener Filtru Cultural!</span>
+            </h2>
+            <p class="footer-subtitle">
+              Adaugă gratuit spațiul tău și evenimentele tale în platformă.<br>
+              Ajută-ne să creștem harta culturală a orașului, pas cu pas.
+            </p>
+            <div class="engage-button-container">
+                <a href class="engage-button" onclick="toggleEngage(event)">Devino partener</a>
+                <div class="engage-button-shadow"></div>
+            </div>
+          </div>
+      
+          <!-- right‑hand illustration + social icons -->
+          <div class="footer-illustration">
+            <img
+              src="tomita-footer.png"
+              alt="Cultural partnership illustration"
+              class="footer-image"
+            />
+            <div class="footer-social">
+              <a href="#" class="social-link">
+                <div class="footer-social-icon">
+                  <img src="EnvelopeOpen.svg" alt="Email" />
+                </div>
+              </a>
+              <a href="#" class="social-link">
+                <div class="footer-social-icon">
+                  <img src="InstagramLogo.svg" alt="Email" />
+                </div>
+              </a>
+              <a href="#" class="social-link">
+                <div class="footer-social-icon">
+                  <img src="FacebookLogo.svg" alt="Email" />
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <div id="lightbox" class="lightbox" style="display: none;">
+      <button class="lightbox-close" onclick="closeLightbox()">
+        <img src="Close.svg"/>
+      </button>
+      <img class="lightbox-prev" onclick="changeImage(-1)" src="lightbox-arrow-left.svg">
+      <img id="lightbox-img" src="">
+      <img class="lightbox-next" onclick="changeImage(1)" src="lightbox-arrow-right.svg">
+      <div class="lightbox-counter"></div>
+    </div>
+
+    <div class="about-us-container" style="display: none;">
+      <div class="about-us-container-content">
+        <div class="about-us-section">
+          <div class="about-us-section-title" id="about-us-first-title">Despre noi</div>
+          <p id="about-us-first-p">
+            Scena culturală din București este în continuă creștere, iar locurile de desfășurare a inițiativelor culturale variază de la clădiri istorice, la spații industriale, clădiri ridicate în perioada socialistă, sau edificii noi. În acest peisaj eclectic, <b>Filtru Cultural</b> strânge laolaltă inițiative culturale tradiționale și alternative, publice și private, repere arhitecturale și clădiri aparent anonime care alcătuiesc împreună patrimoniul cultural al orașului.
+          </p>
+          <p id="about-us-second-p">
+            <b>Filtru Cultural</b> este o platformă online care cartografiază și documentează spațiile culturale din București, oferind informații despre activitatea și evenimentele curente ale acestora. În secțiunea <i>Articole</i> poți descoperi actori ai scenei culturale bucureștene în profunzime  — nu doar prin prisma activității lor artistice sau instituționale, ci și dintr-o perspectivă istorică, arhitecturală și afectivă.
+          </p>
+        </div>
+        <div class="about-us-section" id="about-team">
+          <div class="about-us-section-title" id="about-us-second-title">Echipa de proiect</div>
+          <p><span class="about-us-role" id="ux-role">Web design, UX design</span> • <span class="about-us-name">Bianca Basan</span><br>
+          <span class="about-us-role" id="prog-role">Programator</span> • <span class="about-us-name">Alexandru Militaru</span></p>
+          <p><span class="about-us-role" id="wr-role">Redactare articole</span> • <span class="about-us-name">Raluca Bujor, Nicoleta Moise, Octavian Puric</span></p>
+          <p><span class="about-us-role" id="obj-descr-role">Descrierea obiectivelor</span> • <span class="about-us-name">Evelin Rencsik, Ana Stan</span></p>
+          <p><span class="about-us-role" id="trans-role">Traducere</span> • <span class="about-us-name">Octavian Puric</span></p>
+          <p><span class="about-us-role" id="ilstr-role">Ilustrații</span> • <span class="about-us-name">Maria Mălcică</span><br>
+          <span class="about-us-role" id="photo-role">Fotograf</span> • <span class="about-us-name">Rareș Toma</span></p>
+          <p><span class="about-us-role" id="scientific-consult">Consultant științific</span> • <span class="about-us-name">Simina Stan</span><br>
+          <span class="about-us-role" id="arch-role">Director artistic și arhitect consultant</span> • <span class="about-us-name">Irina Antohe</span></p>
+          <p><span class="about-us-role" id="mgmt-role">Manager de proiect</span> • <span class="about-us-name">Corina Munteanu</span><br>
+          <span class="about-us-role" id="as-mgmt-role">Asistent manager</span> • <span class="about-us-name">Teodora-Melania Munteanu</span></p>
+          <p><span class="about-us-role" id="voluntar-role">Voluntari</span> • <span class="about-us-name">Drăghicescu Daria Maria, Ionescu Irina Maria, Vișan Victoria, Rădoi Ana-Maria, Cuțătoi Andreea Claudia, Pătru Daria Maria, Bălănică Maria Sofia, Teodora Nicolae, Ivanciu Ilinca, Păpușoi Vlad Ion, Naghi Sabin Mihai, Sara Maria Floricel, Anastasia Melinte</span></p>
+        </div>
+        <div class="about-us-section">
+          <div class="about-us-section-title" id="about-us-third-title">Parteneri</div>
+          <div class="about-us-image-container">
+            <img src="partners.png" id="partners" alt="partners logo">
+          </div>
+        </div>
+        <div class="about-us-section">
+          <div class="about-us-section-title" id="about-us-fourth-title">Organizator</div>
+          <div class="about-us-image-container">
+            <img src="aria11.png" id="aria11" alt="aria-11 logo">
+          </div>
+        </div>
+        <div class="about-us-section" id="disclaimer-afcn">
+          <p>Proiect cultural co-finanțat de Administrația Fondului Cultural Național. Proiectul nu reprezintă în mod necesar poziția Administrației Fondului Cultural Național. AFCN nu este responsabilă de conținutul proiectului sau de modul în care rezultatele proiectului pot fi folosite. Acestea sunt în întregime responsabilitatea beneficiarului finanțării.</p>
+        </div>
+        <button class="about-us-close-button" onclick="closeAboutUs()">
+          <img src="Close.svg"/>
+        </button>
+        <img src="tomita.gif" alt="Character Image" class="character-image" id="characterGif">
+      </div>
+    </div>
+
+    <div id="events-container" class="events-container" style="display: none;">
+      <div class="events-header">
+        <div class="events-header-top">
+          <!-- Use a div with the desired style, using a class for easier management -->
+          <div class="events-header-title">Program Evenimente</div>
+          <p class="events-header-subtitle">Descoperă evenimentele culturale din București</p>
+          <button class="event-detail-close-button" id="event-page-close-btn" onclick="closeEvents()">
+            <img src="Close.svg" alt="Close">
+          </button>
+        </div>
+        
+        <div class="filter-bar">
+          <!-- Filter Item: Caută evenimente -->
+          <div class="filter-item" style="padding-right: 0px;">
+              <img src="Binoculars.svg" alt="Binoculars Icon" class="filter-icon"/>
+              <div class="search-bar-events" id="search-bar-events-desktop">
+                <input type="search" placeholder="Caută evenimente" oninput="handleEventsSearch(event)">
+              </div>
+          </div>
+
+          <div class="filter-div"></div> 
+
+          <div class="dropdown-wrapper">
+            <button class="filter-item" id="event-type-btn" onclick="toggleTypePanel()">
+              <span class="filter-text">Tipul evenimentelor</span>
+              <img src="CaretDown.svg" class="dropdown-icon" alt="Toggle" />
+            </button>
+          
+            <div class="dropdown-panel" id="event-type-panel">
+              <!-- Populated from JS -->
+            </div>
+          </div>
+          
+          <div class="dropdown-wrapper">
+            <button class="filter-item" id="keywords-btn" onclick="toggleKeywordsPanel()">
+              <span class="filter-text">Cuvinte cheie</span>
+              <img src="CaretDown.svg" class="dropdown-icon" alt="Toggle" />
+            </button>
+          
+            <div class="dropdown-panel" id="keywords-panel">
+              <!-- Populated from JS -->
+            </div>
+          </div> 
+
+          <div class="filter-item" id="free-entry-btn" type="button">
+            <div class="filter-text">Intrare libera</div>
+          </div>
+          
+          <div class="filter-item" id="ticket-btn" type="button">
+            <div class="filter-text">Bilet</div>
+          </div>
+        </div>        
+
+        <div class="filter-bar-mobile">
+          <div class="dropdown-wrapper" id="mobile-categories-dropdown">
+            <button class="filter-item" id="mobile-events-categories-btn">
+              <span class="filter-text">Categorii</span>
+              <img src="tag.svg" class="dropdown-icon" alt="Tag">
+            </button>
+
+            <div class="dropdown-panel" id="mobile-events-categories-panel">
+              <div class="mobile-categories-header">
+                <h3>Categorii</h3>
+                <button id="mobile-close-categories">
+                  <img src="x-close-black.svg" alt="Închide" />
+                </button>
+              </div>
+
+              <section>
+                <h3>Tipul evenimentelor</h3>
+                <div id="mobile-type-list"></div>
+              </section>
+
+              <section>
+                <h3>Intrare</h3>
+                <label class="dropdown-option">
+                  <input type="checkbox" id="mobile-free-entry"/> Liberă
+                </label>
+                <label class="dropdown-option">
+                  <input type="checkbox" id="mobile-ticket"/> Bilet
+                </label>
+              </section>
+
+              <section>
+                <h3>Cuvinte cheie</h3>
+                <div id="mobile-keywords-list"></div>
+              </section>
+
+              <footer style="display:flex; gap: 8px; padding-top: 24px; border-top: 1px solid #B6B6B6; box-sizing: border-box;">
+                <button id="mobile-cancel-categories" class="anuleaza-button">Anulează</button>
+                <button id="mobile-apply-categories" class="calendar-confirm-btn">Selectează</button>
+              </footer>
+            </div>
+          </div>
+        </div>
+        <div class="search-bar" id="search-bar-events-mobile">
+          <input type="search" placeholder="Caută evenimente" oninput="handleEventsSearch(event)">
+        </div>
+
+        <div id="filterLabelsContainer" class="filter-labels" style="display: none;"></div>
+
+
+        <hr class="dashed-separator" />
+
+        <div id="recent-events-section">
+          <div id="results-count" class="results-count"></div>
+          <h2 class="recent-events-title">Evenimente recente</h2>
+          <hr class="recent-events-separator" />
+          <div id="recent-events-container" class="recent-events-container">
+            <!-- cards will be injected here by JS -->
+          </div>
+        </div>
+
+
+
+      </div>
+      <hr class="dashed-separator" id="dashed-separator-footer"/>
+
+      <footer class="footer-container">
+        <div class="footer-inner">
+          <!-- left‑hand text & button -->
+          <div class="footer-text">
+            <h2 class="footer-title">
+              Administrezi un spațiu cultural?<br>
+              <span class="footer-highlight">Devino partener Filtru Cultural!</span>
+            </h2>
+            <p class="footer-subtitle">
+              Adaugă gratuit spațiul tău și evenimentele tale în platformă.<br>
+              Ajută-ne să creștem harta culturală a orașului, pas cu pas.
+            </p>
+            <div class="engage-button-container">
+                <a href class="engage-button" onclick="toggleEngage(event)">Devino partener</a>
+                <div class="engage-button-shadow"></div>
+            </div>
+          </div>
+      
+          <!-- right‑hand illustration + social icons -->
+          <div class="footer-illustration">
+            <img
+              src="tomita-footer.png"
+              alt="Cultural partnership illustration"
+              class="footer-image"
+            />
+            <div class="footer-social">
+              <a href="#" class="social-link">
+                <div class="footer-social-icon">
+                  <img src="EnvelopeOpen.svg" alt="Email" />
+                </div>
+              </a>
+              <a href="#" class="social-link">
+                <div class="footer-social-icon">
+                  <img src="InstagramLogo.svg" alt="Email" />
+                </div>
+              </a>
+              <a href="#" class="social-link">
+                <div class="footer-social-icon">
+                  <img src="FacebookLogo.svg" alt="Email" />
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <div id="archive-container" class="events-container" style="display: none;">
+      <div class="events-header">
+        <div class="events-header-top">
+          <div class="events-header-title">Arhiva evenimentelor noastre</div>
+          <p class="events-header-subtitle">Inițiative cu focus pe cultură, arhitectură și oameni</p>
+          <button class="event-detail-close-button" id="event-page-close-btn" onclick="closeArchive()">
+            <img src="Close.svg" alt="Close">
+          </button>
+        </div>
+        <img src="archive.png" alt="archive-img" class="archive-header-image">
+        <div class="archive-timeline"></div>
+      </div>
+      <footer class="footer-container">
+        <div class="footer-inner">
+          <!-- left‑hand text & button -->
+          <div class="footer-text">
+            <h2 class="footer-title">
+              Administrezi un spațiu cultural?<br>
+              <span class="footer-highlight">Devino partener Filtru Cultural!</span>
+            </h2>
+            <p class="footer-subtitle">
+              Adaugă gratuit spațiul tău și evenimentele tale în platformă.<br>
+              Ajută-ne să creștem harta culturală a orașului, pas cu pas.
+            </p>
+            <div class="engage-button-container">
+                <a href class="engage-button" onclick="toggleEngage(event)">Devino partener</a>
+                <div class="engage-button-shadow"></div>
+            </div>
+          </div>
+      
+          <!-- right‑hand illustration + social icons -->
+          <div class="footer-illustration">
+            <img
+              src="tomita-footer.png"
+              alt="Cultural partnership illustration"
+              class="footer-image"
+            />
+            <div class="footer-social">
+              <a href="#" class="social-link">
+                <div class="footer-social-icon">
+                  <img src="EnvelopeOpen.svg" alt="Email" />
+                </div>
+              </a>
+              <a href="#" class="social-link">
+                <div class="footer-social-icon">
+                  <img src="InstagramLogo.svg" alt="Email" />
+                </div>
+              </a>
+              <a href="#" class="social-link">
+                <div class="footer-social-icon">
+                  <img src="FacebookLogo.svg" alt="Email" />
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <div class="engage-container" id="engage-container" style="display: none;">
+      <button class="engage-close-button" onclick="closeEngage()">
+        <img src="Close.svg"/>
+      </button>
+      <div class="engage-sparkles"></div>
+
+      <div class="engage-section">
+        <h2 class="engage-title" id="engage-title-1">Încărcă un nou spațiu pe hartă!</h2>
+        <p id="engage-text-1">Bucureștiul este un oraș dinamic, cu inițiative culturale care merită valorificate. Dacă reprezinți sau știi o astfel de inițiativă, ajută-ne să actualizăm harta culturală completând formularul de mai jos.</p>
+        <div class="engage-button-container">
+            <a href="" class="engage-button" id="engage-button-text" onclick="openForm(event)">Formular</a>
+            <div class="engage-button-shadow"></div>
+        </div>
+      </div>
+
+      <div class="engage-image">
+        <img src="engage.png" alt="Street scene in black and white">
+      </div>
+
+      <div class="engage-section">
+        <h2 class="engage-title" id="engage-title-2">Spațiul tău se află deja pe hartă, dar nu știi cum să încarci evenimentele?</h2>
+        <p id="engage-text-2">Scrie-ne pe <i>filtrucultural@gmail.com</i> și îți vom trimite datele de acces pentru Calendarul Filtru Cultural!</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="mobile-articles-page" style="display: none;">
+    <div class="mobile-page-header">
+      <div class="mobile-page-title" id="mobile-articles-page-title">Articole</div>
+      <p class="mobile-page-subtitle" id="mobile-articles-page-subtitle">Descoperă actori ai scenei culturale Bucureștene în profunzime</p>
+      <button class="mobile-page-close-button" onclick="showMapView()">
+          <img src="Close.svg" alt="Close">
+      </button>
+    </div>
+    <div class="mobile-articles-list-container">
+      <a href="" class="article-card" onclick="openArticle(event, 'Centrul de Resurse în Fotografie')">
+        <img src="cdrf.png" alt="Article Card Image" class="article-image">
+        <div class="article-card-content">
+            <div class="article-card-title">Centrul de Resurse în Fotografie</div>
+            <div class="article-card-description">Raluca Bujor & Nicoleta Moise</div>
+        </div>
+      </a>
+      <a href="" class="article-card" onclick="openArticle(event, 'Suprainfinit Gallery')">
+        <img src="suprainfinit.png" alt="Article Card Image">
+        <div class="article-card-content">
+            <div class="article-card-title">Suprainfinit Gallery</div>
+            <div class="article-card-description">Raluca Bujor & Nicoleta Moise</div>
+        </div>
+      </a>
+      <a href="" class="article-card" onclick="openArticle(event, 'Atelierele Scânteia')">
+          <img src="atsc.png" alt="Article Card Image" class="article-image">
+          <div class="article-card-content">
+              <div class="article-card-title">Atelierele Scânteia</div>
+              <div class="article-card-description">Nicoleta Moise & Raluca Bujor</div>
+          </div>
+      </a>
+      <a href="" class="article-card" onclick="openArticle(event, 'Paper Traffic')">
+        <img src="pprt.png" alt="Article Card Image" class="article-image">
+        <div class="article-card-content">
+            <div class="article-card-title">Paper Traffic</div>
+            <div class="article-card-description">Octavian Puric</div>
+        </div>
+      </a>
+      <a href="" class="article-card" onclick="openArticle(event, 'Teatrul Masca')">
+        <img src="masca.png" alt="Article Card Image" class="article-image">
+        <div class="article-card-content">
+            <div class="article-card-title">Teatrul Masca</div>
+            <div class="article-card-description">Nicoleta Moise</div>
+        </div>
+      </a>
+      <a href="" class="article-card" onclick="openArticle(event, 'Casa Memorială Tudor Arghezi — Mărțișor')">
+        <img src="arghezi.png" alt="Article Card Image" class="article-image">
+        <div class="article-card-content">
+            <div class="article-card-title">Casa Memorială Tudor Arghezi — Mărțișor“</div>
+            <div class="article-card-description">Raluca Bujor</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="mobile-toolbar">
+    <button class="toolbar-button active" id="mobile-toolbar-map" onclick="handleToolbarClick(this)">
+        <img src="Obiectiv.svg" alt="Map">
+    </button>
+    <button class="toolbar-button" id="mobile-toolbar-filters" onclick="handleToolbarClick(this)">
+        <img src="SlidersHorizontal.svg" alt="Filters">
+    </button>
+    <button class="toolbar-button" id="mobile-toolbar-search" onclick="handleToolbarClick(this)">
+        <img src="MagnifyingGlass.svg" alt="Search">
+    </button>
+    <button class="toolbar-button" id="mobile-toolbar-events" onclick="handleToolbarClick(this)">
+        <img src="CalendarBlank.svg" alt="Events">
+    </button>
+    <button class="toolbar-button" id="mobile-toolbar-articles" onclick="handleToolbarClick(this)">
+        <img src="Newspaper.svg" alt="Articles">
+    </button>
+  </div>
+
+  <div class="mobile-menu" style="display: none;">
+    <div class="language-switch">
+      <button id="langro" onclick="changeLanguage(event, 'ro')">RO</button> / <button id="langen" onclick="changeLanguage(event, 'en')">EN</button>
+    </div>
+    <button class="menu-button" id="mobile-archive-link" onclick="toggleArchive(event)">Arhivă</button>
+    <button class="menu-button" id="mobile-about-us-link" onclick="openAboutUsMobile()">Despre noi</button>
+    <button class="menu-button" id="mobile-engage-button" onclick="openEngage()">Participă</button>
+    <div class="menu-footer" id="menu-footer">
+      <div class="footer-mission" id="mobile-footer-mission">Filtru Cultural București își propune valorificarea, popularizarea și centralizarea locurilor cu valență culturală din București prin intermediul unei aplicații interactive.</div>
+      <div class="foot-mission-partners" id="mobile-footer-partners">Proiect susținut de AFCN.</div>
+      <div class="mobile-menu-logo" id="mobile-menu-logo">
+        <img src="logoAFCNWhite.png">
+      </div>
+    </div>
+  </div>
+
+  <div class="engage-container-mobile" id="engage-container-mobile" style="display: none;">
+    <button class="mobile-page-close-button" onclick="closeEngage()">
+      <img src="Close.svg" alt="Close">
+    </button>
+
+    <div class="engage-mobile-content">
+      <div class="engage-sparkles"></div>
+      <div class="engage-section">
+        <h2 class="engage-title" id="mobile-engage-title-1">Încărcă un nou spațiu pe hartă!</h2>
+        <p id="mobile-engage-text-1">Bucureștiul este un oraș dinamic, cu inițiative culturale care merită valorificate. Dacă reprezinți sau știi o astfel de inițiativă, ajută-ne să actualizăm harta culturală completând formularul de mai jos.</p>
+        <div class="engage-button-container">
+            <a href="" class="engage-button" id="mobile-engage-button-text" onclick="openForm(event)">Formular</a>
+            <div class="engage-button-shadow"></div>
+        </div>
+      </div>
+      <div class="engage-image">
+        <img src="engage.png" alt="Street scene in black and white">
+      </div>
+      <div class="engage-section">
+        <h2 class="engage-title" id="mobile-engage-title-2">Spațiul tău se află deja pe hartă, dar nu știi cum să încarci evenimentele?</h2>
+        <p id="mobile-engage-text-2">Scrie-ne pe <i>filtrucultural@gmail.com</i> și îți vom trimite datele de acces pentru Calendarul Filtru Cultural!</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="read-more-container-mobile" style="display: none;">
+    <div class="read-more-container-mobile-fixed">
+      <div class="image-gallery-container">
+        <button class="read-more-close-button-mobile" onclick="closeReadMore()">
+          <img src="closeBg.svg"/>
+        </button>
+        <div class="main-image">
+          <img src="" alt="Main Image">
+          <div class="num-pics-label"></div>
+        </div>
+      </div>
+      <div class="read-more-category"></div>
+      <div class="read-more-title"></div>
+      <div class="read-more-org">Tip organizație</div>
+      <div class="read-more-address">
+        <img src="Pin.svg" class="read-more-address-icon" id="read-more-address-icon-mobile"/>
+        <span class="read-more-address-text-content"></span>
+      </div>
+      <div class="read-more-social-links">
+        <a href="" class="read-more-social-link" id="site-link">
+          <div class="read-more-social-icon">
+            <img src="Site.svg"/>
+          </div>
+          Site
+        </a>
+        <a href="" class="read-more-social-link" id="insta-link">
+          <div class="read-more-social-icon">
+            <img src="Instagram.svg"/>
+          </div>
+          Instagram
+        </a>
+        <a href="" class="read-more-social-link" id="fb-link">
+          <div class="read-more-social-icon">
+            <img src="Facebook.svg"/>
+          </div>
+          Facebook
+        </a>
+        <a href="" class="read-more-social-link" id="maps-link">
+          <div class="read-more-social-icon">
+            <img src="Maps.svg"/>
+          </div>
+          <div class="social-text">Google Maps</div>
+        </a>
+      </div>
+      <div class="read-more-section-title" id="read-more-section-title-descr-mob">Descriere</div>
+      <p class="read-more-text" id="read-more-description-mobile"></p>
+      <div class="read-more-section-title" id="read-more-section-title-offer-mob">Ofertă culturală</div>
+      <p class="read-more-text" id="read-more-offer-mobile"></p>
+      <p class="read-more-text" id="read-more-uploaded-mobile" style="display: none;"></p>
+      <div class="photosby" id="photosby-mobile">Fotografii: Rareș Toma</div>
+      <div class="read-more-share" id="read-more-share-txt-mob">Distribuie acest articol</div>
+      <div class="fb-share-button" id="fb-share-read-more-mobile" data-href="" data-layout="button" data-size="large"></div>
+      <div class="event-detail-related-section-wrapper" id="readMoreRelatedEventsWrapperMobile" style="display: none;">
+        <h2 class="event-detail-section-title" id="readMoreRelatedSectionTitleMobile">Alte evenimente la această locație</h2>
+        <div class="event-detail-related-events-container" id="readMoreRelatedEventsContainerMobile">
+            </div>
+      </div>
+      <div class="event-detail-related-section-wrapper" id="categoryRelatedFeaturesWrapperMobile" style="display: none;">
+        <h2 class="event-detail-section-title" id="categoryRelatedFeaturesTitleMobile">Alte locații în această categorie</h2>
+        <div class="event-detail-related-events-container" id="categoryRelatedFeaturesContainerMobile">
+            </div>
+      </div>
+      <div class="custom-dashed-separator"></div>
+      <footer class="footer-container">
+        <div class="footer-inner">
+          <!-- left‑hand text & button -->
+          <div class="footer-text">
+            <h2 class="footer-title">
+              Administrezi un spațiu cultural?<br>
+              <span class="footer-highlight">Devino partener Filtru Cultural!</span>
+            </h2>
+            <p class="footer-subtitle">
+              Adaugă gratuit spațiul tău și evenimentele tale în platformă.<br>
+              Ajută-ne să creștem harta culturală a orașului, pas cu pas.
+            </p>
+            <div class="engage-button-container">
+                <a href class="engage-button" onclick="toggleEngage(event)">Devino partener</a>
+                <div class="engage-button-shadow"></div>
+            </div>
+          </div>
+      
+          <!-- right‑hand illustration + social icons -->
+          <div class="footer-illustration">
+            <img
+              src="tomita-footer.png"
+              alt="Cultural partnership illustration"
+              class="footer-image"
+            />
+            <div class="footer-social">
+              <a href="#" class="social-link">
+                <div class="footer-social-icon">
+                  <img src="EnvelopeOpen.svg" alt="Email" />
+                </div>
+              </a>
+              <a href="#" class="social-link">
+                <div class="footer-social-icon">
+                  <img src="InstagramLogo.svg" alt="Email" />
+                </div>
+              </a>
+              <a href="#" class="social-link">
+                <div class="footer-social-icon">
+                  <img src="FacebookLogo.svg" alt="Email" />
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <div id="lightbox-mobile" class="lightbox" style="display: none;">
+    <button class="lightbox-close" onclick="closeLightboxMobile()">
+      <img src="Close.svg"/>
+    </button>
+    <div class="scroll-container" id="scrollContainer">
+      <!-- Images will be dynamically inserted here -->
+    </div>
+    <div class="lightbox-counter" id="mobileLightboxCounter"></div>
+  </div>
+
+  <div class="event-detail-panel" id="eventDetailPanel">
+    <div class="event-detail-main-row">
+        <div class="event-detail-header" id="eventDetailHeaderImage"></div>
+        <div class="event-detail-content-wrapper">
+            <div class="event-detail-categories-header">
+                <div class="event-detail-categories" id="eventDetailCategories"></div>
+                <button class="event-detail-close-button" id="eventDetailCloseButton" onclick="closeEventDetailPanel()">
+                    <img src="Close.svg" alt="Close"> </button>
+            </div>
+            <h1 class="event-detail-title" id="eventDetailTitle"></h1>
+            <p class="event-detail-quote" id="eventDetailQuote" style="display: none;"></p>
+            <div class="event-detail-info">
+                <div class="event-detail-info-item" id="eventDetailLocationItem">
+                    <img src="Pin.svg" alt="Location">
+                    <span id="eventDetailLocationText"></span>
+                </div>
+                <div class="event-detail-info-item" id="eventDetailDateTimeItem">
+                    <div class="datetime-original-content">
+                        <img src="CalendarRed.svg" alt="Date & Time">
+                        <span id="eventDetailDateTimeText"></span>
+                    </div>
+                    <div class="engage-button-container event-detail-ticket-button-container" id="eventDetailTicketButtonContainer" style="display: none;">
+                        <a href="#" class="engage-button" id="eventDetailTicketButton" target="_blank" rel="noopener noreferrer">
+                            </a>
+                        <div class="engage-button-shadow"></div>
+                    </div>
+                </div>
+            </div>
+            <h2 class="event-detail-section-title" id="eventDetailDescSectionTitle">Descriere</h2>
+            <div class="event-detail-description" id="eventDetailDescription">
+              <button
+                  class="read-more-text-btn"
+                  id="eventDetailDescReadMoreBtn"
+                  onclick="toggleEventDescriptionFull(this)"
+                  style="display:none; margin-bottom: 16px;">
+                  Continuați să citiți
+              </button>
+            </div>
+            <h2 class="event-detail-section-title" id="eventDetailOrgSectionTitle">Organizator</h2>
+            <div class="event-detail-organizer">
+                <div class="organizer-name-line">
+                  <img src="StairsRed.svg" alt="Organizator" class="organizer-title-icon">
+                  <a href="#" class="event-detail-organizer-name" id="eventDetailOrganizerName" target="_blank" rel="noopener noreferrer"></a>
+                </div>
+                <p class="event-detail-organizer-description" id="eventDetailOrganizerDescription">
+                  <span id="organizerDescriptionTextPreview"></span><img src="arrow-more.svg" alt="More" class="organizer-description-arrow-icon" style="display:none;">
+                </p>
+                <div class="read-more-social-links" id="eventDetailOrganizerSocialLinks"></div>
+            </div>
+            <div class="read-more-share" id="eventDetailShareSectionTitle">Distribuie acest eveniment</div>
+            <div class="event-detail-share">
+                <div class="fb-share-button" id="eventDetailFbShareButton" data-href="" data-layout="button_count" data-size="large">
+                    <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=YOUR_EVENT_URL&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="event-detail-related-section-wrapper">
+        <h2 class="event-detail-section-title" id="eventDetailRelatedSectionTitle">Alte evenimente care s-ar putea să-ți placă!</h2>
+        <div class="event-detail-related-events-container" id="eventDetailRelatedEvents"></div>
+    </div>
+    <div class="custom-dashed-separator"></div>
+    <footer class="footer-container">
+      <div class="footer-inner">
+        <!-- left‑hand text & button -->
+        <div class="footer-text">
+          <h2 class="footer-title">
+            Administrezi un spațiu cultural?<br>
+            <span class="footer-highlight">Devino partener Filtru Cultural!</span>
+          </h2>
+          <p class="footer-subtitle">
+            Adaugă gratuit spațiul tău și evenimentele tale în platformă.<br>
+            Ajută-ne să creștem harta culturală a orașului, pas cu pas.
+          </p>
+          <div class="engage-button-container">
+              <a href class="engage-button" onclick="toggleEngage(event)">Devino partener</a>
+              <div class="engage-button-shadow"></div>
+          </div>
+        </div>
+    
+        <!-- right‑hand illustration + social icons -->
+        <div class="footer-illustration">
+          <img
+            src="tomita-footer.png"
+            alt="Cultural partnership illustration"
+            class="footer-image"
+          />
+          <div class="footer-social">
+            <a href="#" class="social-link">
+              <div class="footer-social-icon">
+                <img src="EnvelopeOpen.svg" alt="Email" />
+              </div>
+            </a>
+            <a href="#" class="social-link">
+              <div class="footer-social-icon">
+                <img src="InstagramLogo.svg" alt="Email" />
+              </div>
+            </a>
+            <a href="#" class="social-link">
+              <div class="footer-social-icon">
+                <img src="FacebookLogo.svg" alt="Email" />
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+  fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+  <script>history.scrollRestoration = "manual"</script>
+  <!-- Generated -->
+  <script id="picsJsonData" type="application/json">
+  {
+    "sala_gloria": 5,
+    "centrul_de_excelenta_in_filosofie_cex": 5,
+    "casa_ceausescu_—_palatul_primaverii": 5,
+    "goethe_institut": 4,
+    "institutul_de_arheologie_vasile_parvan_al_academiei_romane": 1,
+    "arcub_—_casa_eliad": 4,
+    "casa_filipescucesianu_—_muzeul_varstelor": 5,
+    "casa_memoriala_anton_pann": 4,
+    "muzeul_national_al_satului_dimitrie_gusti": 5,
+    "centrul_artelor_vizuale_multimedia": 4,
+    "galeria_15d": 3,
+    "galeria_anca_poterasu": 5,
+    "instytut_polski_bukareszt_(institutul_polonez)": 5,
+    "rezidenta9": 5,
+    "atelierele_malmaison": 5,
+    "sala_rapsodia": 5,
+    "centrul_cultural_maghiar_institutul_liszt": 5,
+    "casa_madrigal": 5,
+    "teatrelli_creart": 4,
+    "casa_vintila_bratianu": 5,
+    "muzeul_hartilor_si_cartii_vechi": 5,
+    "teatrul_bulandra_sala_toma_caragiu": 5,
+    "unatc_salile_atelier_si_cinema": 5,
+    "amzei_creative_corner": 5,
+    "muzeul_national_de_arta_al_romaniei": 5,
+    "muzeul_frederic_storck_si_cecilia_cutescu_storck": 5,
+    "teatrul_de_arta_bucuresti": 5,
+    "biblioteca_metropolitana_—_ion_creanga": 5,
+    "muzeul_national_de_arta_contemporana": 5,
+    "biblioteca_glitch": 5,
+    "teatrul_ion_creanga": 5,
+    "casa_memoriala_tudor_arghezi_—_martisor": 13,
+    "casa_memoriala_fanny_si_liviu_rebreanu": 5,
+    "sac": 5,
+    "muzeul_george_severeanu": 5,
+    "biblioteca_universitatii_de_arhitectura_si_urbanism_ion_mincu": 5,
+    "local_design_library": 1,
+    "combinatul_fondului_plastic": 5,
+    "galeria_nicodim": 5,
+    "arthub": 5,
+    "teatrul_metropolis": 5,
+    "impact_hub": 5,
+    "pharmakon_gallery": 4,
+    "palatul_voievodal_curtea_veche": 1,
+    "muzeul_colectiilor": 4,
+    "colectia_ligia_si_pompiliu_macovei": 4,
+    "wasp_—_working_art_space_and_production": 5,
+    "muzeul_national_al_literaturii_romane": 5,
+    "casa_memoriala_pictor_alexandru_tipoia": 5,
+    "českého_centra_bukurešť_(centrul_ceh)": 5,
+    "plan_patru": 5,
+    "kulterra": 5,
+    "muzeul_national_george_enescu": 3,
+    "muzeul_national_de_istorie": 5,
+    "apollo_111": 5,
+    "teatrul_de_comedie": 5,
+    "casa_universitarilor_—_librechtfilipescu": 5,
+    "centrul_de_studii_vizuale": 5,
+    "centrul_cultural_armean": 5,
+    "celula_de_arta": 3,
+    "palatul_copiilor": 3,
+    "sala_george_enescu_a_conservatorului": 5,
+    "galeria_mobius": 4,
+    "biblioteca_mediateca_universitatii_nationale_de_muzica_bucuresti": 4,
+    "galeria_de_arta_veche_romaneasca": 5,
+    "ivan_gallery": 5,
+    "etaj": 4,
+    "palatul_sutu": 5,
+    "salon_de_papier_by_mobius": 4,
+    "vila_catena": 5,
+    "consiliul_britanic": 3,
+    "teatrul_national_bucuresti": 5,
+    "contemporan_hair_space": 4,
+    "casa_memoriala_ioan_hanciu": 5,
+    "teatrul_national_de_opereta_si_musical_ion_dacian": 5,
+    "paper_traffic": 5,
+    "atelierele_scanteia": 7,
+    "muzeul_geologic_national": 5,
+    "teatrul_mic": 4,
+    "biblioteca_centrala_universitara_carol_i": 5,
+    "teatrul_nottara": 4,
+    "teatrul_masca": 10,
+    "unen_studio": 5,
+    "scoala_de_arta_bucuresti": 3,
+    "teatrul_excelsior": 3,
+    "casa_lovinescu": 4,
+    "fundatia_academia_civica": 4,
+    "salonul_de_proiecte": 5,
+    "arsmonitor": 3,
+    "eforie_cinematheque": 4,
+    "sala_luceafarul": 3,
+    "muzeul_victor_babes": 5,
+    "ordinul_arhitectilor_din_romania_filiala_bucuresti": 5,
+    "uniter_—_uniunea_teatrala_din_romania": 5,
+    "muzeul_theodor_aman": 5,
+    "unteatru": 5,
+    "muzeul_nicolae_minovici": 5,
+    "casa_mai": 2,
+    "casa_memoriala_gheorghe_tattarescu": 4,
+    "teatrul_godot": 5,
+    "sala_radio": 5,
+    "ludoteca_apolodor_din_labrador": 5,
+    "palatul_universul": 4,
+    "asociatia_culturala_noua_acropola": 5,
+    "teatrul_odeon": 4,
+    "casa_memoriala_dinu_lipatti": 5,
+    "centru_cultural_mihai_eminescu": 1,
+    "cobo_dance_center": 3,
+    "gaep": 3,
+    "muzeul_national_de_istorie_naturala_grigore_antipa": 5,
+    "galateca": 5,
+    "asociatia_activrandom": 4,
+    "casa_memoriala_ion_mincu": 5,
+    "médiathèque_de_l’institut_français": 5,
+    "scanteia": 5,
+    "mina_museum_of_immersive_new_art": 5,
+    "ateneul_roman": 5,
+    "fundatia_calea_victoriei": 5,
+    "recul": 4,
+    "institut_francais": 5,
+    "non_artspace": 5,
+    "casa_memoriala_george_si_agatha_bacovia": 4,
+    "muzeul_national_cotroceni": 5,
+    "biblioteca_nationala_a_romaniei": 5,
+    "apropo": 5,
+    "nod_makerspace": 5,
+    "centrul_metropolitan_de_educatie_si_cultura_ioan_i_dalles": 3,
+    "teatrul_bulandra_sala_liviu_ciulei": 4,
+    "piua_studio": 3,
+    "opera_comica_pentru_copii": 5,
+    "cinema_elvira_popescu": 5,
+    "centrul_replika": 4,
+    "hart": 4,
+    "cinema_muzeul_taranului_roman_—_studio_horia_bernea": 5,
+    "leilei_gallery": 5,
+    "sandwich_library": 4,
+    "uauim_sala_frescelor": 5,
+    "mater": 5,
+    "grotto": 4,
+    "strata_gallery": 5,
+    "libraria_humanitas": 4,
+    "libraria_kyralina": 5,
+    "institutul_cultural_roman": 5,
+    "centrul_de_resurse_in_fotografie": 5,
+    "muzeul_k.h._zambaccian": 5,
+    "asociatia_hearth": 4,
+    "mostra_space": 5,
+    "muzeul_de_arta_recenta": 5,
+    "biblioteca_british_council": 3,
+    "diptych": 5,
+    "23_gallery": 5,
+    "palatul_pinacotecii": 5,
+    "opera_nationala_bucuresti": 5,
+    "random_space": 5,
+    "gradina_cu_filme": 2,
+    "biblioteca_metropolitana_—_mihail_sadoveanu": 5,
+    "galeria_catinca_tabacaru": 5,
+    "muzeul_copiilor": 5,
+    "ateliere_fara_frontiere": 4,
+    "casa_memoriala_ion_minulescu_si_claudia_millian": 5,
+    "observatorul_astronomic_amiral_vasile_urseanu": 5,
+    "cinema_union": 4,
+    "cinema_europa": 4,
+    "studiourile_ferentari": 2,
+    "galeriile_artmark": 5,
+    "filaret_16": 4,
+    "galeria_posibila": 3,
+    "linotip": 5,
+    "suprainfinit_gallery": 12,
+    "biblioteca_uniunii_artistilor_plastici_din_romania": 5,
+    "am_social_space": 4,
+    "biblioteca_goethe_institut": 4,
+    "teatrul_tandarica": 3,
+    "teatre_theatre": 4,
+    "muzeul_national_al_taranului_roman": 5,
+    "instituto_italiano_di_cultura_bucarest": 5,
+    "arcub_—_hanul_gabroveni": 5,
+    "centrul_national_al_dansului_bucuresti": 5,
+    "casa_paleologu": 4,
+    "instituto_cervantes_de_bucarest": 5,
+    "scanteia_archive": 10,
+    "cdrf_archive": 10,
+    "suprainfinit_archive": 10,
+    "arghezi_archive" : 10,
+    "hanciu_archive": 10,
+    "pptr_archive": 10,
+    "masca_archive": 10,
+    "centrul_cultural_art4all": 2,
+    "calciu_space": 5
+  }
+  </script>
+  <script src="app.js"></script>
+
+</body>
+
+</html>
