@@ -48,89 +48,119 @@ if (!window.matchMedia("(max-width: 550px)").matches) {
   geolocateControl._updateCamera = function(position) { };
 }
 
-$(document).ready(function () {
+document.addEventListener('DOMContentLoaded', function () {
+  // --- Baserow config: fill these in with your own values ---
+  // Table ID: open your Baserow table, look at the URL - .../database/123/table/456 - 456 is the table ID.
+  // Token: Baserow workspace settings > API tokens > create a token scoped to this
+  // database with READ-ONLY permission (this token is publicly visible in the page source).
+  const BASEROW_TABLE_ID = '1095357';
+  const BASEROW_TOKEN = 'hnnLjCo3Boogz0b9OGPPy4SDQK9mdfVF';
+  const BASEROW_API_URL = `https://api.baserow.io/api/database/rows/table/${BASEROW_TABLE_ID}/?user_field_names=true&size=200`;
+
   const maxRetries = 5;
   const retryDelay = 500;
-  const spreadsheetURL = 'https://docs.google.com/spreadsheets/d/1IHRZKDX3W2dXQnR1c0Q9VJUCqXk9XAX9ckvmIeFBjO8/gviz/tq?tqx=out:csv&sheet=Sheet1'
 
   function sleep(ms) {
-    const start = new Date().getTime();
-    while (new Date().getTime() < start + ms);
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  function fetchDataWithRetry(url, retries, delay) {
-    for (let attempt = 1; attempt <= retries; attempt++) {
-      try {
-        let result = null;
-        let ajaxError = false;
+  async function fetchAllBaserowRows(url) {
+    let rows = [];
+    let nextUrl = url;
 
-        $.ajax({
-          type: "GET",
-          url: url,
-          dataType: "text",
-          async: false, // This makes the request synchronous
-          success: function (csvData) {
-            result = csvData;
-          },
-          error: function (jqXHR, textStatus, errorThrown) {
-            ajaxError = new Error(`${textStatus}: ${errorThrown}`);
-          }
-        });
+    while (nextUrl) {
+      let response = null;
+      let lastError = null;
 
-        if (ajaxError) {
-          throw ajaxError;
-        }
-
-        if (result) {
-          return result;
-        }
-      } catch (error) {
-        if (attempt < retries) {
-          sleep(delay);
-        } else {
-          throw error;
+      for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+          response = await fetch(nextUrl, {
+            headers: { 'Authorization': `Token ${BASEROW_TOKEN}` }
+          });
+          if (!response.ok) throw new Error(`Baserow request failed: ${response.status}`);
+          lastError = null;
+          break;
+        } catch (error) {
+          lastError = error;
+          if (attempt < maxRetries) await sleep(retryDelay);
         }
       }
+
+      if (lastError) throw lastError;
+
+      const page = await response.json();
+      rows = rows.concat(page.results);
+      nextUrl = page.next;
     }
+
+    return rows;
   }
 
-  const csvData = fetchDataWithRetry(spreadsheetURL, maxRetries, retryDelay);
-  processCSVData(csvData);
+  function rowsToGeoJSON(rows) {
+    return {
+      type: 'FeatureCollection',
+      features: rows
+        .filter(row => row.Latitude && row.Longitude)
+        .map(row => ({
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [parseFloat(row.Longitude), parseFloat(row.Latitude)]
+          },
+          properties: {
+            Name: row.Name || '',
+            Categories_ro: row.Categories_ro || '',
+            Categories_en: row.Categories_en || '',
+            Orgs_ro: row.Orgs_ro || '',
+            Orgs_en: row.Orgs_en || '',
+            Classification_ro: row.Classification_ro || '',
+            Classification_en: row.Classification_en || '',
+            Period_ro: row.Period_ro || '',
+            Period_en: row.Period_en || '',
+            Style_ro: row.Style_ro || '',
+            Style_en: row.Style_en || '',
+            Descriere_ro: row.Descriere_ro || '',
+            Descriere_en: row.Descriere_en || '',
+            Address: row.Address || '',
+            FB: row.FB || '',
+            Site: row.Site || '',
+            Insta: row.Insta || '',
+            Gmaps: row.Gmaps || ''
+          }
+        }))
+    };
+  }
+
+  function processBaserowData(rows) {
+    const data = rowsToGeoJSON(rows);
+
+    let loadedImg = {}
+    // Load icons into Mapbox, considering normal and clicked states
+    Object.keys(iconPaths).forEach(category => {
+      const baseName = iconPaths[category];  // Directly use the simplified name from iconPaths
+      if (baseName in loadedImg) {
+        return;
+      }
+      ['normal', 'clicked'].forEach(state => {
+          const iconName = `${baseName}_${state}`;  // Construct the icon name using baseName and state
+          const path = `pins/${iconName}.png`;  // Construct the file path via GitHub/jsDelivr
+          map.loadImage(path, function(error, image) {
+              if (error) throw error;
+              map.addImage(iconName, image);
+          });
+      });
+      loadedImg[baseName] = true;
+    });
+
+    initializeMapWithFeatures(data);
+  }
+
+  fetchAllBaserowRows(BASEROW_API_URL)
+    .then(processBaserowData)
+    .catch(error => console.error('Failed to load locations from Baserow:', error));
 
   setupArticleHeaderScroll();
 });
-
-function processCSVData(csvData) {
-  csv2geojson.csv2geojson(csvData, {
-      latfield: 'Latitude',
-      lonfield: 'Longitude',
-      delimiter: ','
-  }, function (err, data) {
-      if (err) {
-          console.error(err);
-          return;
-      }
-      let loadedImg = {}
-      // Load icons into Mapbox, considering normal and clicked states
-      Object.keys(iconPaths).forEach(category => {
-        const baseName = iconPaths[category];  // Directly use the simplified name from iconPaths
-        if (baseName in loadedImg) {
-          return;
-        }
-        ['normal', 'clicked'].forEach(state => {
-            const iconName = `${baseName}_${state}`;  // Construct the icon name using baseName and state
-            const path = `pins/${iconName}.png`;  // Construct the file path in the 'pins/' directory
-            map.loadImage(path, function(error, image) {
-                if (error) throw error;
-                map.addImage(iconName, image);
-            });
-        });
-        loadedImg[baseName] = true;
-      });
-
-      initializeMapWithFeatures(data);
-  });
-}
 
 var uniqueCategories;
 var geojsonData;
@@ -163,17 +193,21 @@ function decodeStringIfNecessary(inputString) {
 }
 
 function initializeMapWithFeatures(data) {
-  map.on('load', function () {
+  function onMapReady() {
       uniqueCategories = setupCategoryLayersAndFilters(data);
       numTotalCategories = uniqueCategories.size;
       populateObjectiveList(uniqueCategories);
       populateGalleryContainer();
 
 
-      document.getElementById('iconBtn1').addEventListener('click', showObiective);
-      document.getElementById('iconBtn2').addEventListener('click', showFiltre);
-      document.getElementById('iconBtn3').addEventListener('click', toggleSidePanel);
-      document.getElementById('selectAllCheckbox').style.display = '';
+      const iconBtn1El = document.getElementById('iconBtn1');
+      if (iconBtn1El) iconBtn1El.addEventListener('click', showObiective);
+      const iconBtn2El = document.getElementById('iconBtn2');
+      if (iconBtn2El) iconBtn2El.addEventListener('click', showFiltre);
+      const iconBtn3El = document.getElementById('iconBtn3');
+      if (iconBtn3El) iconBtn3El.addEventListener('click', toggleSidePanel);
+      const selectAllCheckboxEl = document.getElementById('selectAllCheckbox');
+      if (selectAllCheckboxEl) selectAllCheckboxEl.style.display = '';
 
       const hash = window.location.hash.substring(1);
       if (hash) {
@@ -229,7 +263,13 @@ function initializeMapWithFeatures(data) {
         console.log('Geolocation failed');
       });
       geolocateControl.trigger();
-  });
+  }
+
+  if (map.loaded()) {
+    onMapReady();
+  } else {
+    map.on('load', onMapReady);
+  }
 }
 
 async function handleEventHash(eventSlug) {
@@ -756,7 +796,7 @@ function setupCategoryLayersAndFilters(data) {
   geojsonData = data;
 
   const jsonScript = document.getElementById('picsJsonData');
-  picsDirToNum = JSON.parse(jsonScript.textContent);
+  picsDirToNum = jsonScript ? JSON.parse(jsonScript.textContent) : {};
 
   map.addSource('dynamic-source', {
     type: 'geojson',
@@ -1601,6 +1641,10 @@ function openReadMore(elementOrFeatureName) {
   } else {
       readMoreContainer = document.querySelector('.read-more-container');
   }
+  if (!readMoreContainer) {
+    console.warn("Read-more detail view isn't built on this page yet.");
+    return;
+  }
 
   readMoreContainer.querySelector(".read-more-title").textContent = title;
   readMoreContainer.querySelector(".read-more-address-text-content").textContent = address;
@@ -1811,8 +1855,10 @@ function closeReadMore() {
   let readMoreContainer;
   if (window.matchMedia("(max-width: 550px)").matches) {
     readMoreContainer = document.querySelector('.read-more-container-mobile');
+    if (!readMoreContainer) return;
   } else {
     readMoreContainer = document.querySelector('.read-more-container');
+    if (!readMoreContainer) return;
     if (readMoreContainer.style.display !== 'none') {
       var thumbnailsList = document.querySelectorAll('.thumbnails .thumbnail');
       var thumbnails = Array.from(thumbnailsList);
@@ -3415,19 +3461,23 @@ function toggleKeywordsPanel() {
   updateDropdownButtonState('keywords-btn', 'keywords-panel');
 }
 
-document.getElementById('event-type-panel')
-  .addEventListener('change', e => {
+const eventTypePanelEl = document.getElementById('event-type-panel');
+if (eventTypePanelEl) {
+  eventTypePanelEl.addEventListener('change', e => {
     if (e.target.matches('input[type="checkbox"]')) {
       updateDropdownButtonState('event-type-btn', 'event-type-panel');
     }
   });
+}
 
-document.getElementById('keywords-panel')
-  .addEventListener('change', e => {
+const keywordsPanelEl = document.getElementById('keywords-panel');
+if (keywordsPanelEl) {
+  keywordsPanelEl.addEventListener('change', e => {
     if (e.target.matches('input[type="checkbox"]')) {
       updateDropdownButtonState('keywords-btn', 'keywords-panel');
     }
   });
+}
 
 function populateMobileCategories() {
   document.getElementById('mobile-type-list').innerHTML     = '';
@@ -3972,7 +4022,9 @@ function toggleAboutUsDesktop(event) {
 }
 
 function isAboutUsDesktopOpen() {
-  return document.querySelector('.about-us-container').style.display === 'none' ? false : true;
+  const el = document.querySelector('.about-us-container');
+  if (!el) return false;
+  return el.style.display === 'none' ? false : true;
 }
 
 function openAboutUs() {
@@ -4177,6 +4229,7 @@ function isSidePanelClosed() {
 
 function isEngageOpen() {
   var container = document.getElementById('engage-container');
+  if (!container) return false;
   return container.style.display === 'none' ? false : true;
 }
 
@@ -4229,15 +4282,16 @@ function openEngage() {
 
 function closeEngage() {
   if (!window.matchMedia("(max-width: 550px)").matches) {
-    document.getElementById('engage-link').style.color = '#25121B';
+    const engageLink = document.getElementById('engage-link');
+    if (engageLink) engageLink.style.color = '#25121B';
     if (!isAboutUsDesktopOpen() && !isArticlesHeaderOpen() && ((isSidePanelClosed() && !wasSidePanelClosedEngage) || (!isSidePanelClosed() && wasSidePanelClosedEngage))) {
       toggleSidePanel();
     }
     var container = document.getElementById('engage-container');
-    container.style.display = 'none';
+    if (container) container.style.display = 'none';
   } else {
     var container = document.getElementById('engage-container-mobile');
-    container.style.display = 'none';
+    if (container) container.style.display = 'none';
   }
 }
 
@@ -4282,6 +4336,7 @@ function toggleTransparency() {
 
 function isArticlesHeaderOpen() {
   const articlesHeader = document.getElementById('articles-header');
+  if (!articlesHeader) return false;
   return articlesHeader.style.display === 'none' ? false : true;
 }
 
@@ -4319,11 +4374,13 @@ function openArticlesHeader() {
 
 function closeArticlesHeader() {
   const articlesHeader = document.getElementById('articles-header');
+  if (!articlesHeader) return;
   if (!isAboutUsDesktopOpen() && !isEngageOpen() && ((isSidePanelClosed() && !wasSidePanelClosedArticles) || (!isSidePanelClosed() && wasSidePanelClosedArticles))) {
     toggleSidePanel();
   }
   articlesHeader.style.display = 'none';
-  document.getElementById('articles-link').style.color = '#25121B';
+  const articlesLink = document.getElementById('articles-link');
+  if (articlesLink) articlesLink.style.color = '#25121B';
 }
 
 function toggleArticlesHeader(event) {
@@ -4942,104 +4999,107 @@ function removeFilterPill(type, value) {
 
 
 // catch clicks on the pills container
-filterLabelsContainer.addEventListener('click', e => {
-  const isMobile = window.matchMedia("(max-width: 550px)").matches;
-   // 1) if they clicked the ✕ on a pill…
-  const pill = e.target.closest('.dynamic-label:not([data-cancel-all])');
-  if (pill && e.target.classList.contains('dynamic-label-close-btn')) {
-    const { type, value } = pill.dataset; // 'type' is 'tip', 'keyword', 'free', 'ticket', etc.
-                                         // 'value' is the display text of the pill.
-    // Always remove the pill from display first
-    removeFilterPill(type, value); // This function handles UI for removing the pill itself
+if (filterLabelsContainer) {
+  filterLabelsContainer.addEventListener('click', e => {
+    const isMobile = window.matchMedia("(max-width: 550px)").matches;
+     // 1) if they clicked the ✕ on a pill…
+    const pill = e.target.closest('.dynamic-label:not([data-cancel-all])');
+    if (pill && e.target.classList.contains('dynamic-label-close-btn')) {
+      const { type, value } = pill.dataset; // 'type' is 'tip', 'keyword', 'free', 'ticket', etc.
+                                           // 'value' is the display text of the pill.
+      // Always remove the pill from display first
+      removeFilterPill(type, value); // This function handles UI for removing the pill itself
 
-    let checkboxToModify;
-    let panelIdForButtonUpdate;
-    let buttonIdForUpdate;
+      let checkboxToModify;
+      let panelIdForButtonUpdate;
+      let buttonIdForUpdate;
 
-    if (type === 'tip' || type === 'keyword') {
-      if (!isMobile) { // Desktop
-        panelIdForButtonUpdate = (type === 'tip') ? 'event-type-panel' : 'keywords-panel';
-        buttonIdForUpdate = (type === 'tip') ? 'event-type-btn' : 'keywords-btn';
-        const panel = document.getElementById(panelIdForButtonUpdate);
-        if (panel) {
-          checkboxToModify = panel.querySelector(`input[type="checkbox"][value="${value}"]`);
+      if (type === 'tip' || type === 'keyword') {
+        if (!isMobile) { // Desktop
+          panelIdForButtonUpdate = (type === 'tip') ? 'event-type-panel' : 'keywords-panel';
+          buttonIdForUpdate = (type === 'tip') ? 'event-type-btn' : 'keywords-btn';
+          const panel = document.getElementById(panelIdForButtonUpdate);
+          if (panel) {
+            checkboxToModify = panel.querySelector(`input[type="checkbox"][value="${value}"]`);
+          }
+        } else { // Mobile
+          const listId = (type === 'tip') ? 'mobile-type-list' : 'mobile-keywords-list';
+          const list = document.getElementById(listId);
+          if (list) {
+            // For mobile 'tip', the pill 'value' is just the label part e.g. "Seminar"
+            // Checkbox value attribute is also just the label part e.g. "Seminar"
+            // So, this query should work.
+            checkboxToModify = list.querySelector(`input[type="checkbox"][value="${value}"]`);
+          }
         }
-      } else { // Mobile
-        const listId = (type === 'tip') ? 'mobile-type-list' : 'mobile-keywords-list';
-        const list = document.getElementById(listId);
-        if (list) {
-          // For mobile 'tip', the pill 'value' is just the label part e.g. "Seminar"
-          // Checkbox value attribute is also just the label part e.g. "Seminar"
-          // So, this query should work.
-          checkboxToModify = list.querySelector(`input[type="checkbox"][value="${value}"]`);
-        }
+      } else if (type === 'free-entry-btn' || type === 'ticket-btn') { // Desktop Free/Ticket buttons acting as filters
+          // These don't have separate checkboxes in a dropdown, their state is the button itself.
+          // removeFilterPill() already removed the pill.
+          // We need to reset the button's visual state.
+          const btn = document.getElementById(type); // type here is the button's ID
+          if (btn && btn.classList.contains('red')) {
+              btn.classList.remove('red');
+              btn.style.background = '#FBF6EF';
+              btn.style.color      = '#3E1928';
+          }
+      } else if (type === 'free' || type === 'ticket') { // Mobile Free/Ticket checkboxes
+          checkboxToModify = document.getElementById(
+              type === 'free' ? 'mobile-free-entry' : 'mobile-ticket'
+          );
       }
-    } else if (type === 'free-entry-btn' || type === 'ticket-btn') { // Desktop Free/Ticket buttons acting as filters
-        // These don't have separate checkboxes in a dropdown, their state is the button itself.
-        // removeFilterPill() already removed the pill.
-        // We need to reset the button's visual state.
-        const btn = document.getElementById(type); // type here is the button's ID
-        if (btn && btn.classList.contains('red')) {
-            btn.classList.remove('red');
-            btn.style.background = '#FBF6EF';
-            btn.style.color      = '#3E1928';
-        }
-    } else if (type === 'free' || type === 'ticket') { // Mobile Free/Ticket checkboxes
-        checkboxToModify = document.getElementById(
-            type === 'free' ? 'mobile-free-entry' : 'mobile-ticket'
-        );
+
+      // If a corresponding checkbox was found and is checked, uncheck it
+      if (checkboxToModify && checkboxToModify.checked) {
+        checkboxToModify.checked = false;
+      }
+
+      // Manually update desktop dropdown button appearance if applicable
+      if (!isMobile && panelIdForButtonUpdate && buttonIdForUpdate) {
+        updateDropdownButtonState(buttonIdForUpdate, panelIdForButtonUpdate);
+      }
+
+      // Re-apply all filters and update counts/dropdowns
+      applyAllEventsFiltersAndPopulate();
+      return;
     }
 
-    // If a corresponding checkbox was found and is checked, uncheck it
-    if (checkboxToModify && checkboxToModify.checked) {
-      checkboxToModify.checked = false;
+    // 2) if they clicked the “Anulează tot” pill itself…
+    if (e.target.closest('[data-cancel-all]')) {
+      // desktop
+      document
+        .querySelectorAll('#event-type-panel input, #keywords-panel input')
+        .forEach(i => {
+          if (i.checked) i.click() // will cascade and remove every pill
+        })
+
+      // —— mobile panels ——
+      // 1) clear the mobile types & keywords lists
+      document
+        .querySelectorAll(
+          '#mobile-type-list input[type="checkbox"], ' +
+          '#mobile-keywords-list input[type="checkbox"]'
+        )
+        .forEach(cb => { cb.checked = false })
+
+      // 2) clear the free-entry / ticket toggles
+      const mFree   = document.getElementById('mobile-free-entry')
+      const mTicket = document.getElementById('mobile-ticket')
+      if (mFree)   mFree.checked   = false
+      if (mTicket) mTicket.checked = false
+
+      // all dynamic labels
+      Array.from(
+        filterLabelsContainer
+          .querySelectorAll('.dynamic-label:not([data-cancel-all]) .dynamic-label-close-btn')
+      ).forEach(closeBtn => closeBtn.click());
     }
-
-    // Manually update desktop dropdown button appearance if applicable
-    if (!isMobile && panelIdForButtonUpdate && buttonIdForUpdate) {
-      updateDropdownButtonState(buttonIdForUpdate, panelIdForButtonUpdate);
-    }
-
-    // Re-apply all filters and update counts/dropdowns
-    applyAllEventsFiltersAndPopulate();
-    return;
-  }
-
-  // 2) if they clicked the “Anulează tot” pill itself…
-  if (e.target.closest('[data-cancel-all]')) {
-    // desktop
-    document
-      .querySelectorAll('#event-type-panel input, #keywords-panel input')
-      .forEach(i => {
-        if (i.checked) i.click() // will cascade and remove every pill
-      })
-
-    // —— mobile panels ——
-    // 1) clear the mobile types & keywords lists
-    document
-      .querySelectorAll(
-        '#mobile-type-list input[type="checkbox"], ' +
-        '#mobile-keywords-list input[type="checkbox"]'
-      )
-      .forEach(cb => { cb.checked = false })
-
-    // 2) clear the free-entry / ticket toggles
-    const mFree   = document.getElementById('mobile-free-entry')
-    const mTicket = document.getElementById('mobile-ticket')
-    if (mFree)   mFree.checked   = false
-    if (mTicket) mTicket.checked = false
-
-    // all dynamic labels
-    Array.from(
-      filterLabelsContainer
-        .querySelectorAll('.dynamic-label:not([data-cancel-all]) .dynamic-label-close-btn')
-    ).forEach(closeBtn => closeBtn.click());
-  }
-});
+  });
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   ['free-entry-btn', 'ticket-btn'].forEach(btnId => {
     const btn = document.getElementById(btnId);
+    if (!btn) return;
     btn.addEventListener('click', () => {
       // grab its display text
       const labelText = btn.querySelector('.filter-text')?.textContent.trim() 
