@@ -181,6 +181,168 @@
     <div class="logo-container">
       <img src="logoAFCN.png">
     </div>
+
+    <div class="read-more-container" style="display: none;">
+      <div class="read-more-container-fixed">
+        <div class="image-gallery-container">
+          <div class="main-image">
+            <img src="">
+          </div>
+          <div class="thumbnails">
+            <div class="thumbnail" id="thumb0">
+              <img src="">
+            </div>
+            <div class="thumbnail" id="thumb1">
+              <img src="">
+            </div>
+            <div class="thumbnail" id="thumb2">
+              <img src="">
+            </div>
+            <div class="thumbnail" id="thumb3">
+              <img src="">
+            </div>
+          </div>
+          <div class="photosby" id="photosby-desktop">Fotografii: Rareș Toma</div>
+        </div>
+
+        <div class="read-more-content-container">
+          <button class="read-more-close-button" onclick="closeReadMore()">
+            <img src="Close.svg"/>
+          </button>
+          <div class="read-more-category"></div>
+          <div class="read-more-title"></div>
+          <div class="read-more-org">Tip organizație</div>
+          <div class="read-more-address">
+            <img src="Pin.svg" class="read-more-address-icon" id="read-more-address-icon"/>
+            <span class="read-more-address-text-content"></span>
+          </div>
+          <div class="read-more-social-links">
+            <a href="" class="read-more-social-link" id="site-link">
+              <div class="read-more-social-icon">
+                <img src="Site.svg"/>
+              </div>
+              Site
+            </a>
+            <a href="" class="read-more-social-link" id="insta-link">
+              <div class="read-more-social-icon">
+                <img src="Instagram.svg"/>
+              </div>
+              Instagram
+            </a>
+            <a href="" class="read-more-social-link" id="fb-link">
+              <div class="read-more-social-icon">
+                <img src="Facebook.svg"/>
+              </div>
+              Facebook
+            </a>
+            <a href="" class="read-more-social-link" id="maps-link">
+              <div class="read-more-social-icon">
+                <img src="Maps.svg"/>
+              </div>
+              <div class="social-text">Google Maps</div>
+            </a>
+          </div>
+          <div class="read-more-section-title" id="read-more-section-title-descr">Descriere</div>
+          <p class="read-more-text" id="read-more-description"></p>
+          <div class="read-more-section-title" id="read-more-section-title-offer">Ofertă culturală</div>
+          <p class="read-more-text" id="read-more-offer"></p>
+          <p class="read-more-text" id="read-more-uploaded" style="display: none;"></p>
+          <div class="read-more-share" id="read-more-share-txt">Distribuie acest articol</div>
+          <div class="fb-share-button" id="fb-share-read-more-desktop" data-href="" data-layout="button" data-size="large"></div>
+        </div>
+      </div>
+      <div class="event-detail-related-section-wrapper" id="readMoreRelatedEventsWrapperDesktop" style="display: none;">
+        <h2 class="event-detail-section-title" id="readMoreRelatedSectionTitleDesktop">Alte evenimente la această locație</h2>
+        <div class="event-detail-related-events-container" id="readMoreRelatedEventsContainerDesktop"></div>
+      </div>
+      <div class="event-detail-related-section-wrapper" id="categoryRelatedFeaturesWrapperDesktop" style="display: none;">
+        <h2 class="event-detail-section-title" id="categoryRelatedFeaturesTitleDesktop">Obiective similare din apropriere</h2>
+        <div class="event-detail-related-events-container" id="categoryRelatedFeaturesContainerDesktop"></div>
+      </div>
+    </div>
+
+    <div id="lightbox" class="lightbox" style="display: none;">
+      <button class="lightbox-close" onclick="closeLightbox()">
+        <img src="Close.svg"/>
+      </button>
+      <img class="lightbox-prev" onclick="changeImage(-1)" src="lightbox-arrow-left.svg">
+      <img id="lightbox-img" src="">
+      <img class="lightbox-next" onclick="changeImage(1)" src="lightbox-arrow-right.svg">
+      <div class="lightbox-counter"></div>
+    </div>
+  </div>
+
+  <div class="read-more-container-mobile" style="display: none;">
+    <div class="read-more-container-mobile-fixed">
+      <div class="image-gallery-container">
+        <button class="read-more-close-button-mobile" onclick="closeReadMore()">
+          <img src="closeBg.svg"/>
+        </button>
+        <div class="main-image">
+          <img src="" alt="Main Image">
+          <div class="num-pics-label"></div>
+        </div>
+      </div>
+      <div class="read-more-category"></div>
+      <div class="read-more-title"></div>
+      <div class="read-more-org">Tip organizație</div>
+      <div class="read-more-address">
+        <img src="Pin.svg" class="read-more-address-icon" id="read-more-address-icon-mobile"/>
+        <span class="read-more-address-text-content"></span>
+      </div>
+      <div class="read-more-social-links">
+        <a href="" class="read-more-social-link" id="site-link">
+          <div class="read-more-social-icon">
+            <img src="Site.svg"/>
+          </div>
+          Site
+        </a>
+        <a href="" class="read-more-social-link" id="insta-link">
+          <div class="read-more-social-icon">
+            <img src="Instagram.svg"/>
+          </div>
+          Instagram
+        </a>
+        <a href="" class="read-more-social-link" id="fb-link">
+          <div class="read-more-social-icon">
+            <img src="Facebook.svg"/>
+          </div>
+          Facebook
+        </a>
+        <a href="" class="read-more-social-link" id="maps-link">
+          <div class="read-more-social-icon">
+            <img src="Maps.svg"/>
+          </div>
+          <div class="social-text">Google Maps</div>
+        </a>
+      </div>
+      <div class="read-more-section-title" id="read-more-section-title-descr-mob">Descriere</div>
+      <p class="read-more-text" id="read-more-description-mobile"></p>
+      <div class="read-more-section-title" id="read-more-section-title-offer-mob">Ofertă culturală</div>
+      <p class="read-more-text" id="read-more-offer-mobile"></p>
+      <p class="read-more-text" id="read-more-uploaded-mobile" style="display: none;"></p>
+      <div class="photosby" id="photosby-mobile">Fotografii: Rareș Toma</div>
+      <div class="read-more-share" id="read-more-share-txt-mob">Distribuie acest articol</div>
+      <div class="fb-share-button" id="fb-share-read-more-mobile" data-href="" data-layout="button" data-size="large"></div>
+      <div class="event-detail-related-section-wrapper" id="readMoreRelatedEventsWrapperMobile" style="display: none;">
+        <h2 class="event-detail-section-title" id="readMoreRelatedSectionTitleMobile">Alte evenimente la această locație</h2>
+        <div class="event-detail-related-events-container" id="readMoreRelatedEventsContainerMobile"></div>
+      </div>
+      <div class="event-detail-related-section-wrapper" id="categoryRelatedFeaturesWrapperMobile" style="display: none;">
+        <h2 class="event-detail-section-title" id="categoryRelatedFeaturesTitleMobile">Alte locații în această categorie</h2>
+        <div class="event-detail-related-events-container" id="categoryRelatedFeaturesContainerMobile"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="lightbox-mobile" class="lightbox" style="display: none;">
+    <button class="lightbox-close" onclick="closeLightboxMobile()">
+      <img src="Close.svg"/>
+    </button>
+    <div class="scroll-container" id="scrollContainer">
+      <!-- Images will be dynamically inserted here -->
+    </div>
+    <div class="lightbox-counter" id="mobileLightboxCounter"></div>
   </div>
 
   <!-- ===== Shared footer (same block goes on every page) ===== -->
