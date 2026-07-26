@@ -252,3 +252,20 @@ body.evenimente-page .page-content {
 .event-card:hover .event-title {
   color: #CC4205;
 }
+
+/* Articole: same 1232px/4-cards-per-row layout as Evenimente. .articles-grid
+   already uses a 32px gap, so 284px cards line up the same way. */
+body.articles-page .page-content {
+  max-width: 1280px;
+}
+
+@media (min-width: 900px) {
+  .articles-grid .article-card {
+    width: 284px;
+    height: 388px;
+  }
+}
+
+.article-card:hover .article-card-title {
+  color: #CC4205;
+}
