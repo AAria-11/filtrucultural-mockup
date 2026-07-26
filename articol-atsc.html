@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+  <meta charset='utf-8' />
+  <title>Atelierele Scânteia — Filtru Cultural București</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+
+  <link href="https://fonts.googleapis.com/css2?family=Afacad:wght@700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="site.css" />
+</head>
+
+<body>
+
+  <!-- ===== Shared nav (same block as index.html) ===== -->
+  <div class="nav-container">
+    <a href="index.html" class="home-link">
+      <img src="logo-filtru-cultural.png" alt="Filtru Cultural" class="nav-logo">
+    </a>
+    <div class="nav-links">
+      <nav>
+        <a href="evenimente.html" id="events-link">Evenimente</a>
+        <a href="articole.html" id="articles-link">Articole</a>
+        <a href="arhiva.html" id="archive-link">Arhivă</a>
+        <a href="despre-noi.html" id="about-us-link">Despre noi</a>
+        <a href="#" id="language-link">EN<img src="lang.svg" style="vertical-align: middle; margin-left: 4px;"></a>
+        <a href="participa.html" id="engage-link">Participă</a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="mobile-nav">
+    <a href="index.html" class="mobile-nav-button">
+      <img src="logo-filtru-cultural.png" alt="Filtru Cultural" class="nav-logo">
+    </a>
+    <button class="mobile-menu-button" id="mobileMenuBtn">
+      <img src="hamburger-menu.svg">
+    </button>
+  </div>
+
+  <div class="mobile-menu" id="mobileMenu" style="display: none;">
+    <a href="evenimente.html" class="menu-button">Evenimente</a>
+    <a href="articole.html" class="menu-button">Articole</a>
+    <a href="arhiva.html" class="menu-button">Arhivă</a>
+    <a href="despre-noi.html" class="menu-button">Despre noi</a>
+    <a href="participa.html" class="menu-button">Participă</a>
+    <a href="#" class="menu-button" id="mobileLanguageLink">EN</a>
+  </div>
+  <!-- ===== End shared nav ===== -->
+
+  <div class="page-content">
+    <a href="articole.html" class="link-decorator back-to-articles-link">← Articole</a>
+
+    <div class="article-title">Atelierele Scânteia</div>
+    <div class="article-authors-date">de Nicoleta Moise & Raluca Bujor <span class="article-date">• 20 octombrie 2024</span></div>
+    <img src="pics/atelierele_scanteia/0.jpg" class="article-photo" id="article-photo">
+    <div class="article-photo-author">Ilustrație: Maria Mălcică</div>
+    <div class="read-more-category mobile-only" id="article-category-mobile" style="color: #3E665A">SPAȚII DEDICATE ARTIȘTILOR</div>
+    <div class="audio-player-container">
+      <audio id="articleAudioPlayer" src="articles/atsc_ro.mp3"></audio>
+      <div class="player-controls">
+        <div class="progress-bar-wrapper">
+          <input type="range" class="progress-bar" value="0" min="0" max="100">
+          <div class="time-display">
+            <span class="current-time">00:00</span> / <span class="total-time">00:00</span>
+          </div>
+        </div>
+        <div class="playback-buttons">
+          <button class="rewind-button control-button"></button>
+          <button class="play-pause-button control-button"></button>
+          <button class="forward-button control-button"></button>
+        </div>
+      </div>
+    </div>
+    <div class="article-photo-author">Narator: Ilinca Neacsu</div>
+    <div class="article-content-text">
+      <div class="article-intro-text">Ultimul text din cadrul proiectului Filtru Cultural București intră în dialog cu Atelierele Scânteia. Spațiul găzduiește 22 de artiști și artiste și și-a deschis porțile în 2023, în clădirea Casa Presei Libere, cunoscută anterior drept Casa Scânteii - sediul presei de propagandă și a celei mai mari tipografii din țară în timpul regimului comunist. Proiectul Atelierele Scânteia a fost inițiat de platforma SwitchLab, împreună cu mai mulți artiști/ artiste, și realizat în colaborare cu Galeria Posibilă. Atelierele ocupă un spațiu de 1.000 de metri pătrați, împărțit în 12 studiouri și trei galerii. Pentru a afla mai multe despre spațiul care a devenit un reper cultural important și necesar pe harta orașului, i-am invitat la o discuție pe doi dintre membrii atelierelor, Vlad Albu, artist vizual și director artistic al proiectului, și Gia Țidorescu, curatoarea Calciu Space. Am vorbit despre relația lor cotidiană cu clădirea în care își desfășoară activitatea, despre interacțiunea cu împrejurimile într-o zonă care pare destinată exclusiv mașinilor, și despre trecutul și istoria mai recentă a clădirii.</div>
+      <p>
+      Casa Presei Libere este genul de loc pe care ne-am obișnuit să îl vedem doar din exterior - din autobuz, din mașină sau de la distanță. Până în 2007 a fost clasată drept cea mai înaltă structură din oraș. Întotdeauna te întrebi ce este acolo, ce se întâmplă în interiorul ei? Descinsă din arhitectura socialist realistă, Casa Scânteii a fost proiectată după chipul și asemănarea unor clădiri-emblemă pentru regimul socialist - Universitatea Lomonosov și Hotelul Leningrad din Moscova și Palatul Culturii și Științei din Varșovia. Clădirea a devenit o emblemă pentru București, dar, până de curând, nu a oferit publicului larg un pretext de a intra în dialoga cu ea. Inițiativa Atelierele Scânteia încearcă să schimbe regulile jocului și să aducă locuitorii mai aproape de acest loc, prin expozițiile și evenimentele organizate în corpul A2 al clădirii.
+      </p>
+      <p>
+      „Dacă treci prin gangul ăsta, pe lângă Sala de marmură, și rămâi în curtea interioară, la intrare o să vezi că scrie <a href="https://atelierelescanteia.ro/" class="link-decorator" target="_blank">Ateliere Scânteia</a>. Apoi urci scările și ajungi la lift. E cumva cea mai simplă variantă,” ne explică Vlad Albu, după ce ne-am rătăcit ca să ajungem la discuția cu el și Gia Țidorescu. La <a href="https://atelierelemalmaison.ro/atelierele-malmaison/despre/" class="link-decorator" target="_blank">Atelierele Malmaison</a>, aflate într-o altă clădire istorică care a fost, de-a lungul timpului, garnizoană, închisoare și judecătorie, întâlnești aceeași situație labirintică. Ambele sunt clădiri masive cu cotloane întortocheate. Vocația lor pare să fie de a te împiedica să ajungi simplu și direct la țintă.
+      </p>
+      <p>
+      Deși sunt multe autobuze care circulă până la Atelierele Scânteia, Gia spune că, din cauza distanței, majoritatea oamenilor se simt descurajați să vină până aici. Alternativa ar fi ca, atunci când organizează evenimente, să se grupeze cu alte spații culturale din zonă, cum ar fi <a href="https://combinat.ro/" class="link-decorator" target="_blank">Combinatul Fondului Plastic</a>, un alt pol cultural construit la finalul anilor ‘60 și care reunește mai multe galerii și ateliere pentru artiști și artiste. „Când există o configurație mai mare, oamenii sunt mai tentați să facă un efort ca să iasă [din casă],” spune Gia.
+      </p>
+      <p>
+      Vlad locuiește pe la Ștefan cel Mare și ajunge la atelier destul de repede cu autobuzul sau cu bicicleta. Spune că vine cam trei zile pe săptămână. „M-am gândit că, dacă tot am un spațiu, să încerc să intru într-un ritm.” Gia s-a mutat din Cluj în București acum un an și jumătate și locuiește în cartierul Titan. De acasă și până la Ateliere face cam o oră și 20 de minute. Jumătate din săptămână merge la un job <i>part-time</i>, iar în a doua jumătate vine la Scânteia, unde fie lucrează la proiectele spațiului ei, Calciu Space, fie scrie articole, texte. „E liniște și mă descurc mult mai bine decât acasă.”
+      </p>
+      <p>
+      I-am întrebat dacă și în cel fel le-a fost influențată practica artistică de când s-au instalat la Atelierele Scânteia. „E foarte simplu să-ți vină mai multe idei când poți să le treci și prin filtrul unor oameni a căror practică o respecți,” spune Gia. Pentru Vlad e benefic faptul că are spațiu unde să experimenteze cu diferite tipuri de materialității. „E liniște, e lumină bună. Pleci de acasă cu gândul că o să intri în starea aia, fără să ți-o propui neapărat, și rămâi aici. Mai ieși afară la discuție la o cafea. E plăcut.”
+      </p>
+      <div class="article-section-title">Vecinii Atelierelor Scânteia</div>
+      <p>
+      Atelierele Scânteia reprezintă doar un mic segment din activitățile care se desfășoară în corpul A2 al clădirii. Multe dintre spațiile Casei Presei sunt încă necartografiate și inaccesibile, iar cele care sunt folosite compun un peisaj eclectic. În aripa unde activează artiștii mai găsești un studio de fotografie culinară, o sală de scrimă, o alta de dansuri și trei televiziuni: Metropola TV, finanțată cu bani publici și deținută de Florentin Pandele, primarul din Voluntari, Agro TV, despre care Vlad spune că nu sunt neapărat comunicativi, dar vin să vadă ce se întâmplă la evenimentele lor, și studioul Inedit TV, o televiziune unde când nu se vorbește despre politică, se difuzează muzică populară.
+      </p>
+      <p>
+      La deschiderea din septembrie 2023 a Atelierelor, au venit cei de la Metropola și le-au propus să facă un material despre spațiu, dar propunerea nu s-a materializat. „Nici nu știu dacă au insistat și nu știu dacă ne-am fi dorit neapărat,” spune Vlad. Tot atunci Gia a fost întrebată de Metropola despre cum reușesc artiștii să se auto-finanțeze. „Mai exact: voi din ce faceți bani?”. Gia le-a explicat că prin colaborări cu diferite instituții, finanțări publice nerambursabile, dar și prin vânzarea lucrărilor. Este important ca ceilalți să vadă că există și alte surse de finanțare decât salariul și să fie deschiși la a lucra pe proiecte punctuale, crede ea. „Oricât de mult aș fi încercat să explic, nu părea să atingă interlocutorul.”
+      </p>
+      <p>
+      Pentru televiziuni și nu numai, a fost un lucru bun că au apărut Atelierele. Înainte ca artiștii să înceapă renovarea spațiilor unde a funcționat mult timp o fabrică care producea CD-uri, zona aceea a clădirii era colonizată de porumbei, fiind neatinsă și lăsată în paragină de 5-7 ani. Majoritatea angajaților celor trei televiziuni erau nevoiți să traverseze holul pe atunci părăsit. În prezent, coridorul este un spațiu de tranzit îngrijit. Porumbeii care intrau până de curând prin ferestrele sparte nu s-au obișnuit însă cu faptul că fostul lor loc de adunare e acum locuit și continuă să intre pe unde mai apucă.
+      </p>
+      <p>
+      Editura Coresi, care a pus bazele industriei tipografice în România, funcționează în continuare în Casa Presei și deține latura clădirii unde se află Atelierele. „Directorul probabil crede că facem cu totul altceva decât facem. Adică are o altă impresie despre arta care se produce aici. Dar e mulțumit că sunt niște oameni din zona culturală care au ocupat spațiul și încearcă cumva să susțină ce se întâmplă aici,” spune Vlad. Tot de la el aflăm și că editura deține o arhivă instituțională de care se ocupă o doamnă arhivar. Acolo se găsesc toate ștatele de plată ale angajaților, imagini din 1956, când s-a deschis editura, și alte câteva sute de imagini, din anii ‘70-’80, cu portrete de muncitori.
+      </p>
+      <p>
+      Împreună cu alți artiști, Vlad și-a propus să scaneze arhiva și să facă o mică intervenție de ziua porților deschise a Atelierelor Scânteia, în toamna aceasta. „Vrem să deschidem arhiva pentru public. Trebuie să găsim exact formatul potrivit dacă vrem să multiplicăm materialele astfel încât oamenii să poată lua o parte din arhivă acasă. Vrem să creăm povești în jurul ei sau chiar să aflăm cu ajutorul oameniilor despre istoria locului, pentru a completa spațiile goale și a crea un dialog între public, noi și Coresi.”
+      </p>
+      <div class="article-section-title">„Astăzi sunt la Scânteia”</div>
+      <p>
+      După cum spuneam mai sus, a ajunge la Atelierele Scânteia din diverse zone ale Bucureștiului poate fi o aventură cronofagă. Prin urmare, odată ce ai ancorat la fața locului, nu îți mai permiți să pleci atât de ușor. Nu îți mai aranjezi întâlniri la prânz sau în vreo pauză de cafea. După ce cobori din autobuzul care te aduce la una din cele câteva stații ce flanchează colosul numit „Casa Presei”, îți asumi un fel de logodnă: „Când faci trei ore dus-întors până acasă, <i>it's a commitment</i>”, spune Gia apropo de programul ei. Îndepărtarea de casă și de centrul orașului are însă un efect anti-procrastinare. „Foarte multe chestii mă distrăgeau acasă. Aici reușesc să mă concentrez”, adaugă ea. Zona pare să funcționeze într-o dinamică destul de închisă, dar acest lucru nu este neapărat negativ pentru artiștii care își doresc o bulă de liniște. Atelierele sunt destul de izolate și în raport cu spațiul public. Perimetrul Casei Presei este destinat aproape exclusiv traficului și mașinilor. „De noi nu afli din stradă și apoi intri,” punctează Gia.
+      </p>
+      <p>
+      Fosta Casa Scânteii seamănă cu o insulă sau cu un vapor de croazieră: odată ce intri în clădire, malul, adică orașul, dispare. În interior, preferabil este să te lași asimilat de logica locului, fiindcă opțiunile sunt oricum foarte limitate. „La prânz trebuie să mergi foarte repede să-ți iei masă. Există niște locuri unde merg oamenii de la ANAF și de la alte instituții, dar dacă ajungi la unu jumate să-ți iei prânzul, nu prea mai găsești nimic”, ne explică Vlad. Cel mai bine e să vii cu „pachețelul la tine”. Cu alte cuvinte, fie îți sincronizezi ritmul corporal cu cel al celorlalți angajați din clădire, fie ești pe cont propriu, împrejurimile neavând mai nimic de oferit. Pe cât este de vastă, Casa Presei nu lasă momentan loc pentru prea multe divagări sau plăceri nenecesare. Monumentalitatea ei aproape că induce un fel de ascetism.
+      </p>
+      <div class="article-section-title">Atelierele și fosta fabrică de CD-uri</div>
+      <p>
+      Atelierele Scânteia au fost amenajate în locul unei foste fabrici de CD-uri, iar configurația spațiilor a rămas, în mare, cea originală. Fiecare a intervenit atât cât i-a fost util. Atelierul lui Vlad era înainte, cel mai probabil, o cameră de depozitare, iar cel al Giei, continuarea camerei tehnice. „Eu mi-am dărâmat un zid, inițial erau două încăperi. Dar altfel, perimetral, [spațiul] a rămas cam cum l-am găsit”, își amintește Vlad.
+      </p>
+      <p>
+      Multe dintre ateliere au geamuri care dau în holul principal. Vlad are o astfel de fereastră chiar la intrare, lângă ușă. Cel mai des, lumea îi bate în geam mai degrabă decât la ușă pentru a-l saluta sau a-i face o vizită. Moștenire de la fabrica de CD-uri și perfect nenecesară, fereastra a devenit un element ludic pentru interacțiunile dintre el și alți artiști sau vizitatori. Dar există și o anume presiune în a fi privit. „De când am deschis vreau să îl întreb pe Vlad dacă așa ar arăta spațiul tău și dacă nu ar avea geam. Pentru că este atât de superb”, râde Gia. „Zilele trecute a fost dezastru aici pentru că am lucrat. Era praf, era mizerie, am tăiat faianță, erau cioburi. Ieri am făcut un pic curat. Nu mă rușinez să-l las cum o fi, e un spațiu de lucru. În același timp, m-a întrebat mai multă lume de ce nu-mi acopăr geamul ăsta. Știi, pentru că ține de o anume intimitate”, spune Vlad. În acest punct al discuției, ne-am gândit în secret că ar fi interesant să apară studii despre <a href="https://www.bbc.com/future/article/20140209-being-watched-why-thats-good" class="link-decorator" target="_blank"><i>audience effect</i></a> și în interacțiunile tipice comunităților artistice, nu numai în sport, competiții sau morală.
+      </p>
+      <div class="article-section-title">„Au muncit niște oameni aici”</div>
+      <p>
+      Monumentalitatea tipică arhitecturii realist-socialiste toarnă în beton un anumit tip de relație între stat și om. Chiar dacă nu mai există ziarul Scânteia, propaganda PCR, și nu mai suntem în dictatură, e încă dificil să nu resimți o distanță ireparabilă între tine și ceea ce a fost, vreme de ani buni, cea mai înaltă construcție din oraș. Când ajungi în proximitatea zidurilor de peste 90 de metri ale corpului central al Casei Presei, în fața ta, aproape de necuprins cu privirea, apare ceva cvasi-inuman. Sau, în orice caz, un spațiu care de la bun început îți spune „ești foarte mic”.
+      </p>
+      <p>
+      I-am întrebat pe Vlad și Gia cum resimt (<i>dacă</i> resimt) trecutul fostei Casa Scânteii și cum negociază cu spațiile atât de vaste din clădire. „Mi se pare că nu se simte trecutul acestei clădiri. Sau noi, cel puțin, nu cred că îl simțim. În afară de faptul că știi unde intri, știi ce a fost aici, îți dai seama de faptul că e o chestie monumentală, nu mi se pare că e o apăsare. Are un trecut, dar au muncit niște oameni aici”, spune Vlad. A ne orienta atenția către cei care au avut cândva locul de muncă într-una din cele 6000 de încăperi ale clădirii este consolator, readuce umanul în discuție.
+      </p>
+      <p>
+      Dar configurația spațială este greu de învins: mai nimic din clădire nu a fost proiectat ținându-se cont de scara umană. Gia ne spune că rezolvarea stă în relațiile cu ceilalți și în intimitatea creată în interiorul segmentului de etaj ocupat de Ateliere, „Cumva, tu te raportezi la ai tăi și nu mai simți [imensitatea locului]”.
+      </p>
+      <p>
+      Mai mult, spațiul în care se află Atelierele este modular, se desfășoară ca <a href="https://atelierelescanteia.ro/spaces/" class="link-decorator" target="_blank">o secvență de 16 compartimente mai mari sau mai mici</a>. Din fericire, segmentarea îmblânzește dimensiunile, mai ales pe orizontală, și lucrurile capătă un aspect mai omenesc.
+      </p>
+      <p>
+      Atelierul lui Vlad este minimalist, luminos și înalt, având în jur de 5 metri înălțime. La etajul de dedesubt, acolo unde se află secția de legătorie a tipografiei Coresi, tavanul se îndepărtează la peste 7 metri. Monumentalitatea clădirii începe să se facă resimțită și în interior. Ca suprafață, „spațiul [secției Coresi] e dublu față de cel de aici, e un <i>open space</i> în care mai vezi câțiva stâlpi de susținere. Vreo 20-30 de doamne lucrează acolo, într-un spațiu care în mod clar a fost destinat pentru mult mai mulți angajați. Acolo se simte lucrul ăsta, că totul e imens”. Cei câțiva oameni care lucrează la utilaje par risipiți printr-o încăpere absurd de mare pentru nevoile lor. Așa cum putem bănui, în urma proiectelor monumentaliste rămâne o doză zdravănă de risipă. Din păcate, aceasta nu poate fi reparată prin relații umane și solidaritate.
+      </p>
+      <div class="article-section-title">Arta contemporană și arhitectura trecutului</div>
+      <p>
+      Am citit undeva că lungimea totală a coridoarelor din Casa Presei este de 3 km. Vlad și Gia ne-au spus că nu au explorat încă întreaga clădire și că, oricum, o mare parte din ea nu este folosită. Există deja un tipar în faptul că artiștii bucureșteni independenți își găsesc spații pentru ateliere și expoziții în locuri rămase în suspensie după căderea dictaturii ceaușiste: Atelierele Malmaison se află acolo unde, în comunism, se găsea o închisoare cu același nume; WASP a preluat o fostă hală industrială a fabricii Flaros; Make a Point găzduia evenimente artistice într-o hală a fostei fabrici de textile Postăvăria Română și în Turnul de Apă din curtea acesteia. Desigur, <a href="https://www.igloo.ro/initiative-de-salvgardare-a-patrimoniului-industrial-romanesc/" class="link-decorator" target="_blank">conversia patrimoniului industrial</a> poate conduce și la apariția altor tipuri de <i>venue</i>-uri, un exemplu în acest sens fiind <a href="https://e-zeppelin.ro/halele-carol-prezentare/" class="link-decorator" target="_blank">Halele Carol</a>.
+      </p>
+      <p>
+      La Scânteia este loc pentru mai multe spații culturale, iar acest lucru ar aduce, cel mai probabil, mai mulți vizitatori și mai multe colaborări între artiști: „Dacă ar fi pe acest etaj, în clădire, și alte entități din zona artelor performative sau orice altceva din zona culturală, cu siguranță ar fi mai bine”, crede Vlad. În același corp cu Atelierele se mai află  o galerie privată, <a href="https://www.igloo.ro/antreprenoriatul-si-arta-contemporana-schimba-aerul-in-casa-presei-noua-galerie-de-arta-arsmonitor/" class="link-decorator" target="_blank">ARSMONITOR</a>, iar vestea bună este că, în curând, la parterul clădirii va fi inaugurat un al doilea spațiu independent ce va ține de Ateliere și va găzdui expoziții, concerte, performance-uri, etc: <i>Scânteia</i> +.
+      </p>
+      <p>
+      Gia ne-a povestit că spațiul gestionat de ea, dedicat tinerilor curatori, și-a găsit numele în urma unei sesiuni nocturne de <i>brainstorming</i>. „Calciu”, numele final, trimite la interesul ei pentru intersecția dintre arta contemporană și cercetări din domeniul biologiei, cât și la procesul de calcifiere al unui proiect artistic, la procesualitatea și drumul care duc la rezultatul final.
+      </p>
+      <p>
+      Dacă extrapolăm, ce se întâmplă în prezent la Atelierele Scânteia seamănă cu o calcifiere sau o sedimentare lentă și fragilă a unui proiect și a unei comunități. Din păcate, toate acestea se întâmplă (deocamdată) fără sprijinul politic și financiar al instituțiilor centrale ale statului.
+      </p>
+      <div class="image-gallery-container" id="image-gallery-container-article">
+        <div class="main-image">
+          <img src="pics/atelierele_scanteia/1.jpg">
+          <div class="num-pics-label" id="num-pics-label-article"></div>
+        </div>
+        <div class="thumbnails-article" id="article-thumbnails">
+          <div class="thumbnail-article" id="thumb0-article">
+            <img src="pics/atelierele_scanteia/2.jpg">
+          </div>
+          <div class="thumbnail-article" id="thumb1-article">
+            <img src="pics/atelierele_scanteia/3.jpg">
+          </div>
+          <div class="thumbnail-article" id="thumb2-article">
+            <img src="pics/atelierele_scanteia/4.jpg">
+          </div>
+          <div class="thumbnail-article" id="thumb3-article">
+            <img src="pics/atelierele_scanteia/5.jpg">
+          </div>
+        </div>
+        <div class="photosby">Fotografii: Rareș Toma</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Shared footer (same block as index.html) ===== -->
+  <footer class="footer-container">
+    <div class="footer-inner">
+      <div class="footer-text">
+        <h2 class="footer-title">
+          Administrezi un spațiu cultural?<br>
+          <span class="footer-highlight">Devino partener Filtru Cultural!</span>
+        </h2>
+        <p class="footer-subtitle">
+          Adaugă gratuit spațiul tău și evenimentele tale în platformă.<br>
+          Ajută-ne să creștem harta culturală a orașului, pas cu pas.
+        </p>
+        <div class="engage-button-container">
+          <a href="participa.html" class="engage-button">Devino partener</a>
+          <div class="engage-button-shadow"></div>
+        </div>
+      </div>
+      <div class="footer-illustration">
+        <img src="tomita-footer.png" alt="Cultural partnership illustration" class="footer-image" />
+        <div class="footer-social">
+          <a href="mailto:filtrucultural@gmail.com" class="social-link"><div class="footer-social-icon"><img src="EnvelopeOpen.svg" alt="Email" /></div></a>
+          <a href="#" class="social-link"><div class="footer-social-icon"><img src="InstagramLogo.svg" alt="Instagram" /></div></a>
+          <a href="#" class="social-link"><div class="footer-social-icon"><img src="FacebookLogo.svg" alt="Facebook" /></div></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- ===== End shared footer ===== -->
+
+  <script>
+    document.getElementById('mobileMenuBtn').addEventListener('click', function () {
+      const menu = document.getElementById('mobileMenu');
+      menu.style.display = menu.style.display === 'none' ? 'flex' : 'none';
+    });
+  </script>
+  <script src="articles/article.js"></script>
+
+</body>
+</html>

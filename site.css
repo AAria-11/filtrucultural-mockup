@@ -80,10 +80,34 @@
   gap: 32px;
 }
 
+/* #partners is a fixed 1200px in styles.css (sized for the old full-width
+   modal) with an intentional 112px override under its mobile media query —
+   only fix the gap above that breakpoint so the mobile size stays untouched. */
+@media (min-width: 551px) {
+  #partners {
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+  }
+}
+
 .archive-gallery img,
 .archive-main-image {
   max-width: 100%;
   height: auto;
+}
+
+/* styles.css only styles .archive-gallery-mobile inside its mobile media
+   query — it never actually hides it on desktop, so without this it doubles
+   up with .archive-gallery. */
+.archive-gallery-mobile {
+  display: none;
+}
+
+@media (max-width: 550px) {
+  .archive-gallery-mobile {
+    display: block;
+  }
 }
 
 /* The CDRF article's footnote expand/collapse (see .footnotes / .expanded

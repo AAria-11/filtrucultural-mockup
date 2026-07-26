@@ -56,8 +56,8 @@
   <div class="page-content">
     <h1>Arhiva evenimentelor noastre</h1>
     <p>Inițiative cu focus pe cultură, arhitectură și oameni.</p>
-    <div class="page-placeholder-note">
-      Placeholder — full Arhivă page content comes next, once the navigation and shared layout are confirmed working across all pages.
+    <div id="archive-container">
+      <div class="archive-timeline" id="archiveTimeline"></div>
     </div>
   </div>
 
@@ -95,6 +95,99 @@
       const menu = document.getElementById('mobileMenu');
       menu.style.display = menu.style.display === 'none' ? 'flex' : 'none';
     });
+
+    // Archive entries link back to the article discussing the same space
+    // (see articles/*_ro.html / articol-*.html).
+    var ARCHIVE_ARTICLE_LINKS = {
+      'Suprainfinit Gallery': 'articol-suprainfinit.html',
+      'Centrul de Resurse în Fotografie': 'articol-cdrf.html',
+      'Atelierele Scânteia': 'articol-atsc.html',
+      'Paper Traffic': 'articol-pprt.html',
+      'Teatrul Masca': 'articol-masca.html',
+      'Casa Memorială Tudor Arghezi — Mărțișor': 'articol-arghezi.html'
+    };
+    window.openArticle = function (event, title) {
+      if (event) event.preventDefault();
+      var href = ARCHIVE_ARTICLE_LINKS[title];
+      if (href) window.location.href = href;
+    };
+
+    // Each archive.json galleryDir folder (pics/<dir>/) holds exactly 10
+    // photos, numbered 0.jpg through 9.jpg.
+    var ARCHIVE_GALLERY_PHOTO_COUNT = 10;
+
+    fetch('archive.json')
+      .then(function (r) { return r.json(); })
+      .then(function (entries) {
+        var timeline = document.getElementById('archiveTimeline');
+        entries.forEach(function (entry) {
+          var el = document.createElement('div');
+          el.className = 'archive-entry';
+
+          var marker = document.createElement('div');
+          marker.className = 'archive-timeline-marker';
+          el.appendChild(marker);
+
+          var date = document.createElement('div');
+          date.className = 'archive-date';
+          date.textContent = entry.date;
+          el.appendChild(date);
+
+          var title = document.createElement('div');
+          title.className = 'archive-title';
+          title.textContent = entry.title;
+          el.appendChild(title);
+
+          var subtitle = document.createElement('div');
+          subtitle.className = 'archive-subtitle';
+          subtitle.textContent = entry.subtitle;
+          el.appendChild(subtitle);
+
+          var mainImage = document.createElement('img');
+          mainImage.className = 'archive-main-image';
+          mainImage.src = entry.mainImage;
+          mainImage.alt = entry.title;
+          el.appendChild(mainImage);
+
+          var description = document.createElement('div');
+          description.className = 'archive-description';
+          entry.description.forEach(function (paragraph) {
+            var p = document.createElement('p');
+            p.innerHTML = paragraph;
+            description.appendChild(p);
+          });
+          el.appendChild(description);
+
+          var gallery = document.createElement('div');
+          gallery.className = 'archive-gallery';
+          for (var i = 0; i < ARCHIVE_GALLERY_PHOTO_COUNT; i++) {
+            var thumb = document.createElement('div');
+            thumb.className = 'thumbnail-archive';
+            var img = document.createElement('img');
+            img.src = 'pics/' + entry.galleryDir + '/' + i + '.jpg';
+            img.alt = entry.title;
+            thumb.appendChild(img);
+            gallery.appendChild(thumb);
+          }
+          el.appendChild(gallery);
+
+          var galleryMobile = document.createElement('div');
+          galleryMobile.className = 'archive-gallery-mobile';
+          var mobileMain = document.createElement('div');
+          mobileMain.className = 'main-image';
+          var mobileImg = document.createElement('img');
+          mobileImg.src = 'pics/' + entry.galleryDir + '/0.jpg';
+          mobileImg.alt = entry.title;
+          mobileMain.appendChild(mobileImg);
+          galleryMobile.appendChild(mobileMain);
+          el.appendChild(galleryMobile);
+
+          timeline.appendChild(el);
+        });
+      })
+      .catch(function (err) {
+        console.error('Could not load archive.json', err);
+      });
   </script>
 
 </body>
