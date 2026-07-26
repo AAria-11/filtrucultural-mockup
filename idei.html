@@ -115,26 +115,18 @@
           marker.className = 'archive-timeline-marker';
           el.appendChild(marker);
 
-          var date = document.createElement('div');
-          date.className = 'archive-date';
-          date.textContent = entry.date;
-          el.appendChild(date);
-
           var title = document.createElement('div');
           title.className = 'archive-title';
           title.textContent = entry.title;
           el.appendChild(title);
 
-          var subtitle = document.createElement('div');
-          subtitle.className = 'archive-subtitle';
-          subtitle.textContent = entry.subtitle;
-          el.appendChild(subtitle);
-
-          var mainImage = document.createElement('img');
-          mainImage.className = 'archive-main-image';
-          mainImage.src = entry.mainImage;
-          mainImage.alt = entry.title;
-          el.appendChild(mainImage);
+          if (entry.mainImage) {
+            var mainImage = document.createElement('img');
+            mainImage.className = 'archive-main-image';
+            mainImage.src = entry.mainImage;
+            mainImage.alt = entry.title;
+            el.appendChild(mainImage);
+          }
 
           var description = document.createElement('div');
           description.className = 'archive-description';
