@@ -2,6 +2,10 @@
    Kept separate from the original styles.css so it's easy to see
    what we've added versus the original site's styling. */
 
+body {
+  background-color: #FBF7F2;
+}
+
 .nav-logo {
   height: 48px;
   width: auto;
