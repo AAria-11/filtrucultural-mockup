@@ -97,6 +97,23 @@
   height: auto;
 }
 
+/* Evenimente reuses the old .events-container class (some shared JS in
+   app-part2.js still looks it up via document.querySelector('.events-container')
+   for the mobile calendar/category-panel scroll-lock behavior), but that
+   class is position:absolute/fixed-height, sized for the old full-viewport
+   modal. Override back to normal in-flow layout — an id selector always
+   wins over the plain class rules in styles.css, including inside its
+   mobile media queries. */
+#events-container {
+  position: static;
+  height: auto;
+  width: auto;
+  top: auto;
+  z-index: auto;
+  background-color: transparent;
+  -webkit-overflow-scrolling: auto;
+}
+
 /* styles.css only styles .archive-gallery-mobile inside its mobile media
    query — it never actually hides it on desktop, so without this it doubles
    up with .archive-gallery. */

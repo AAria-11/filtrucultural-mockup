@@ -1,3 +1,9 @@
+// This whole map-setup block (through the end of the DOMContentLoaded handler
+// below it) only applies on pages with a #map element (currently index.html).
+// Guarded so app-part1.js can also load safely on pages like evenimente.html
+// that need its other shared globals/functions but have no map on them.
+if (document.getElementById('map')) {
+
 mapboxgl.accessToken = 'pk.eyJ1IjoiYWxleGFuZHJ1Y20iLCJhIjoiY2x5OG12MGZ4MGtrejJrc2JoeDJwam9nMSJ9.qacp8v2WqXV_48dG9O1gng';
 
 var transformRequest = (url, resourceType) => {
@@ -32,7 +38,7 @@ var map = new mapboxgl.Map({
 
 // Add geolocate control to the map.
 
-const geolocateControl = new mapboxgl.GeolocateControl({
+var geolocateControl = new mapboxgl.GeolocateControl({
   positionOptions: {
       enableHighAccuracy: true
   },
@@ -54,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // Token: Baserow workspace settings > API tokens > create a token scoped to this
   // database with READ-ONLY permission (this token is publicly visible in the page source).
   const BASEROW_TABLE_ID = '1095357';
-  const BASEROW_TOKEN = 'hnnLjCo3Boogz0b9OGPPy4SDQK9mdfVF';
+  const BASEROW_TOKEN = '4vDdxD3bsSuJycladWU5gQMesLQ0ko3S';
   const BASEROW_API_URL = `https://api.baserow.io/api/database/rows/table/${BASEROW_TABLE_ID}/?user_field_names=true&size=200`;
 
   const maxRetries = 5;
@@ -162,6 +168,8 @@ document.addEventListener('DOMContentLoaded', function () {
   setupArticleHeaderScroll();
 });
 
+} // end of the #map-only guard opened above
+
 var uniqueCategories;
 var geojsonData;
 var picsDirToNum = {};
@@ -259,6 +267,14 @@ function initializeMapWithFeatures(data) {
           toggleArchive({ preventDefault: () => {} });
         }
       }
+
+      // Cross-page link from evenimente.html: ?pin=<location name> opens
+      // that location's map card directly (see the openPin override there).
+      const pinParam = new URLSearchParams(window.location.search).get('pin');
+      if (pinParam && nameToFeature[pinParam]) {
+        openPin(nameToFeature[pinParam]);
+      }
+
       geolocateControl.on('error', function(e) {
         console.log('Geolocation failed');
       });
@@ -1420,10 +1436,10 @@ document.addEventListener('DOMContentLoaded', function() {
     initialEventsFetchPromise = fetchAndPrepareInitialEventData();
   }
   if (!initialEventTypesFetchPromise) {
-    initialEventTypesFetchPromise = fetchAndPrepareEventsFilterData('Evtype', dynamicEventTypes, "Name", false);
+    initialEventTypesFetchPromise = fetchAndPrepareEventsFilterData('Event_type', dynamicEventTypes, false);
   }
   if (!initialKeywordsFetchPromise) {
-    initialKeywordsFetchPromise = fetchAndPrepareEventsFilterData('Keywords', dynamicKeywords, "Name", true);
+    initialKeywordsFetchPromise = fetchAndPrepareEventsFilterData('Keywords', dynamicKeywords, true);
   }
 });
 

@@ -53,11 +53,220 @@
   </div>
   <!-- ===== End shared nav ===== -->
 
+  <template id="calendar-template">
+    <div class="calendar-wrapper">
+      <button class="filter-item" id="calendar-btn" onclick="toggleCalendar()">
+        <img src="CalendarBlank.svg" alt="Calendar Icon" class="filter-icon"/>
+        <span class="filter-text">Calendar</span>
+        <img src="x-white.svg" class="calendar-clear-btn" alt="Clear" style="display:none;"/>
+      </button>
+
+      <div class="calendar-container" id="calendar-container">
+        <nav class="nav-tabs">
+          <button class="nav-tab" id="today-tab">ASTAZI</button>
+          <button class="nav-tab" id="tomorrow-tab">MAINE</button>
+          <button class="nav-tab" id="weekend-tab">WEEKEND</button>
+        </nav>
+
+        <header class="month-navigation">
+          <button class="nav-button" id="prev-month">
+            <img
+              src="chevron-left.svg"
+              alt="Previous Month"
+              class="nav-icon"
+            />
+          </button>
+          <div id="month-year"></div>
+          <button class="nav-button" id="next-month">
+            <img src="chevron-right.svg" alt="Next Month" class="nav-icon" />
+          </button>
+        </header>
+
+        <section class="weekday-header">
+          <div class="weekday">LUN</div>
+          <div class="weekday">MAR</div>
+          <div class="weekday">MIE</div>
+          <div class="weekday">JOI</div>
+          <div class="weekday">VIN</div>
+          <div class="weekday">SAM</div>
+          <div class="weekday">DUM</div>
+        </section>
+
+        <section class="calendar-grid" id="calendar-grid">
+          <!-- Calendar will be generated dynamically with JavaScript -->
+        </section>
+        <div id="range-bar-container"></div>
+      </div>
+    </div>
+  </template>
+
   <div class="page-content">
     <h1>Program Evenimente</h1>
-    <p>Descoperă evenimentele culturale din București. (Conținutul acestei pagini urmează să fie migrat de pe Airtable pe Baserow.)</p>
-    <div class="page-placeholder-note">
-      Placeholder — full Evenimente page content comes next, once the navigation and shared layout are confirmed working across all pages.
+    <p>Descoperă evenimentele culturale din București.</p>
+
+    <div id="events-container" class="events-container">
+      <div class="filter-bar">
+        <div class="filter-item" style="padding-right: 0px;">
+          <img src="Binoculars.svg" alt="Binoculars Icon" class="filter-icon"/>
+          <div class="search-bar-events" id="search-bar-events-desktop">
+            <input type="search" placeholder="Caută evenimente" oninput="handleEventsSearch(event)">
+          </div>
+        </div>
+
+        <div class="filter-div"></div>
+
+        <div class="dropdown-wrapper">
+          <button class="filter-item" id="event-type-btn" onclick="toggleTypePanel()">
+            <span class="filter-text">Tipul evenimentelor</span>
+            <img src="CaretDown.svg" class="dropdown-icon" alt="Toggle" />
+          </button>
+
+          <div class="dropdown-panel" id="event-type-panel">
+            <!-- Populated from JS -->
+          </div>
+        </div>
+
+        <div class="dropdown-wrapper">
+          <button class="filter-item" id="keywords-btn" onclick="toggleKeywordsPanel()">
+            <span class="filter-text">Cuvinte cheie</span>
+            <img src="CaretDown.svg" class="dropdown-icon" alt="Toggle" />
+          </button>
+
+          <div class="dropdown-panel" id="keywords-panel">
+            <!-- Populated from JS -->
+          </div>
+        </div>
+
+        <div class="filter-item" id="free-entry-btn" type="button">
+          <div class="filter-text">Intrare libera</div>
+        </div>
+
+        <div class="filter-item" id="ticket-btn" type="button">
+          <div class="filter-text">Bilet</div>
+        </div>
+      </div>
+
+      <div class="filter-bar-mobile">
+        <div class="dropdown-wrapper" id="mobile-categories-dropdown">
+          <button class="filter-item" id="mobile-events-categories-btn">
+            <span class="filter-text">Categorii</span>
+            <img src="tag.svg" class="dropdown-icon" alt="Tag">
+          </button>
+
+          <div class="dropdown-panel" id="mobile-events-categories-panel">
+            <div class="mobile-categories-header">
+              <h3>Categorii</h3>
+              <button id="mobile-close-categories">
+                <img src="x-close-black.svg" alt="Închide" />
+              </button>
+            </div>
+
+            <section>
+              <h3>Tipul evenimentelor</h3>
+              <div id="mobile-type-list"></div>
+            </section>
+
+            <section>
+              <h3>Intrare</h3>
+              <label class="dropdown-option">
+                <input type="checkbox" id="mobile-free-entry"/> Liberă
+              </label>
+              <label class="dropdown-option">
+                <input type="checkbox" id="mobile-ticket"/> Bilet
+              </label>
+            </section>
+
+            <section>
+              <h3>Cuvinte cheie</h3>
+              <div id="mobile-keywords-list"></div>
+            </section>
+
+            <footer style="display:flex; gap: 8px; padding-top: 24px; border-top: 1px solid #B6B6B6; box-sizing: border-box;">
+              <button id="mobile-cancel-categories" class="anuleaza-button">Anulează</button>
+              <button id="mobile-apply-categories" class="calendar-confirm-btn">Selectează</button>
+            </footer>
+          </div>
+        </div>
+      </div>
+      <div class="search-bar" id="search-bar-events-mobile">
+        <input type="search" placeholder="Caută evenimente" oninput="handleEventsSearch(event)">
+      </div>
+
+      <div id="filterLabelsContainer" class="filter-labels" style="display: none;"></div>
+
+      <hr class="dashed-separator" />
+
+      <div id="recent-events-section">
+        <div id="results-count" class="results-count"></div>
+        <h2 class="recent-events-title">Evenimente recente</h2>
+        <hr class="recent-events-separator" />
+        <div id="recent-events-container" class="recent-events-container">
+          <!-- cards will be injected here by JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="event-detail-panel" id="eventDetailPanel">
+    <div class="event-detail-main-row">
+      <div class="event-detail-header" id="eventDetailHeaderImage"></div>
+      <div class="event-detail-content-wrapper">
+        <div class="event-detail-categories-header">
+          <div class="event-detail-categories" id="eventDetailCategories"></div>
+          <button class="event-detail-close-button" id="eventDetailCloseButton" onclick="closeEventDetailPanel()">
+            <img src="Close.svg" alt="Close"> </button>
+        </div>
+        <h1 class="event-detail-title" id="eventDetailTitle"></h1>
+        <p class="event-detail-quote" id="eventDetailQuote" style="display: none;"></p>
+        <div class="event-detail-info">
+          <div class="event-detail-info-item" id="eventDetailLocationItem">
+            <img src="Pin.svg" alt="Location">
+            <span id="eventDetailLocationText"></span>
+          </div>
+          <div class="event-detail-info-item" id="eventDetailDateTimeItem">
+            <div class="datetime-original-content">
+              <img src="CalendarRed.svg" alt="Date & Time">
+              <span id="eventDetailDateTimeText"></span>
+            </div>
+            <div class="engage-button-container event-detail-ticket-button-container" id="eventDetailTicketButtonContainer" style="display: none;">
+              <a href="#" class="engage-button" id="eventDetailTicketButton" target="_blank" rel="noopener noreferrer">
+                </a>
+              <div class="engage-button-shadow"></div>
+            </div>
+          </div>
+        </div>
+        <h2 class="event-detail-section-title" id="eventDetailDescSectionTitle">Descriere</h2>
+        <div class="event-detail-description" id="eventDetailDescription">
+          <button
+              class="read-more-text-btn"
+              id="eventDetailDescReadMoreBtn"
+              onclick="toggleEventDescriptionFull(this)"
+              style="display:none; margin-bottom: 16px;">
+              Continuați să citiți
+          </button>
+        </div>
+        <h2 class="event-detail-section-title" id="eventDetailOrgSectionTitle">Organizator</h2>
+        <div class="event-detail-organizer">
+          <div class="organizer-name-line">
+            <img src="StairsRed.svg" alt="Organizator" class="organizer-title-icon">
+            <a href="#" class="event-detail-organizer-name" id="eventDetailOrganizerName" target="_blank" rel="noopener noreferrer"></a>
+          </div>
+          <p class="event-detail-organizer-description" id="eventDetailOrganizerDescription">
+            <span id="organizerDescriptionTextPreview"></span><img src="arrow-more.svg" alt="More" class="organizer-description-arrow-icon" style="display:none;">
+          </p>
+          <div class="read-more-social-links" id="eventDetailOrganizerSocialLinks"></div>
+        </div>
+        <div class="read-more-share" id="eventDetailShareSectionTitle">Distribuie acest eveniment</div>
+        <div class="event-detail-share">
+          <div class="fb-share-button" id="eventDetailFbShareButton" data-href="" data-layout="button_count" data-size="large">
+            <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=YOUR_EVENT_URL&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="event-detail-related-section-wrapper">
+      <h2 class="event-detail-section-title" id="eventDetailRelatedSectionTitle">Alte evenimente care s-ar putea să-ți placă!</h2>
+      <div class="event-detail-related-events-container" id="eventDetailRelatedEvents"></div>
     </div>
   </div>
 
@@ -94,6 +303,239 @@
     document.getElementById('mobileMenuBtn').addEventListener('click', function () {
       const menu = document.getElementById('mobileMenu');
       menu.style.display = menu.style.display === 'none' ? 'flex' : 'none';
+    });
+  </script>
+
+  <!-- Shared map/events logic (same three files index.html uses). The
+       map-specific portions inside app-part1.js no-op on this page since
+       there's no #map element here — see the guard at the top of that file. -->
+  <script src="app-part1.js"></script>
+  <script src="app-part2.js"></script>
+  <script src="app-part3.js"></script>
+
+  <script>
+    // This page has no map, so instead of opening a pin in place, an event's
+    // location links over to index.html and asks it to open that pin.
+    window.openPin = function (feature) {
+      const name = feature && feature.properties && feature.properties.Name;
+      window.location.href = 'index.html' + (name ? ('?pin=' + encodeURIComponent(name)) : '');
+    };
+
+    // Populates nameToFeature (declared in app-part1.js) with just enough
+    // Obiective data for the event detail panel's "Discover <location>"
+    // organizer section — reuses the same read-only Baserow table/token as
+    // the map page, without loading mapbox-gl.js or the map's fetch pipeline.
+    function fetchObiectiveForEventOrganizerInfo() {
+      const BASEROW_LOCATIONS_TABLE_ID = '1095357';
+      const BASEROW_LOCATIONS_TOKEN = '4vDdxD3bsSuJycladWU5gQMesLQ0ko3S';
+      const url = `https://api.baserow.io/api/database/rows/table/${BASEROW_LOCATIONS_TABLE_ID}/?user_field_names=true&size=200`;
+
+      async function fetchAllRows(nextUrl) {
+        let rows = [];
+        while (nextUrl) {
+          const response = await fetch(nextUrl, { headers: { 'Authorization': `Token ${BASEROW_LOCATIONS_TOKEN}` } });
+          if (!response.ok) throw new Error(`Baserow request failed: ${response.status}`);
+          const page = await response.json();
+          rows = rows.concat(page.results);
+          nextUrl = page.next;
+        }
+        return rows;
+      }
+
+      return fetchAllRows(url).then(rows => {
+        rows.forEach(row => {
+          if (!row.Name) return;
+          window.nameToFeature[row.Name] = {
+            properties: {
+              Name: row.Name || '',
+              Categories_ro: row.Categories_ro || '',
+              Categories_en: row.Categories_en || '',
+              Descriere_ro: row.Descriere_ro || '',
+              Descriere_en: row.Descriere_en || '',
+              Address: row.Address || '',
+              FB: row.FB || '',
+              Site: row.Site || '',
+              Insta: row.Insta || '',
+              Gmaps: row.Gmaps || ''
+            }
+          };
+        });
+      }).catch(error => console.error('Failed to load Obiective data for event organizer info:', error));
+    }
+
+    // Everything below reuses the existing event-list logic from
+    // app-part2.js/app-part3.js (originally wired up inside toggleEvents(),
+    // which toggled a hidden overlay on the old single-page app) — adapted
+    // to just render once on page load, since this page is always "open".
+    document.addEventListener('DOMContentLoaded', async function () {
+      fetchObiectiveForEventOrganizerInfo();
+
+      const isDesktop = !window.matchMedia('(max-width: 550px)').matches;
+
+      if (!calendarInserted) {
+        insertCalendarOnce();
+        calendarInserted = true;
+      }
+
+      if (!initialEventsFetchPromise) {
+        initialEventsFetchPromise = fetchAndPrepareInitialEventData();
+      }
+      if (!initialEventTypesFetchPromise) {
+        initialEventTypesFetchPromise = fetchAndPrepareEventsFilterData('Event_type', dynamicEventTypes, false);
+      }
+      if (!initialKeywordsFetchPromise) {
+        initialKeywordsFetchPromise = fetchAndPrepareEventsFilterData('Keywords', dynamicKeywords, true);
+      }
+
+      try {
+        await Promise.all([initialEventsFetchPromise, initialEventTypesFetchPromise, initialKeywordsFetchPromise]);
+        applyAllEventsFiltersAndPopulate();
+      } catch (error) {
+        console.error('Error awaiting initial event fetch on Evenimente page:', error);
+      }
+
+      calculateAndAssignEventTypeCounts();
+
+      if (isDesktop) {
+        populateTypeDropdown(dynamicEventTypes);
+        populateKeywordsPanel(dynamicKeywords);
+      } else {
+        populateMobileCategories();
+      }
+
+      if (isDesktop) {
+        [
+          { panelId: 'event-type-panel', type: 'tip' },
+          { panelId: 'keywords-panel', type: 'keyword' }
+        ].forEach(({ panelId, type }) => {
+          const panelElement = document.getElementById(panelId);
+          if (panelElement) {
+            panelElement.addEventListener('change', e => {
+              if (e.target.matches('input[type="checkbox"]')) {
+                const pillDisplayText = e.target.value;
+                if (e.target.checked) {
+                  addFilterPill(type, pillDisplayText, e.target.id);
+                } else {
+                  removeFilterPill(type, pillDisplayText);
+                }
+                applyAllEventsFiltersAndPopulate();
+              }
+            });
+          }
+        });
+      } else {
+        const mobBtn = document.getElementById('mobile-events-categories-btn');
+        const mobPanel = document.getElementById('mobile-events-categories-panel');
+        const mobApply = document.getElementById('mobile-apply-categories');
+
+        mobBtn.addEventListener('click', () => {
+          mobPanel.classList.add('visible');
+          document.getElementById('events-container').classList.add('no-scroll');
+        });
+
+        const mobClose = document.getElementById('mobile-close-categories');
+        mobClose.addEventListener('click', () => {
+          mobPanel.classList.remove('visible');
+          document.getElementById('events-container').classList.remove('no-scroll');
+        });
+
+        const mobCancel = document.getElementById('mobile-cancel-categories');
+        mobCancel.addEventListener('click', () => {
+          document.querySelectorAll('#mobile-type-list input[type="checkbox"]:checked').forEach(checkbox => checkbox.click());
+          document.querySelectorAll('#mobile-keywords-list input[type="checkbox"]:checked').forEach(checkbox => checkbox.click());
+
+          const mobileFreeEntryCheckbox = document.getElementById('mobile-free-entry');
+          if (mobileFreeEntryCheckbox && mobileFreeEntryCheckbox.checked) mobileFreeEntryCheckbox.click();
+
+          const mobileTicketCheckbox = document.getElementById('mobile-ticket');
+          if (mobileTicketCheckbox && mobileTicketCheckbox.checked) mobileTicketCheckbox.click();
+
+          mobPanel.classList.remove('visible');
+          document.getElementById('events-container').classList.remove('no-scroll');
+        });
+
+        mobApply.addEventListener('click', () => {
+          mobPanel.classList.remove('visible');
+          document.getElementById('events-container').classList.remove('no-scroll');
+        });
+
+        [
+          { selector: '#mobile-type-list', type: 'tip' },
+          { selector: '#mobile-keywords-list', type: 'keyword' },
+        ].forEach(({ selector, type }) => {
+          document.querySelector(selector).addEventListener('change', e => {
+            if (!e.target.matches('input[type=checkbox]')) return;
+
+            let fullLabelText = e.target.nextSibling.textContent.trim();
+            let pillLabelText = fullLabelText;
+
+            if (type === 'tip') {
+              const countRegex = /\s*\(\d+\)$/;
+              const match = fullLabelText.match(countRegex);
+              if (match) pillLabelText = fullLabelText.substring(0, match.index).trim();
+            }
+
+            if (e.target.checked) {
+              addFilterPill(type, pillLabelText, e.target.id);
+            } else {
+              removeFilterPill(type, pillLabelText);
+            }
+            refreshDynamicContainer();
+            ensureCancelAll();
+            applyAllEventsFiltersAndPopulate();
+          });
+        });
+
+        document.getElementById('mobile-free-entry').addEventListener('change', e => {
+          const label = 'Intrare liberă';
+          if (e.target.checked) addFilterPill('free', label, e.target.id); else removeFilterPill('free', label);
+          refreshDynamicContainer();
+          ensureCancelAll();
+          applyAllEventsFiltersAndPopulate();
+        });
+
+        document.getElementById('mobile-ticket').addEventListener('change', e => {
+          const label = 'Bilet';
+          if (e.target.checked) addFilterPill('ticket', label, e.target.id); else removeFilterPill('ticket', label);
+          refreshDynamicContainer();
+          ensureCancelAll();
+          applyAllEventsFiltersAndPopulate();
+        });
+      }
+
+      document.addEventListener('click', (e) => {
+        const typeBtn = document.getElementById('event-type-btn');
+        const typePanel = document.getElementById('event-type-panel');
+        if (typePanel.classList.contains('visible') && !typeBtn.contains(e.target) && !typePanel.contains(e.target)) {
+          toggleTypePanel();
+        }
+
+        const keyBtn = document.getElementById('keywords-btn');
+        const keyPanel = document.getElementById('keywords-panel');
+        if (keyPanel.classList.contains('visible') && !keyBtn.contains(e.target) && !keyPanel.contains(e.target)) {
+          toggleKeywordsPanel();
+        }
+
+        const calBtn = document.getElementById('calendar-btn');
+        const calPanel = document.getElementById('calendar-container');
+        if (calPanel && calPanel.classList.contains('visible') && !calBtn.contains(e.target) && !calPanel.contains(e.target)) {
+          const confirmBtn = calPanel.querySelector('.calendar-confirm-btn');
+          if (confirmBtn) confirmBtn.click(); else toggleCalendar();
+        }
+      });
+
+      // Auto-open an event's detail panel when linked to directly, e.g.
+      // from a "related event" card elsewhere or a bookmarked #event-slug URL.
+      if (window.location.hash.startsWith('#event-')) {
+        try {
+          await Promise.all([initialEventsFetchPromise]);
+          const slug = window.location.hash.slice('#event-'.length);
+          const match = masterEventList.find(ev => slugify(ev.title) === slug);
+          if (match) openEventDetailPanel(match.title);
+        } catch (error) {
+          console.error('Could not open event from URL hash:', error);
+        }
+      }
     });
   </script>
 

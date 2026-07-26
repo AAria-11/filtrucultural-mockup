@@ -134,8 +134,13 @@ let initialKeywordsFetchPromise = null;
 let currentOpenEventData = null;
 let currentSearchQuery = '';
 
-const AIRTABLE_API_KEY = 'patbwEkPQC08zp6qy.d68a2e2965681fef780e5483bd34fed597a21f10bcf7bc8774b34bb7810dcb19';
-const AIRTABLE_BASE_ID = 'appz7cGVGynDa0R4z';
+// --- Baserow config for Events (see app-part1.js for the Obiective/locations
+// config this mirrors). Table ID from the table's URL, token scoped
+// read-only to this database (it's publicly visible in the page source). ---
+const BASEROW_EVENTS_TABLE_ID = '1095448';
+const BASEROW_EVENTS_TOKEN = 'BGQuoVQ5T3RBqE534jsj6KonM7IcsldS';
+const BASEROW_EVENTS_API_URL = `https://api.baserow.io/api/database/rows/table/${BASEROW_EVENTS_TABLE_ID}/?user_field_names=true&size=200`;
+const BASEROW_EVENTS_FIELDS_URL = `https://api.baserow.io/api/database/fields/table/${BASEROW_EVENTS_TABLE_ID}/`;
 
 function formatEventDateTime(isoStartDate, isoEndDate) {
   if (!isoStartDate) return "Data neprecizată";
@@ -197,125 +202,113 @@ function formatEventDateTime(isoStartDate, isoEndDate) {
   return `${startDay} ${startMonthName} ${startYear} - ${endDay} ${endMonthName} ${endYear} • ${startTime} - ${endTime}`;
 }
 
-async function fetchAllAirtableRecords(apiKey, baseId, tableNameOrId, options = {}) {
-  let allRecords = [];
-  let offset = null; // For pagination
+async function fetchAllBaserowEventRows(url) {
+  const maxRetries = 5;
+  const retryDelay = 500;
+  const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-  // Construct the base URL
-  let url = `https://api.airtable.com/v0/${baseId}/${encodeURIComponent(tableNameOrId)}`;
+  let rows = [];
+  let nextUrl = url;
 
-  // Add any specified options to the URL as query parameters
-  const queryParams = new URLSearchParams();
-  for (const key in options) {
-    if (options.hasOwnProperty(key)) {
-      // If 'fields' or 'sort' is an array, Airtable expects them as repeated parameters
-      if ((key === 'fields' || key === 'sort') && Array.isArray(options[key])) {
-        // For sort, Airtable expects sort[i][field] and sort[i][direction]
-        if (key === 'sort') {
-          options[key].forEach((sortObject, index) => {
-              queryParams.append(`sort[${index}][field]`, sortObject.field);
-              if (sortObject.direction) {
-                  queryParams.append(`sort[${index}][direction]`, sortObject.direction);
-              }
-          });
-        } else { // For fields
-          options[key].forEach(value => queryParams.append(`${key}[]`, value));
-        }
-      } else {
-        queryParams.append(key, options[key]);
+  while (nextUrl) {
+    let response = null;
+    let lastError = null;
+
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        response = await fetch(nextUrl, {
+          headers: { 'Authorization': `Token ${BASEROW_EVENTS_TOKEN}` }
+        });
+        if (!response.ok) throw new Error(`Baserow request failed: ${response.status}`);
+        lastError = null;
+        break;
+      } catch (error) {
+        lastError = error;
+        if (attempt < maxRetries) await sleep(retryDelay);
       }
     }
+
+    if (lastError) throw lastError;
+
+    const page = await response.json();
+    rows = rows.concat(page.results);
+    nextUrl = page.next;
   }
 
-  do {
-    // Create a new URLSearchParams object for the current request to handle offset correctly
-    const currentQueryParams = new URLSearchParams(queryParams.toString());
-    if (offset) {
-      currentQueryParams.append('offset', offset);
-    }
-
-    const requestUrl = `${url}${currentQueryParams.toString() ? '?' + currentQueryParams.toString() : ''}`;
-
-    try {
-      const response = await fetch(requestUrl, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${apiKey}`,
-          'Content-Type': 'application/json'
-        }
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(`Airtable API Error: ${response.status} ${response.statusText} - ${errorData.error?.message || JSON.stringify(errorData)}`);
-      }
-
-      const data = await response.json();
-      allRecords = allRecords.concat(data.records);
-      offset = data.offset; // Get the offset for the next page, if it exists
-
-    } catch (error) {
-      console.error('Error fetching page from Airtable:', error);
-      throw error; // Re-throw the error to be caught by the caller
-    }
-  } while (offset); // Continue if Airtable provides an offset (meaning more records)
-
-  return allRecords;
+  return rows;
 }
 
 async function fetchAndPrepareInitialEventData() {
   try {
-    const fetchOptions = {
-      sort: [{field: "Start", direction: "asc"}] // Sort by Start date/time ascending
-    };
-    const airtableRecords = await fetchAllAirtableRecords(AIRTABLE_API_KEY, AIRTABLE_BASE_ID, 'Events', fetchOptions);
+    const rows = await fetchAllBaserowEventRows(BASEROW_EVENTS_API_URL);
+    rows.sort((a, b) => new Date(a.Start || 0) - new Date(b.Start || 0));
 
-    masterEventList = airtableRecords.map(record => {
-      const fields = record.fields;
-      // Basic safety checks for fields
-      const imageUrl = (fields.Picture && fields.Picture.length > 0 && fields.Picture[0].url)
-                       ? fields.Picture[0].url
+    masterEventList = rows.map(row => {
+      const imageUrl = (row.Picture && row.Picture.length > 0 && row.Picture[0].url)
+                       ? row.Picture[0].url
                        : 'https://placehold.co/284x180/EAAAC8/EAAAC8'; // Default placeholder
 
-      const eventTypeArray = fields.Event_type || [];
+      const eventTypeArray = (row.Event_type || []).map(option => option.value);
       let categoryString = eventTypeArray.join(' • ');
       if (!categoryString) categoryString = "Necategorisit"; // Default category
+
+      // Normalized into the shape the rest of the app already reads
+      // (kept as "airtableFields" — this event data now comes from Baserow,
+      // not Airtable, but that property name is referenced throughout
+      // app-part1/2/3.js so it's left as-is to avoid touching every call site).
+      const fields = {
+        Title: row.Title,
+        Description: row.Description,
+        Description_ro: row.Description,
+        Description_en: row.Description_en,
+        Start: row.Start,
+        End: row.End,
+        Picture: row.Picture,
+        Location: row.Location ? row.Location.value : null,
+        Entry: row.Entry ? row.Entry.value : null,
+        Ticket_details: row.Ticket_details,
+        Event_type: eventTypeArray,
+        Keywords: (row.Keywords || []).map(option => option.value)
+      };
 
       return {
         image: imageUrl,
         category: categoryString,
         title: fields.Title || "Eveniment fără titlu",
         eventTypes: eventTypeArray,
-        address: fields.Location || "Locație neprecizată", // Assuming 'Location' field holds address-like info
-        time: formatEventDateTime(fields.Start, fields.End), // Use the new formatting function
+        address: fields.Location || "Locație neprecizată",
+        time: formatEventDateTime(fields.Start, fields.End),
         airtableFields: fields
       };
     });
   } catch (error) {
-    console.error("Failed to load events from Airtable. Falling back to example events.", error);
+    console.error("Failed to load events from Baserow.", error);
   }
 }
 
-async function fetchAndPrepareEventsFilterData(tableName, targetArray, fieldName = "Name", isKeywords = false) {
+// Event_type/Keywords are Baserow multiple_select fields — the filter
+// checkboxes read their master list of options from the field's own
+// metadata rather than a separate lookup table.
+async function fetchAndPrepareEventsFilterData(fieldName, targetArray, isKeywords = false) {
   try {
-    const records = await fetchAllAirtableRecords(AIRTABLE_API_KEY, AIRTABLE_BASE_ID, tableName, {
-        fields: [fieldName],
-        sort: [{ field: fieldName, direction: "asc" }]
+    const response = await fetch(BASEROW_EVENTS_FIELDS_URL, {
+      headers: { 'Authorization': `Token ${BASEROW_EVENTS_TOKEN}` }
     });
+    if (!response.ok) throw new Error(`Baserow fields request failed: ${response.status}`);
+    const allFields = await response.json();
+    const field = allFields.find(f => f.name === fieldName);
+    const values = (field && field.select_options ? field.select_options.map(opt => opt.value) : [])
+      .sort((a, b) => a.localeCompare(b, 'ro'));
 
     if (isKeywords) {
-      const keywordNames = records.map(record => record.fields[fieldName]).filter(Boolean);
-      targetArray.splice(0, targetArray.length, ...keywordNames);
+      targetArray.splice(0, targetArray.length, ...values);
     } else {
-      const typeObjects = records.map(record => ({
-        label: record.fields[fieldName].trim(),
-        count: 0
-      })).filter(item => item.label);
+      const typeObjects = values.map(label => ({ label, count: 0 }));
       targetArray.splice(0, targetArray.length, ...typeObjects);
     }
   } catch (error) {
-    console.error(`Failed to load ${tableName} from Airtable. Filter list will be empty.`, error);
-    targetArray.length = 0; // Clear the array on error
+    console.error(`Failed to load ${fieldName} options from Baserow. Filter list will be empty.`, error);
+    targetArray.length = 0;
   }
   return targetArray;
 }
@@ -489,10 +482,10 @@ async function toggleEvents(event) {
     initialEventsFetchPromise = fetchAndPrepareInitialEventData();
   }
   if (!initialEventTypesFetchPromise) {
-    initialEventTypesFetchPromise = fetchAndPrepareEventsFilterData('Evtype', dynamicEventTypes, "Name", false);
+    initialEventTypesFetchPromise = fetchAndPrepareEventsFilterData('Event_type', dynamicEventTypes, false);
   }
   if (!initialKeywordsFetchPromise) {
-    initialKeywordsFetchPromise = fetchAndPrepareEventsFilterData('Keywords', dynamicKeywords, "Name", true);
+    initialKeywordsFetchPromise = fetchAndPrepareEventsFilterData('Keywords', dynamicKeywords, true);
   }
 
   try {
