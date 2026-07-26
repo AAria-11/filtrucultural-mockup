@@ -1198,6 +1198,14 @@ body {
     height: 18px; /* Set height of the 'X' icon */
 }
 
+.read-more-tags {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
 .read-more-category {
     display: inline-block;
     font-family: Inter;
@@ -1208,7 +1216,24 @@ body {
     border: 1px solid;
     padding: 2px 4px;
     border-radius: 2px 0px 0px 0px;
-    margin-bottom: 8px;
+    margin-bottom: 0;
+}
+
+.read-more-tag {
+    display: inline-block;
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20.8px;
+    text-align: left;
+    border: 1px solid #585858;
+    color: #585858;
+    padding: 2px 4px;
+    border-radius: 2px 0px 0px 0px;
+}
+
+.read-more-tag:empty {
+    display: none;
 }
 
 .read-more-title, .read-more-section-title {
@@ -3839,7 +3864,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
         height: 32px;
     }
 
-    .read-more-category {
+    .read-more-tags {
         margin-top: 24px;
         align-self: flex-start;
     }

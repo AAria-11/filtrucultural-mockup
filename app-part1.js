@@ -1831,15 +1831,25 @@ function refreshOrFillReadMore(featureToRefresh) {
       return;
   }
 
-  const orgsKey = `Orgs_${currentLang}`;
-  let orgType = feature.properties[orgsKey].split(/[,;]+/).map(s => s.trim())[0];
-  readMoreContainer.querySelector(".read-more-org").textContent = orgType;
-
   const categoriesKey = `Categories_${currentLang}`;
   const category = feature.properties[categoriesKey].split(/[,;]+/).map(s => s.trim())[0];
   let readMoreCategory = readMoreContainer.querySelector(".read-more-category");
   readMoreCategory.textContent = getCategoryDisplayName(category);
   readMoreCategory.style.color = `${getCategoryColor(category)}`;
+
+  // Style/Period/Classification/Org tags — same "first value from a
+  // comma/semicolon-separated field" convention as category/org used above.
+  function setReadMoreTag(selector, propertyKeyBase) {
+    const el = readMoreContainer.querySelector(selector);
+    if (!el) return;
+    const raw = feature.properties[`${propertyKeyBase}_${currentLang}`] || '';
+    const value = raw.split(/[,;]+/).map(s => s.trim()).filter(Boolean)[0];
+    el.textContent = value || '';
+  }
+  setReadMoreTag('.read-more-tag-style', 'Style');
+  setReadMoreTag('.read-more-tag-period', 'Period');
+  setReadMoreTag('.read-more-tag-clasare', 'Classification');
+  setReadMoreTag('.read-more-tag-org', 'Orgs');
 
   const descriereKey = `Descriere_${currentLang}`;
   let contentArr = feature.properties[descriereKey].split('\n').filter(l => l.length > 0 && l.trim() !== '');
