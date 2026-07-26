@@ -1960,7 +1960,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 }
   
 .event-card:hover .event-title {
-    color: rgba(173, 83, 124, 1);  /* your global reddish accent */
+    color: rgb(204, 66, 5);  /* your global reddish accent */
 }
   
 .event-image {
@@ -2062,7 +2062,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     display: block;
     width: 100%;
     font-size: 16px;
-    color: rgba(173, 83, 124, 1);
+    color: rgb(204, 66, 5);
     font-weight: 600;
     text-transform: uppercase;
 }
