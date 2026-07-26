@@ -262,7 +262,7 @@ body.articles-page .page-content {
 @media (min-width: 900px) {
   .articles-grid .article-card {
     width: 284px;
-    height: 388px;
+    height: 300px;
   }
 }
 
