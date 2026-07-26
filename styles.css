@@ -1203,7 +1203,7 @@ body {
     flex-wrap: wrap;
     align-items: center;
     gap: 8px;
-    margin-bottom: 8px;
+    margin-bottom: 14px;
 }
 
 .read-more-category {
@@ -1264,7 +1264,7 @@ body {
     line-height: 20.8px;
     text-align: left;
     color: #585858;
-    margin-bottom: 32px;
+    margin-bottom: 24px;
     display: flex;
     align-items: center;
 }
@@ -1283,9 +1283,9 @@ body {
     align-items: center;
     border-bottom: 1px dashed #25121B;
     border-top: 1px dashed #25121B;
-    margin-bottom: 32px;
-    padding-top: 22px;
-    padding-bottom: 17px;
+    margin-bottom: 24px;
+    padding-top: 4px;
+    padding-bottom: 0px;
 }
 
 .read-more-social-link {
