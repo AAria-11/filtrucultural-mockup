@@ -673,7 +673,7 @@ function createAndDisplayCard(clickedFeature, adjustMap = true) {
         if (isPanelHidden) {
           panelLeft = 55;
        } else {
-          panelLeft = 370;
+          panelLeft = 377;
        }
     }
 
@@ -1239,17 +1239,17 @@ function showSidePanel() {
   var btn =  document.getElementById('iconBtn3');
   if (currentLeft < 0) {
     panel.style.left = '0px';
-    btn.style.left = '315px';
+    btn.style.left = '322px';
     img3.src = 'CaretLeft.svg';
     var dynamicLabelContainer = document.getElementById("dynamicLabelContainer");
-    dynamicLabelContainer.style.left = '415px';
+    dynamicLabelContainer.style.left = '422px';
     isPanelHidden = false;
     if (!window.matchMedia("(max-width: 550px)").matches) {
       closeArticlesHeader();
     }
     const card = document.querySelector('.card');
     if (!card.classList.contains('hidden-element')) {
-       const leftLimit = 370;
+       const leftLimit = 377;
        const cardLeft = parseInt(window.getComputedStyle(card).left, 10) || 0;
        if (cardLeft <= leftLimit) {
           card.classList.add('hidden-element');
@@ -1270,7 +1270,7 @@ function toggleSidePanel() {
   var img3 = document.getElementById('iconBtn3Image');
   var btn = document.getElementById('iconBtn3');
   if (!showSidePanel()) {
-    panel.style.left = '-315px';
+    panel.style.left = '-322px';
     btn.style.left = '0px';
     img3.src = 'CaretRight.svg';
     var dynamicLabelContainer = document.getElementById("dynamicLabelContainer");
