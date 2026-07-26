@@ -1920,7 +1920,7 @@ body {
 
 .event-card {
     border-radius: 0px 30px 0px 0px;
-    background-color: #EAABC82E;
+    background-color: #CC42052E;
 
     max-width: 284px;
     overflow: hidden;
@@ -2367,7 +2367,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 .article-card {
     width: 242px;
     height: 282px;
-    background-color: #EAABC82E;
+    background-color: #CC42052E;
     text-align: center;
     display: flex;
     flex-direction: column;
