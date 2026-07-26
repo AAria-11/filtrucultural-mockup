@@ -613,7 +613,7 @@ body {
 #selectAllCheckmark,
 #mobileSelectAllCheckmark {
     left: 24px;
-    border: 1.5px solid #ffcb16;
+    border: 1.5px solid #D3D3D3;
 }
 
 .custom-checkbox input {
@@ -636,8 +636,8 @@ body {
 
 #selectAllCheckbox input:checked ~ #selectAllCheckmark,
 #mobileSelectAllCheckbox input:checked ~ #mobileSelectAllCheckmark {
-    background-color: #ffcb16;
-    border-color: #ffcb16;
+    background-color: #D3D3D3;
+    border-color: #D3D3D3;
 }
 
   /* When the checkbox is checked, change the background color */
