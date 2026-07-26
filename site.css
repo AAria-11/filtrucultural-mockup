@@ -90,6 +90,12 @@ body {
    existing markup into collapsible sections. */
 #obiective-panel {
   overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* old Edge/IE */
+}
+
+#obiective-panel::-webkit-scrollbar {
+  display: none; /* Chrome/Safari — scrolling itself stays enabled */
 }
 
 .sidebar-search-bar {

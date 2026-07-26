@@ -113,7 +113,7 @@ body {
 
 .side-panel {
     position: absolute;
-    width: 320px;
+    width: 315px;
     height: calc(100vh - 108px);
     top: 108px;
     left: 0px;
@@ -186,7 +186,7 @@ body {
 .side-panel-btn {
     position: absolute;
     top: 54%;
-    left: 320px;
+    left: 315px;
     transform: translateY(-50%); /* Adjust vertical centering due to the positioning */
     width: 36px;
     height: 48px;
