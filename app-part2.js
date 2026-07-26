@@ -171,7 +171,7 @@ function formatEventDateTime(isoStartDate, isoEndDate) {
 
   // Case 1: No isoEndDate (current behavior)
   if (!endDate) {
-    return `${startDayName}, ${startDay} ${startMonthName} ${startYear} • ${startTime}`;
+    return `${startDayName}, ${startDay} ${startMonthName} • ${startTime}`;
   }
 
   // With isoEndDate
@@ -185,21 +185,21 @@ function formatEventDateTime(isoStartDate, isoEndDate) {
 
   // Case 2: Same day event
   if (startYear === endYear && startMonthIndex === endMonthIndex && startDay === endDay) {
-    return `${startDayName}, ${startDay} ${startMonthName} ${startYear} • ${startTime} - ${endTime}`;
+    return `${startDayName}, ${startDay} ${startMonthName} • ${startTime} - ${endTime}`;
   }
 
   // Case 3: Different day, same month and year
   if (startYear === endYear && startMonthIndex === endMonthIndex) {
-    return `${startDay} - ${endDay} ${startMonthName} ${startYear} • ${startTime} - ${endTime}`;
+    return `${startDay} - ${endDay} ${startMonthName} • ${startTime} - ${endTime}`;
   }
 
   // Case 4: Different month, same year
   if (startYear === endYear) {
-    return `${startDay} ${startMonthName} - ${endDay} ${endMonthName} ${startYear} • ${startTime} - ${endTime}`;
+    return `${startDay} ${startMonthName} - ${endDay} ${endMonthName} • ${startTime} - ${endTime}`;
   }
 
   // Case 5: Different year (implies different month and day as well)
-  return `${startDay} ${startMonthName} ${startYear} - ${endDay} ${endMonthName} ${endYear} • ${startTime} - ${endTime}`;
+  return `${startDay} ${startMonthName} - ${endDay} ${endMonthName} • ${startTime} - ${endTime}`;
 }
 
 async function fetchAllBaserowEventRows(url) {

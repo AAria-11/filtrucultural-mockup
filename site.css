@@ -232,3 +232,23 @@ body {
   display: inline-block;
   margin-top: 32px;
 }
+
+/* Evenimente: widen .page-content just on this page so the title, filter
+   bar, and card grid all share a 1232px content width — 1280px minus the
+   .page-content 24px side padding (box-sizing: border-box). 1232px is
+   exactly 4 cards at 284px plus 3 gaps at 32px (.recent-events-container's
+   existing gap), so the grid lands on 4 cards/row with no leftover space. */
+body.evenimente-page .page-content {
+  max-width: 1280px;
+}
+
+@media (min-width: 900px) {
+  .recent-events-container .event-card {
+    width: 284px;
+    height: 388px;
+  }
+}
+
+.event-card:hover .event-title {
+  color: #CC4205;
+}
