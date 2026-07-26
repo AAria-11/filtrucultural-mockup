@@ -2449,12 +2449,12 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 .article-card-title {
     font-family: "Afacad";
     font-weight: 700;
-    font-size: 22px;
+    font-size: 24px;
     line-height: 24px;
     letter-spacing: -0.02em;
     text-align: left;
     color: #2A2829;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
 }
 
 .article-card-description {
