@@ -50,3 +50,49 @@
     margin-top: 74px;
   }
 }
+
+/* Despre noi / Participă / Articole / Arhivă content, ported from the old
+   single-page app, dropped into .page-content instead of the old fixed/
+   absolute overlay wrappers. A few of the original desktop widths assumed
+   a full-viewport modal wider than .page-content's 900px cap, so they need
+   a max-width fix here. */
+
+.article-photo,
+.article-content-text,
+.image-gallery-container {
+  max-width: 100%;
+}
+
+.engage-image {
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.engage-image img {
+  max-width: 100%;
+  height: auto;
+}
+
+.articles-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+}
+
+.archive-gallery img,
+.archive-main-image {
+  max-width: 100%;
+  height: auto;
+}
+
+/* The CDRF article's footnote expand/collapse (see .footnotes / .expanded
+   in styles.css) caps at 500px, too short for its actual footnote text. */
+.expanded #footnotes-more-text {
+  max-height: 4000px;
+}
+
+.back-to-articles-link {
+  display: inline-block;
+  margin-top: 32px;
+}
