@@ -1274,6 +1274,13 @@ function toggleSidePanel() {
   }
 }
 
+function toggleSidebarSection(headerEl) {
+  const section = headerEl.parentElement;
+  const wasOpen = section.classList.contains('open');
+  document.querySelectorAll('#sidebarAccordion .sidebar-accordion-section.open').forEach(s => s.classList.remove('open'));
+  if (!wasOpen) section.classList.add('open');
+}
+
 function activateOrDeactivateCancelButton() {
   const cancelBtn = document.getElementById('cancelbtn');
 

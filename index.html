@@ -68,80 +68,108 @@
 
   <div class="main-container">
     <div class="side-panel" id="sidePanel">
-      <div class="icon-buttons">
-        <button class="icon-btn icon-btn1 icon-btn-active" id="iconBtn1"><img id="iconBtn1Image" src="Stairs.svg"></button>
-        <button class="icon-btn icon-btn2" id="iconBtn2"><img id="iconBtn2Image" src="Sliders.svg"></button>
-      </div>
       <div id="obiective-panel" class="desktop-only-panel">
-        <div class="side-panel-title" id="locations-panel-title">Obiective
-          <button class="mobile-panel-close-button" onclick="closeMobilePanel()">
-            <img src="Close.svg"/>
-          </button>
-        </div>
-        <ul id="custom-bulleted-list"></ul>
-        <label class="custom-checkbox" id="selectAllCheckbox" style="display: none;">
-          <span id="selectAllLabelText">Selectează toate</span>
-          <input type="checkbox" id="selectAllInput" checked onclick="handleSelectAll()">
-          <span class="checkmark" id="selectAllCheckmark"></span>
-        </label>
-        <div class="sep-line"></div>
-        <div class="search-bar">
+        <div class="search-bar sidebar-search-bar">
           <input type="search" id="searchInput" placeholder="Caută obiective" oninput="handleSearch(this.value)">
         </div>
-        <div class="sep-line"></div>
-        <div class="side-panel-title" id="objList">Listă obiective</div>
-        <div id="gallery-container"></div>
-      </div>
-      <div id="filtre-panel" class="desktop-only-panel" style="display: none;">
-        <div class="side-panel-title" id="filters-panel-name">Filtre
-          <button class="mobile-panel-close-button" onclick="closeMobilePanel()">
-            <img src="Close.svg"/>
-          </button>
+
+        <div class="sidebar-accordion" id="sidebarAccordion">
+          <div class="sidebar-accordion-section open" data-section="lista-obiective">
+            <button class="sidebar-accordion-header" onclick="toggleSidebarSection(this)">
+              <span id="objList">Listă obiective</span>
+              <img class="sidebar-accordion-chevron" src="CaretDown.svg" alt="">
+            </button>
+            <div class="sidebar-accordion-content">
+              <div id="gallery-container"></div>
+            </div>
+          </div>
+
+          <div class="sidebar-accordion-section" data-section="categorie">
+            <button class="sidebar-accordion-header" onclick="toggleSidebarSection(this)">
+              <span>Categorie</span>
+              <img class="sidebar-accordion-chevron" src="CaretDown.svg" alt="">
+            </button>
+            <div class="sidebar-accordion-content">
+              <label class="custom-checkbox" id="selectAllCheckbox">
+                <span id="selectAllLabelText">Selectează toate</span>
+                <input type="checkbox" id="selectAllInput" checked onclick="handleSelectAll()">
+                <span class="checkmark" id="selectAllCheckmark"></span>
+              </label>
+              <ul id="custom-bulleted-list"></ul>
+            </div>
+          </div>
+
+          <div class="sidebar-accordion-section" data-section="stil-arhitectural">
+            <button class="sidebar-accordion-header" onclick="toggleSidebarSection(this)">
+              <span id="arch-style-title">Stil arhitectural</span>
+              <img class="sidebar-accordion-chevron" src="CaretDown.svg" alt="">
+            </button>
+            <div class="sidebar-accordion-content">
+              <div id="architectural-style-filters">
+                <label class="custom-checkbox"><span id="style-neogotic-txt">Neogotic</span><input type="checkbox" id="style-neogotic"><span class="checkmark"></span></label>
+                <label class="custom-checkbox"><span id="style-neoclasic-txt">Neoclasic</span><input type="checkbox" id="style-neoclasic"><span class="checkmark"></span></label>
+                <label class="custom-checkbox"><span id="style-artnouveau-txt">Art Nouveau/ Secession</span><input type="checkbox" id="style-artnouveau"><span class="checkmark"></span></label>
+                <label class="custom-checkbox"><span id="style-eclectic-txt">Eclectic</span><input type="checkbox" id="style-eclectic"><span class="checkmark"></span></label>
+                <label class="custom-checkbox"><span id="style-neoromanesc-txt">Neoromânesc</span><input type="checkbox" id="style-neoromanesc"><span class="checkmark"></span></label>
+                <label class="custom-checkbox"><span id="style-industrial-txt">Arhitectură industrială</span><input type="checkbox" id="style-industrial"><span class="checkmark"></span></label>
+                <label class="custom-checkbox"><span id="style-modernism-txt">Modernism</span><input type="checkbox" id="style-modernism"><span class="checkmark"></span></label>
+                <label class="custom-checkbox"><span id="style-artdeco-txt">Art-Deco</span><input type="checkbox" id="style-artdeco"><span class="checkmark"></span></label>
+                <label class="custom-checkbox"><span id="style-pitoresc-txt">Pitoresc mediteraneean</span><input type="checkbox" id="style-pitoresc"><span class="checkmark"></span></label>
+                <label class="custom-checkbox"><span id="style-realism-txt">Realism Socialist</span><input type="checkbox" id="style-realism"><span class="checkmark"></span></label>
+                <label class="custom-checkbox"><span id="style-modernism-soc-txt">Modernism socialist</span><input type="checkbox" id="style-modernism-soc"><span class="checkmark"></span></label>
+                <label class="custom-checkbox"><span id="style-brutalism-txt">Brutalism</span><input type="checkbox" id="style-brutalism"><span class="checkmark"></span></label>
+                <label class="custom-checkbox"><span id="style-contemporan-txt">Contemporan</span><input type="checkbox" id="style-contemporan"><span class="checkmark"></span></label>
+                <label class="custom-checkbox"><span id="style-postmodern-txt">Postmodern</span><input type="checkbox" id="style-postmodern"><span class="checkmark"></span></label>
+                <label class="custom-checkbox"><span id="style-altele-txt">Altele</span><input type="checkbox" id="style-altele"><span class="checkmark"></span></label>
+              </div>
+            </div>
+          </div>
+
+          <div class="sidebar-accordion-section" data-section="perioada-constructiei">
+            <button class="sidebar-accordion-header" onclick="toggleSidebarSection(this)">
+              <span id="constr-period-title">Perioada construcției</span>
+              <img class="sidebar-accordion-chevron" src="CaretDown.svg" alt="">
+            </button>
+            <div class="sidebar-accordion-content">
+              <div id="construction-period-filters">
+                <label class="custom-checkbox"><span id="period-1401-txt">1401 - 1500</span><input type="checkbox" id="period-1401"><span class="checkmark"></span></label>
+                <label class="custom-checkbox"><span id="period-1701-txt">1701 - 1800</span><input type="checkbox" id="period-1701"><span class="checkmark"></span></label>
+                <label class="custom-checkbox"><span id="period-1801-txt">1801 - 1866</span><input type="checkbox" id="period-1801"><span class="checkmark"></span></label>
+                <label class="custom-checkbox"><span id="period-1867-txt">1867 - 1918</span><input type="checkbox" id="period-1867"><span class="checkmark"></span></label>
+                <label class="custom-checkbox"><span id="period-1919-txt">1919 - 1947</span><input type="checkbox" id="period-1919"><span class="checkmark"></span></label>
+                <label class="custom-checkbox"><span id="period-1948-txt">1948 - 1989</span><input type="checkbox" id="period-1948"><span class="checkmark"></span></label>
+                <label class="custom-checkbox"><span id="period-1990-txt">1990 - prezent</span><input type="checkbox" id="period-1990"><span class="checkmark"></span></label>
+              </div>
+            </div>
+          </div>
+
+          <div class="sidebar-accordion-section" data-section="clasarea-imobilului">
+            <button class="sidebar-accordion-header" onclick="toggleSidebarSection(this)">
+              <span id="prop-class">Clasarea imobilului</span>
+              <img class="sidebar-accordion-chevron" src="CaretDown.svg" alt="">
+            </button>
+            <div class="sidebar-accordion-content">
+              <div class="clasare-container">
+                <div id="historicalMonument" class="button-clasare" onclick="buttonClasareClicked(this);">Monument istoric</div>
+                <div id="unclassified" class="button-clasare" onclick="buttonClasareClicked(this);">Neclasat</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sidebar-accordion-section" data-section="tipul-organizatiei">
+            <button class="sidebar-accordion-header" onclick="toggleSidebarSection(this)">
+              <span id="filtre-organizatii">Tipul organizației</span>
+              <img class="sidebar-accordion-chevron" src="CaretDown.svg" alt="">
+            </button>
+            <div class="sidebar-accordion-content">
+              <label class="custom-checkbox"><span id="fund-txt">Fundație</span><input type="checkbox" id="fund"><span class="checkmark"></span></label>
+              <label class="custom-checkbox"><span id="priv-inst-txt">Inițiativă privată</span><input type="checkbox" id="priv-inst"><span class="checkmark"></span></label>
+              <label class="custom-checkbox"><span id="pub-inst-txt">Instituție publică</span><input type="checkbox" id="pub-inst"><span class="checkmark"></span></label>
+              <label class="custom-checkbox"><span id="ong-txt">ONG</span><input type="checkbox" id="ong"><span class="checkmark"></span></label>
+            </div>
+          </div>
         </div>
-        <div class="section-title" id="filtre-organizatii">A. Organizații</div>
-        <div>
-          <label class="custom-checkbox"><span id="fund-txt">Fundație</span><input type="checkbox" id="fund"><span class="checkmark"></span></label>
-          <label class="custom-checkbox"><span id="priv-inst-txt">Inițiativă privată</span><input type="checkbox" id="priv-inst"><span class="checkmark"></span></label>
-          <label class="custom-checkbox"><span id="pub-inst-txt">Instituție publică</span><input type="checkbox" id="pub-inst"><span class="checkmark"></span></label>
-          <label class="custom-checkbox"><span id="ong-txt">ONG</span><input type="checkbox" id="ong"><span class="checkmark"></span></label>
-        </div>
-        <div class="sep-line-dashed"></div>
-        <div class="section-title" id="prop-class">B. Clasarea imobilului</div>
-        <div class="clasare-container">
-          <div id="historicalMonument" class="button-clasare" onclick="buttonClasareClicked(this);">Monument istoric</div>
-          <div id="unclassified" class="button-clasare" onclick="buttonClasareClicked(this);">Neclasat</div>
-        </div>
-        <div class="sep-line-dashed"></div>
-        <div class="section-title" id="constr-period-title">C. Perioada construcției</div>
-        <div id="construction-period-filters">
-          <label class="custom-checkbox"><span id="period-1401-txt">1401 - 1500</span><input type="checkbox" id="period-1401"><span class="checkmark"></span></label>
-          <label class="custom-checkbox"><span id="period-1701-txt">1701 - 1800</span><input type="checkbox" id="period-1701"><span class="checkmark"></span></label>
-          <label class="custom-checkbox"><span id="period-1801-txt">1801 - 1866</span><input type="checkbox" id="period-1801"><span class="checkmark"></span></label>
-          <label class="custom-checkbox"><span id="period-1867-txt">1867 - 1918</span><input type="checkbox" id="period-1867"><span class="checkmark"></span></label>
-          <label class="custom-checkbox"><span id="period-1919-txt">1919 - 1947</span><input type="checkbox" id="period-1919"><span class="checkmark"></span></label>
-          <label class="custom-checkbox"><span id="period-1948-txt">1948 - 1989</span><input type="checkbox" id="period-1948"><span class="checkmark"></span></label>
-          <label class="custom-checkbox"><span id="period-1990-txt">1990 - prezent</span><input type="checkbox" id="period-1990"><span class="checkmark"></span></label>
-        </div>
-        <div class="sep-line-dashed"></div>
-        <div class="section-title" id="arch-style-title">D. Stil arhitectural</div>
-        <div id="architectural-style-filters">
-          <label class="custom-checkbox"><span id="style-neogotic-txt">Neogotic</span><input type="checkbox" id="style-neogotic"><span class="checkmark"></span></label>
-          <label class="custom-checkbox"><span id="style-neoclasic-txt">Neoclasic</span><input type="checkbox" id="style-neoclasic"><span class="checkmark"></span></label>
-          <label class="custom-checkbox"><span id="style-artnouveau-txt">Art Nouveau/ Secession</span><input type="checkbox" id="style-artnouveau"><span class="checkmark"></span></label>
-          <label class="custom-checkbox"><span id="style-eclectic-txt">Eclectic</span><input type="checkbox" id="style-eclectic"><span class="checkmark"></span></label>
-          <label class="custom-checkbox"><span id="style-neoromanesc-txt">Neoromânesc</span><input type="checkbox" id="style-neoromanesc"><span class="checkmark"></span></label>
-          <label class="custom-checkbox"><span id="style-industrial-txt">Arhitectură industrială</span><input type="checkbox" id="style-industrial"><span class="checkmark"></span></label>
-          <label class="custom-checkbox"><span id="style-modernism-txt">Modernism</span><input type="checkbox" id="style-modernism"><span class="checkmark"></span></label>
-          <label class="custom-checkbox"><span id="style-artdeco-txt">Art-Deco</span><input type="checkbox" id="style-artdeco"><span class="checkmark"></span></label>
-          <label class="custom-checkbox"><span id="style-pitoresc-txt">Pitoresc mediteraneean</span><input type="checkbox" id="style-pitoresc"><span class="checkmark"></span></label>
-          <label class="custom-checkbox"><span id="style-realism-txt">Realism Socialist</span><input type="checkbox" id="style-realism"><span class="checkmark"></span></label>
-          <label class="custom-checkbox"><span id="style-modernism-soc-txt">Modernism socialist</span><input type="checkbox" id="style-modernism-soc"><span class="checkmark"></span></label>
-          <label class="custom-checkbox"><span id="style-brutalism-txt">Brutalism</span><input type="checkbox" id="style-brutalism"><span class="checkmark"></span></label>
-          <label class="custom-checkbox"><span id="style-contemporan-txt">Contemporan</span><input type="checkbox" id="style-contemporan"><span class="checkmark"></span></label>
-          <label class="custom-checkbox"><span id="style-postmodern-txt">Postmodern</span><input type="checkbox" id="style-postmodern"><span class="checkmark"></span></label>
-          <label class="custom-checkbox"><span id="style-altele-txt">Altele</span><input type="checkbox" id="style-altele"><span class="checkmark"></span></label>
-        </div>
-        <div class="sep-line" id="filtre-sep-line"></div>
+
         <button class="anuleaza-button" id="cancelbtn" onclick="onAnuleazaClick(this)">Anulează</button>
       </div>
     </div>

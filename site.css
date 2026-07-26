@@ -80,6 +80,81 @@
   gap: 32px;
 }
 
+/* Map sidebar (index.html): a single accordion replacing the old
+   Obiective/Filtre icon-tab-toggle panels. All the underlying filter
+   checkboxes/logic in app-part1.js are unchanged, this just relocates the
+   existing markup into collapsible sections. */
+#obiective-panel {
+  overflow-y: auto;
+}
+
+.sidebar-search-bar {
+  margin-top: 20px;
+}
+
+.sidebar-accordion-section {
+  border-bottom: 1px dashed #D9C9C0;
+}
+
+.sidebar-accordion-section:last-child {
+  border-bottom: none;
+}
+
+.sidebar-accordion-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #2A1115;
+  text-align: left;
+  padding: 16px 24px;
+  box-sizing: border-box;
+}
+
+.sidebar-accordion-header:hover {
+  background-color: #CC420512;
+}
+
+.sidebar-accordion-chevron {
+  width: 12px;
+  height: 12px;
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+.sidebar-accordion-section.open .sidebar-accordion-chevron {
+  transform: rotate(180deg);
+}
+
+.sidebar-accordion-content {
+  display: none;
+  padding: 0 24px 16px 24px;
+  box-sizing: border-box;
+}
+
+.sidebar-accordion-section.open .sidebar-accordion-content {
+  display: block;
+}
+
+.sidebar-accordion-content #gallery-container {
+  max-height: 45vh;
+  overflow-y: auto;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.sidebar-accordion-content #custom-bulleted-list {
+  max-height: 40vh;
+  overflow-y: auto;
+}
+
 /* #partners is a fixed 1200px in styles.css (sized for the old full-width
    modal) with an intentional 112px override under its mobile media query —
    only fix the gap above that breakpoint so the mobile size stays untouched. */
