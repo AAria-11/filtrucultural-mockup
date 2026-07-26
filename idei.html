@@ -3,7 +3,7 @@
 
 <head>
   <meta charset='utf-8' />
-  <title>Articole — Filtru Cultural București</title>
+  <title>Idei — Filtru Cultural București</title>
   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
@@ -58,51 +58,10 @@
   <!-- ===== End shared nav ===== -->
 
   <div class="page-content">
-    <h1>Articole</h1>
-    <p>Descoperă actori ai scenei culturale bucureștene în profunzime.</p>
-    <div class="articles-grid">
-      <a href="articol-suprainfinit.html" class="article-card">
-        <img src="suprainfinit.png" alt="Suprainfinit Gallery">
-        <div class="article-card-content">
-          <div class="article-card-title">Suprainfinit Gallery</div>
-          <div class="article-card-description">Raluca Bujor & Nicoleta Moise</div>
-        </div>
-      </a>
-      <a href="articol-cdrf.html" class="article-card">
-        <img src="cdrf.png" alt="Centrul de Resurse în Fotografie">
-        <div class="article-card-content">
-          <div class="article-card-title">Centrul de Resurse în Fotografie</div>
-          <div class="article-card-description">Raluca Bujor & Nicoleta Moise</div>
-        </div>
-      </a>
-      <a href="articol-atsc.html" class="article-card">
-        <img src="atsc.png" alt="Atelierele Scânteia">
-        <div class="article-card-content">
-          <div class="article-card-title">Atelierele Scânteia</div>
-          <div class="article-card-description">Nicoleta Moise & Raluca Bujor</div>
-        </div>
-      </a>
-      <a href="articol-pprt.html" class="article-card">
-        <img src="pprt.png" alt="Paper Traffic">
-        <div class="article-card-content">
-          <div class="article-card-title">Paper Traffic</div>
-          <div class="article-card-description">Octavian Puric</div>
-        </div>
-      </a>
-      <a href="articol-masca.html" class="article-card">
-        <img src="masca.png" alt="Teatrul Masca">
-        <div class="article-card-content">
-          <div class="article-card-title">Teatrul Masca</div>
-          <div class="article-card-description">Nicoleta Moise</div>
-        </div>
-      </a>
-      <a href="articol-arghezi.html" class="article-card">
-        <img src="arghezi.png" alt="Casa Memorială Tudor Arghezi — Mărțișor">
-        <div class="article-card-content">
-          <div class="article-card-title">Casa Memorială Tudor Arghezi — Mărțișor</div>
-          <div class="article-card-description">Raluca Bujor</div>
-        </div>
-      </a>
+    <h1>Idei</h1>
+    <p>Perspective și proiecte care ne inspiră.</p>
+    <div id="archive-container">
+      <div class="archive-timeline" id="archiveTimeline"></div>
     </div>
   </div>
 
@@ -140,6 +99,88 @@
       const menu = document.getElementById('mobileMenu');
       menu.style.display = menu.style.display === 'none' ? 'flex' : 'none';
     });
+
+    // Same rendering pattern as arhiva.html/archive.json. Each entry's photo
+    // gallery reads pics/<galleryDir>/0.jpg, 1.jpg, ... — defaults to just the
+    // one main photo unless the entry sets a higher "photoCount".
+    fetch('idei.json')
+      .then(function (r) { return r.json(); })
+      .then(function (entries) {
+        var timeline = document.getElementById('archiveTimeline');
+        entries.forEach(function (entry) {
+          var el = document.createElement('div');
+          el.className = 'archive-entry';
+
+          var marker = document.createElement('div');
+          marker.className = 'archive-timeline-marker';
+          el.appendChild(marker);
+
+          var date = document.createElement('div');
+          date.className = 'archive-date';
+          date.textContent = entry.date;
+          el.appendChild(date);
+
+          var title = document.createElement('div');
+          title.className = 'archive-title';
+          title.textContent = entry.title;
+          el.appendChild(title);
+
+          var subtitle = document.createElement('div');
+          subtitle.className = 'archive-subtitle';
+          subtitle.textContent = entry.subtitle;
+          el.appendChild(subtitle);
+
+          var mainImage = document.createElement('img');
+          mainImage.className = 'archive-main-image';
+          mainImage.src = entry.mainImage;
+          mainImage.alt = entry.title;
+          el.appendChild(mainImage);
+
+          var description = document.createElement('div');
+          description.className = 'archive-description';
+          entry.description.forEach(function (paragraph) {
+            var p = document.createElement('p');
+            p.innerHTML = paragraph;
+            description.appendChild(p);
+          });
+          el.appendChild(description);
+
+          var photoCount = entry.photoCount || 1;
+
+          if (entry.galleryDir && photoCount > 1) {
+            var gallery = document.createElement('div');
+            gallery.className = 'archive-gallery';
+            for (var i = 0; i < photoCount; i++) {
+              var thumb = document.createElement('div');
+              thumb.className = 'thumbnail-archive';
+              var img = document.createElement('img');
+              img.src = 'pics/' + entry.galleryDir + '/' + i + '.jpg';
+              img.alt = entry.title;
+              thumb.appendChild(img);
+              gallery.appendChild(thumb);
+            }
+            el.appendChild(gallery);
+          }
+
+          if (entry.galleryDir) {
+            var galleryMobile = document.createElement('div');
+            galleryMobile.className = 'archive-gallery-mobile';
+            var mobileMain = document.createElement('div');
+            mobileMain.className = 'main-image';
+            var mobileImg = document.createElement('img');
+            mobileImg.src = 'pics/' + entry.galleryDir + '/0.jpg';
+            mobileImg.alt = entry.title;
+            mobileMain.appendChild(mobileImg);
+            galleryMobile.appendChild(mobileMain);
+            el.appendChild(galleryMobile);
+          }
+
+          timeline.appendChild(el);
+        });
+      })
+      .catch(function (err) {
+        console.error('Could not load idei.json', err);
+      });
   </script>
 
 </body>
