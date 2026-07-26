@@ -20,7 +20,7 @@ body {
 
 .page-content {
   max-width: 900px;
-  margin: 108px auto 80px auto;
+  margin: 50px auto 80px auto;
   padding: 0 24px;
   box-sizing: border-box;
   font-family: 'Inter', sans-serif;
@@ -37,6 +37,14 @@ body {
 .page-content p {
   font-size: 16px;
   line-height: 1.6;
+}
+
+/* Page title + subtitle only — the direct-child combinator keeps this from
+   also centering body copy nested deeper in the page (article text, archive
+   descriptions, etc.), which still uses the plain .page-content p rule above. */
+.page-content > h1,
+.page-content > p {
+  text-align: center;
 }
 
 .page-placeholder-note {
@@ -246,6 +254,10 @@ body {
    existing gap), so the grid lands on 4 cards/row with no leftover space. */
 body.evenimente-page .page-content {
   max-width: 1280px;
+}
+
+.filter-bar {
+  justify-content: center;
 }
 
 @media (min-width: 900px) {
