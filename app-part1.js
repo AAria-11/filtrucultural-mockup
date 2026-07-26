@@ -425,32 +425,45 @@ const articleTitleTranslation = {
 }
 
 const categoryColors = {
-  'Teatre': '#F28B40',
-  'Cinematografe': '#6E406D',
-  'Muzică': '#CB211D',
-  'Inițiative pentru comunitate': '#479B66',
-  'Instituții culturale' : '#B0507B',
-  'Industrie creativă' : '#0D90AE',
-  'Muzee și case memoriale' : '#5553E0',
-  'Biblioteci' : '#F96781',
-  'Spații dedicate artiștilor' : '#3E665A',
-  'Galerii' : '#A5882A',
-  'Spații dedicate copiilor' : '#6078FF',
-  'Educație culturală': '#EB6200',
+  'Teatre': '#5D363C',
+  'Cinematografe': '#714e9a',
+  'Muzică': '#E85BB0',
+  'Inițiative pentru comunitate': '#b8c650',
+  'Instituții culturale' : '#8E285B',
+  'Industrie creativă' : '#3d5ccb',
+  'Muzee și case memoriale' : '#2D3E82',
+  'Biblioteci' : '#e06d17',
+  'Spații dedicate artiștilor' : '#406E6B',
+  'Galerii' : '#8487EB',
+  'Spații dedicate copiilor' : '#409de2',
+  'Educație culturală': '#cc4205',
 
-  'Theatres': '#F28B40',
-  'Cinema': '#6E406D',
-  'Music' : '#CB211D',
-  'Community initiatives' : '#479B66',
-  'Cultural institutions': '#B0507B',
-  'Creative industry' : '#0D90AE',
-  'Museums and memorial houses': '#5553E0',
-  'Libraries': '#F96781',
-  'Artist spaces': '#3E665A',
-  'Galleries': '#A5882A',
-  'Culture for children' : '#6078FF',
-  'Cultural education': '#EB6200'
+  'Theatres': '#5D363C',
+  'Cinema': '#714e9a',
+  'Music' : '#E85BB0',
+  'Community initiatives' : '#b8c650',
+  'Cultural institutions': '#8E285B',
+  'Creative industry' : '#3d5ccb',
+  'Museums and memorial houses': '#2D3E82',
+  'Libraries': '#e06d17',
+  'Artist spaces': '#406E6B',
+  'Galleries': '#8487EB',
+  'Culture for children' : '#409de2',
+  'Cultural education': '#cc4205'
 };
+
+// Display labels shown to users. Kept separate from the canonical category
+// tokens above (which must stay unchanged since they're the literal values
+// used to split/match Baserow's Categories_ro/Categories_en fields, index
+// categoryColors/iconPaths/categoryTranslation, and populate selectedCategories).
+const categoryDisplayNames = {
+  'Muzică': 'Muzică, dans și performance',
+  'Music': 'Music, dance and performance'
+};
+
+function getCategoryDisplayName(category) {
+  return categoryDisplayNames[category] || category;
+}
 
 const clasareToId = {
   "Monument istoric": "historicalMonument",
@@ -566,7 +579,7 @@ function createAndDisplayCard(clickedFeature, adjustMap = true) {
     const category = clickedFeature.properties[categoriesKey].split(/[,;]+/).map(s => s.trim())[0];
     cardCategory.style.color = `${getCategoryColor(category)}`;
     // TODO just one category
-    cardCategory.textContent = category;
+    cardCategory.textContent = getCategoryDisplayName(category);
 
     const descriereKey = `Descriere_${currentLang}`;
     let contentArr = clickedFeature.properties[descriereKey].split('\n').filter(l => l.length > 0 && l.trim() !== '');
@@ -999,18 +1012,19 @@ function populateObjectiveList(categoriesList) {
     let childrenList = [];
     categoriesList.forEach(categoryName => {
         const li = document.createElement("li");
-        li.textContent = categoryName;
+        li.textContent = getCategoryDisplayName(categoryName);
         li.setAttribute('data-category-name', categoryName);
         li.style.setProperty("--bullet-color", getCategoryColor(categoryName));
 
         li.addEventListener("click", function() {
           const selectAllId = isMobile ? 'mobileSelectAllInput' : 'selectAllInput';
-          const index = selectedCategories.indexOf(li.textContent);
+          const clickedCategoryName = li.getAttribute('data-category-name');
+          const index = selectedCategories.indexOf(clickedCategoryName);
           var selectAllBox = document.getElementById(selectAllId);
           if (index > -1) {
             selectedCategories.splice(index, 1);
           } else {
-            selectedCategories.push(li.textContent);
+            selectedCategories.push(clickedCategoryName);
             if (selectAllBox) selectAllBox.checked = false;
             if (selectedCategories.length === numTotalCategories) {
               selectedCategories = [];
@@ -1636,13 +1650,15 @@ function openReadMore(elementOrFeatureName) {
   } else if (elementOrFeatureName && elementOrFeatureName.parentNode) {
       const card = elementOrFeatureName.parentNode;
       title = card.querySelector('.card-title').textContent;
-      categoryName = card.querySelector('.card-category').textContent;
-      // For address and links, it's better to get them from the feature object via title
+      // For address, links, and category, it's better to get them from the feature object via title
+      // (the card's .card-category element holds a display label, not the canonical category token)
       feature = nameToFeature[title];
       if (!feature) {
            console.error("Feature not found for Read More from card element:", title);
            return;
       }
+      const cardCategoriesKey = `Categories_${currentLang}`;
+      categoryName = feature.properties[cardCategoriesKey].split(/[,;]+/).map(s => s.trim())[0];
       address = feature.properties.Address; // Get from feature for consistency
       fbLink = fixLinkIfNeeded(feature.properties.FB);
       siteLink = fixLinkIfNeeded(feature.properties.Site);
@@ -1822,7 +1838,7 @@ function refreshOrFillReadMore(featureToRefresh) {
   const categoriesKey = `Categories_${currentLang}`;
   const category = feature.properties[categoriesKey].split(/[,;]+/).map(s => s.trim())[0];
   let readMoreCategory = readMoreContainer.querySelector(".read-more-category");
-  readMoreCategory.textContent = category;
+  readMoreCategory.textContent = getCategoryDisplayName(category);
   readMoreCategory.style.color = `${getCategoryColor(category)}`;
 
   const descriereKey = `Descriere_${currentLang}`;

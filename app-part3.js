@@ -628,7 +628,7 @@ async function openArticle(event, articleName, shouldScrollToTop = true, shouldC
         const categoriesKey = `Categories_${currentLang}`;
         const category = nameToFeature[correctArticleName].properties[categoriesKey].split(/[,;]+/).map(s => s.trim())[0];
         articleCardCategory.style.color = `${getCategoryColor(category)}`;
-        articleCardCategory.textContent = category.toUpperCase();
+        articleCardCategory.textContent = getCategoryDisplayName(category).toUpperCase();
       }
 
       if (shouldScrollToTop) {
@@ -861,10 +861,10 @@ async function changeLanguage(event, langToChangeTo = null) {
 
     const listItems = document.querySelectorAll('#custom-bulleted-list li, #mobileCustomBulletedList li');
     listItems.forEach(li => {
-      const oldName = li.textContent;
-      li.textContent = categoryTranslation[currentLang][oldName];
       const oldCat = li.getAttribute('data-category-name');
-      li.setAttribute('data-category-name', categoryTranslation[currentLang][oldCat]);
+      const newCat = categoryTranslation[currentLang][oldCat];
+      li.textContent = getCategoryDisplayName(newCat);
+      li.setAttribute('data-category-name', newCat);
     });
 
     let labelContainer = document.getElementById("dynamicLabelContainer");
@@ -939,7 +939,7 @@ async function changeLanguage(event, langToChangeTo = null) {
       const categoriesKey = `Categories_${currentLang}`;
       const category = feature.properties[categoriesKey].split(/[,;]+/).map(s => s.trim())[0];
       cardCategory.style.color = `${getCategoryColor(category)}`;
-      cardCategory.textContent = category;
+      cardCategory.textContent = getCategoryDisplayName(category);
 
       const descriereKey = `Descriere_${currentLang}`;
       let contentArr = feature.properties[descriereKey].split('\n').filter(l => l.length > 0 && l.trim() !== '');
