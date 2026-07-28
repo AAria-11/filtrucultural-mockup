@@ -181,8 +181,8 @@ body {
    only fix the gap above that breakpoint so the mobile size stays untouched. */
 @media (min-width: 551px) {
   #partners {
-    max-width: 34%;
-    width: 34%;
+    max-width: 57.8%;
+    width: 57.8%;
     height: auto;
   }
 }
