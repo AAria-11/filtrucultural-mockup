@@ -1156,7 +1156,7 @@ function populateGalleryContainer() {
       let filteredFeatures = categoryToData[currentLang][category].features.filter(f => filterFunc(f));
       filteredFeatures.forEach(feature => {
           items.push({ title: feature.properties.Name,
-                       labels: feature.properties[categoriesKey].split(/[,;]+/).map(s => s.trim())
+                       labels: feature.properties[categoriesKey].split(/[,;]+/).map(s => getCategoryDisplayName(s.trim()))
                      });
       });
   });
