@@ -84,6 +84,9 @@ body {
 .engage-image img {
   max-width: 100%;
   height: auto;
+  /* styles.css's .engage-image img applies a 2deg tilt meant for the old
+     "polaroid-style" photo — this graphic is a straight banner, not a photo. */
+  transform: none;
 }
 
 .articles-grid {
