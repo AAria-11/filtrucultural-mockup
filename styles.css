@@ -2892,7 +2892,10 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 }
 
 .mobile-toolbar .toolbar-button.active img {
-    filter: invert(44%) sepia(21%) saturate(1292%) hue-rotate(301deg) brightness(89%) contrast(88%);
+    /* Recolors the icon (base fill/stroke #3E1928) to the brand orange
+       #CC4205. The previous filter's hue-rotate(301deg) landed on a
+       rose/purple (#B55665) instead. */
+    filter: invert(34%) sepia(72%) saturate(637%) brightness(90%) contrast(174%);
 }
 
 #mobile-events-btn {
@@ -4295,7 +4298,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     }
 
     .footer-container {
-        background-color: #551C36;
+        background-color: #2e0f15;
         border-radius: 5px;
         padding: 24px 16px;
         padding-bottom: 0px;

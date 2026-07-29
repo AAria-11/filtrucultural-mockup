@@ -114,12 +114,12 @@ body {
   .engage-image {
     max-width: 340px;
     height: auto;
-    /* Extra top margin (32px vs. 24px) compensates for the button's
-       .engage-button-shadow, which overhangs 8px below the button
-       (bottom: -8px, set in styles.css's mobile rules) and otherwise eats
-       into the visual gap above the image without a matching effect below
-       it, making the two gaps look uneven even though the margins match. */
-    margin: 32px auto 24px auto;
+    /* Extra top margin compensates for the button's .engage-button-shadow,
+       which overhangs 8px below the button (bottom: -8px, set in
+       styles.css's mobile rules) and otherwise eats into the visual gap
+       above the image without a matching effect below it, making the two
+       gaps look uneven even though the margins match. */
+    margin: 48px auto 24px auto;
   }
 
   .page-content .engage-button-container {
@@ -140,6 +140,11 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: 32px;
+  /* Below 900px the cards fall back to a fixed 242px (styles.css) that
+     doesn't divide evenly into the row width like the desktop 284px/4-per-row
+     layout does, so the wrapped rows were left-aligned with empty space on
+     the right instead of looking centered. */
+  justify-content: center;
 }
 
 /* Map sidebar (index.html): a single accordion replacing the old
@@ -224,14 +229,14 @@ body {
 }
 
 /* #partners is a fixed 1200px in styles.css (sized for the old full-width
-   modal) with an intentional 112px override under its mobile media query —
-   only fix the gap above that breakpoint so the mobile size stays untouched. */
-@media (min-width: 551px) {
-  #partners {
-    max-width: 57.8%;
-    width: 57.8%;
-    height: auto;
-  }
+   modal), and styles.css's own mobile media query shrinks it further to a
+   barely-legible 112px (also sized for the old modal's layout). Apply the
+   same responsive scaling at every width so the logos stay legible on
+   mobile too. */
+#partners {
+  max-width: 57.8%;
+  width: 57.8%;
+  height: auto;
 }
 
 .archive-gallery img,
