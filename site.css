@@ -102,6 +102,35 @@ body {
   transform: none;
 }
 
+/* On mobile, styles.css's .engage-image still carries a fixed height: 274px,
+   which forces a 476:274 crop onto a ~330px-wide column and reads as
+   oversized/cropped. Also, styles.css has a #engage-container-mobile-scoped
+   fix for the old single-page app's mobile modal (image capped + full-width
+   button) that never matches this page's plain .page-content structure, so
+   Participă's two engage-buttons fall through to a separate, unscoped mobile
+   rule meant for the footer's single CTA and get stretched to width: 100%.
+   Re-scope both fixes to this page's actual markup. */
+@media (max-width: 550px) {
+  .engage-image {
+    max-width: 340px;
+    height: auto;
+    margin: 24px auto;
+  }
+
+  .page-content .engage-button-container {
+    display: inline-block;
+    width: auto;
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .page-content .engage-button {
+    width: 265px;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+}
+
 .articles-grid {
   display: flex;
   flex-wrap: wrap;
