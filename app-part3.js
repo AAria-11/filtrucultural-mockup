@@ -1592,31 +1592,45 @@ async function populateRelatedFeaturesByCategory(currentFeatureName, currentFeat
 }
 
 
+// Note: this file (and the map/side-panel elements it manages) is only
+// present on index.html and evenimente.html. On evenimente.html the mobile
+// discover/filters panels don't exist (no map there), so those cases fall
+// back to navigating to index.html instead of toggling panels in place.
 function handleToolbarClick(clickedButton) {
-  const buttons = document.querySelectorAll('.mobile-toolbar .toolbar-button');
-  buttons.forEach(btn => {
-      btn.classList.remove('active');
-  });
-
-  clickedButton.classList.add('active');
+  const sidePanel = document.getElementById('sidePanel');
+  const discoverPanel = document.getElementById('mobile-discover-panel');
+  const filtersPanel = document.getElementById('mobile-filters-panel');
 
   switch (clickedButton.id) {
     case 'mobile-toolbar-map':
-        showMapView();
+        if (!sidePanel) { window.location.href = 'index.html'; return; }
+        sidePanel.style.display = 'none';
+        const mobileMenu = document.querySelector('.mobile-menu');
+        if (mobileMenu) mobileMenu.style.display = 'none';
         break;
     case 'mobile-toolbar-filters':
-        showFiltre();
+        if (!sidePanel || !discoverPanel || !filtersPanel) { window.location.href = 'index.html'; return; }
+        discoverPanel.style.display = 'none';
+        filtersPanel.style.display = 'flex';
+        sidePanel.style.display = 'flex';
         break;
     case 'mobile-toolbar-search':
-        showObiective();
+        if (!sidePanel || !discoverPanel || !filtersPanel) { window.location.href = 'index.html'; return; }
+        filtersPanel.style.display = 'none';
+        discoverPanel.style.display = 'flex';
+        sidePanel.style.display = 'flex';
         break;
     case 'mobile-toolbar-events':
-        toggleEvents({ preventDefault: () => {} });
-        break;
+        window.location.href = 'evenimente.html';
+        return;
     case 'mobile-toolbar-articles':
-        openMobileArticlesPage();
-        break;
+        window.location.href = 'articole.html';
+        return;
   }
+
+  const buttons = document.querySelectorAll('.mobile-toolbar .toolbar-button');
+  buttons.forEach(btn => btn.classList.remove('active'));
+  clickedButton.classList.add('active');
 }
 
 function resetToolbarToMapView() {

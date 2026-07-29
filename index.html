@@ -176,6 +176,77 @@
 
         <button class="anuleaza-button" id="cancelbtn" onclick="onAnuleazaClick(this)">Anulează</button>
       </div>
+
+      <div id="mobile-discover-panel" class="mobile-only-panel">
+        <div class="side-panel-title discover-title">Descoperă
+          <button class="mobile-panel-close-button" onclick="closeMobilePanel()">
+            <img src="Close.svg"/>
+          </button>
+        </div>
+        <div class="search-bar">
+          <input type="search" id="mobileSearchInput" placeholder="Caută obiective" oninput="handleSearch(this.value)">
+        </div>
+        <div class="side-panel-title" id="mobileObjList">Listă obiective</div>
+        <div id="mobileGalleryContainer"></div>
+      </div>
+      <div id="mobile-filters-panel" class="mobile-only-panel" style="display: none;">
+        <div class="side-panel-title" id="mobile-filters-panel-name">Filtre
+            <button class="mobile-panel-close-button" onclick="closeMobilePanel()">
+              <img src="Close.svg"/>
+            </button>
+        </div>
+        <ul id="mobileCustomBulletedList"></ul>
+        <label class="custom-checkbox" id="mobileSelectAllCheckbox" onclick="handleSelectAll(true)">
+            <span id="mobileSelectAllLabelText">Selectează toate</span>
+            <input type="checkbox" id="mobileSelectAllInput" checked>
+            <span class="checkmark" id="mobileSelectAllCheckmark"></span>
+        </label>
+        <div class="sep-line-dashed"></div>
+        <div class="section-title" id="mobile-filtre-organizatii">A. Organizații</div>
+        <div>
+            <label class="custom-checkbox"><span id="mobile-fund-txt">Fundație</span><input type="checkbox" id="mobile-fund"><span class="checkmark"></span></label>
+            <label class="custom-checkbox"><span id="mobile-priv-inst-txt">Inițiativă privată</span><input type="checkbox" id="mobile-priv-inst"><span class="checkmark"></span></label>
+            <label class="custom-checkbox"><span id="mobile-pub-inst-txt">Instituție publică</span><input type="checkbox" id="mobile-pub-inst"><span class="checkmark"></span></label>
+            <label class="custom-checkbox"><span id="mobile-ong-txt">ONG</span><input type="checkbox" id="mobile-ong"><span class="checkmark"></span></label>
+        </div>
+        <div class="sep-line-dashed"></div>
+        <div class="section-title" id="mobile-prop-class">B. Clasarea imobilului</div>
+        <div class="clasare-container">
+            <div id="mobile-historicalMonument" class="button-clasare" onclick="buttonClasareClicked(this);">Monument istoric</div>
+            <div id="mobile-unclassified" class="button-clasare" onclick="buttonClasareClicked(this);">Neclasat</div>
+        </div>
+        <div class="sep-line-dashed"></div>
+        <div class="section-title" id="mobile-constr-period-title">C. Perioada construcției</div>
+        <div id="mobile-construction-period-filters">
+          <label class="custom-checkbox"><span id="mobile-period-1401-txt">1401 - 1500</span><input type="checkbox" id="mobile-period-1401"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-period-1701-txt">1701 - 1800</span><input type="checkbox" id="mobile-period-1701"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-period-1801-txt">1801 - 1866</span><input type="checkbox" id="mobile-period-1801"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-period-1867-txt">1867 - 1918</span><input type="checkbox" id="mobile-period-1867"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-period-1919-txt">1919 - 1947</span><input type="checkbox" id="mobile-period-1919"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-period-1948-txt">1948 - 1989</span><input type="checkbox" id="mobile-period-1948"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-period-1990-txt">1990 - prezent</span><input type="checkbox" id="mobile-period-1990"><span class="checkmark"></span></label>
+        </div>
+
+        <div class="sep-line-dashed"></div>
+        <div class="section-title" id="mobile-arch-style-title" style="padding-bottom: 0px;">D. Stil arhitectural</div>
+        <div id="mobile-architectural-style-filters" style="padding-bottom: 32px;">
+          <label class="custom-checkbox"><span id="mobile-style-neogotic-txt">Neogotic</span><input type="checkbox" id="mobile-style-neogotic"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-style-neoclasic-txt">Neoclasic</span><input type="checkbox" id="mobile-style-neoclasic"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-style-artnouveau-txt">Art Nouveau/ Secession</span><input type="checkbox" id="mobile-style-artnouveau"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-style-eclectic-txt">Eclectic</span><input type="checkbox" id="mobile-style-eclectic"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-style-neoromanesc-txt">Neoromânesc</span><input type="checkbox" id="mobile-style-neoromanesc"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-style-industrial-txt">Arhitectură industrială</span><input type="checkbox" id="mobile-style-industrial"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-style-modernism-txt">Modernism</span><input type="checkbox" id="mobile-style-modernism"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-style-artdeco-txt">Art-Deco</span><input type="checkbox" id="mobile-style-artdeco"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-style-pitoresc-txt">Pitoresc mediteraneean</span><input type="checkbox" id="mobile-style-pitoresc"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-style-realism-txt">Realism Socialist</span><input type="checkbox" id="mobile-style-realism"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-style-modernism-soc-txt">Modernism socialist</span><input type="checkbox" id="mobile-style-modernism-soc"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-style-brutalism-txt">Brutalism</span><input type="checkbox" id="mobile-style-brutalism"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-style-contemporan-txt">Contemporan</span><input type="checkbox" id="mobile-style-contemporan"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-style-postmodern-txt">Postmodern</span><input type="checkbox" id="mobile-style-postmodern"><span class="checkmark"></span></label>
+          <label class="custom-checkbox"><span id="mobile-style-altele-txt">Altele</span><input type="checkbox" id="mobile-style-altele"><span class="checkmark"></span></label>
+        </div>
+      </div>
     </div>
     <button class="side-panel-btn" id="iconBtn3"><img id="iconBtn3Image" src="CaretLeft.svg"></button>
 
@@ -388,6 +459,24 @@
       <!-- Images will be dynamically inserted here -->
     </div>
     <div class="lightbox-counter" id="mobileLightboxCounter"></div>
+  </div>
+
+  <div class="mobile-toolbar">
+    <button class="toolbar-button active" id="mobile-toolbar-map" onclick="handleToolbarClick(this)">
+        <img src="Obiectiv.svg" alt="Map">
+    </button>
+    <button class="toolbar-button" id="mobile-toolbar-filters" onclick="handleToolbarClick(this)">
+        <img src="SlidersHorizontal.svg" alt="Filters">
+    </button>
+    <button class="toolbar-button" id="mobile-toolbar-search" onclick="handleToolbarClick(this)">
+        <img src="MagnifyingGlass.svg" alt="Search">
+    </button>
+    <button class="toolbar-button" id="mobile-toolbar-events" onclick="handleToolbarClick(this)">
+        <img src="CalendarBlank.svg" alt="Events">
+    </button>
+    <button class="toolbar-button" id="mobile-toolbar-articles" onclick="handleToolbarClick(this)">
+        <img src="Newspaper.svg" alt="Articles">
+    </button>
   </div>
 
   <script>
