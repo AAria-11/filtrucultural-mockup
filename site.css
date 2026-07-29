@@ -140,17 +140,26 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: 32px;
-  /* Below 900px the cards fall back to a fixed 242px (styles.css) that
-     doesn't divide evenly into the row width like the desktop 284px/4-per-row
-     layout does, so the wrapped rows were left-aligned with empty space on
-     the right instead of looking centered. */
-  justify-content: center;
 }
 
-/* Match the Evenimente page's mobile card treatment (styles.css's
-   .recent-events-container .event-card under this same breakpoint): a
-   single stacked column of full-width cards instead of the small
-   fixed-242px cards the base styles.css rules give articles. */
+/* Below 900px the cards fall back to a fixed 242px (styles.css) that
+   doesn't divide evenly into the row width like the desktop 284px/4-per-row
+   layout does, so the wrapped rows were left-aligned with empty space on
+   the right. Center just at that range — at 900px+ the 4-per-row grid
+   already fills the row exactly, so centering a partial last row there
+   would pull it out of alignment with the row above it. */
+@media (max-width: 899px) {
+  .articles-grid {
+    justify-content: center;
+  }
+}
+
+/* Single stacked column of full-width cards on mobile (matching the
+   Evenimente page's mobile card list). The image height used to be forced
+   to 170px with object-fit: cover, which cropped it — let it size to its
+   natural aspect ratio instead so nothing gets cut off, and shrink the
+   card's own padding so the title/description bar underneath doesn't take
+   up more room than it needs. */
 @media (max-width: 550px) {
   .articles-grid {
     flex-direction: column;
@@ -161,11 +170,15 @@ body {
   .article-card {
     width: 100%;
     max-width: none;
-    height: 330px;
+    height: auto;
   }
 
   .article-card img {
-    height: 170px;
+    height: auto;
+  }
+
+  .article-card-content {
+    padding: 12px 16px;
   }
 }
 
