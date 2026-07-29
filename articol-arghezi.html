@@ -251,6 +251,26 @@
   </footer>
   <!-- ===== End shared footer ===== -->
 
+  <div id="lightbox" class="lightbox" style="display: none;">
+    <button class="lightbox-close" onclick="closeLightbox()">
+      <img src="Close.svg"/>
+    </button>
+    <img class="lightbox-prev" onclick="changeImage(-1)" src="lightbox-arrow-left.svg">
+    <img id="lightbox-img" src="">
+    <img class="lightbox-next" onclick="changeImage(1)" src="lightbox-arrow-right.svg">
+    <div class="lightbox-counter"></div>
+  </div>
+
+  <div id="lightbox-mobile" class="lightbox" style="display: none;">
+    <button class="lightbox-close" onclick="closeLightboxMobile()">
+      <img src="Close.svg"/>
+    </button>
+    <div class="scroll-container" id="scrollContainer">
+      <!-- Images will be dynamically inserted here -->
+    </div>
+    <div class="lightbox-counter" id="mobileLightboxCounter"></div>
+  </div>
+
   <script>
     document.getElementById('mobileMenuBtn').addEventListener('click', function () {
       const menu = document.getElementById('mobileMenu');

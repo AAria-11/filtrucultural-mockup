@@ -88,18 +88,103 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  // Bottom photo gallery: click a thumbnail to swap it with the main image.
+  // Bottom photo gallery: click any image to expand it full-screen. Desktop
+  // gets click arrows + keyboard, mobile gets native swipe (same lightbox
+  // pattern used for the map pin galleries on index.html).
   document.querySelectorAll('.image-gallery-container').forEach(function (gallery) {
     var mainImg = gallery.querySelector('.main-image img');
-    var thumbs = gallery.querySelectorAll('.thumbnail-article img');
-    thumbs.forEach(function (thumbImg) {
-      thumbImg.addEventListener('click', function () {
-        if (mainImg && thumbImg.getAttribute('src')) {
-          var tmp = mainImg.src;
-          mainImg.src = thumbImg.src;
-          thumbImg.src = tmp;
-        }
+    var thumbImgs = Array.from(gallery.querySelectorAll('.thumbnail-article img'));
+    if (!mainImg) return;
+
+    // Original gallery order, captured once — clicking an image never
+    // rearranges the thumbnail row.
+    var images = [mainImg.getAttribute('src')].concat(
+      thumbImgs.map(function (t) { return t.getAttribute('src'); })
+    );
+
+    var numPicsLabel = gallery.querySelector('.num-pics-label');
+    if (numPicsLabel && window.matchMedia('(max-width: 550px)').matches) {
+      numPicsLabel.textContent = '1 / ' + images.length;
+    }
+
+    var lightbox = document.getElementById('lightbox');
+    var lightboxImg = document.getElementById('lightbox-img');
+    var lightboxCounter = lightbox ? lightbox.querySelector('.lightbox-counter') : null;
+    var lightboxMobile = document.getElementById('lightbox-mobile');
+    var scrollContainer = document.getElementById('scrollContainer');
+    var mobileCounter = document.getElementById('mobileLightboxCounter');
+    var currentIndex = 0;
+
+    function updateDesktopImage() {
+      lightboxImg.src = images[currentIndex];
+      if (lightboxCounter) lightboxCounter.textContent = (currentIndex + 1) + ' / ' + images.length;
+    }
+
+    window.openLightbox = function (index) {
+      if (!lightbox || !lightboxImg) return;
+      currentIndex = index;
+      updateDesktopImage();
+      lightbox.style.display = 'flex';
+      document.addEventListener('keydown', onKeydown);
+    };
+
+    window.closeLightbox = function () {
+      if (!lightbox) return;
+      lightbox.style.display = 'none';
+      document.removeEventListener('keydown', onKeydown);
+    };
+
+    window.changeImage = function (step) {
+      currentIndex = (currentIndex + step + images.length) % images.length;
+      updateDesktopImage();
+    };
+
+    function onKeydown(event) {
+      if (event.key === 'ArrowLeft') window.changeImage(-1);
+      else if (event.key === 'ArrowRight') window.changeImage(1);
+      else if (event.key === 'Escape') window.closeLightbox();
+    }
+
+    window.openLightboxMobile = function (index) {
+      if (!lightboxMobile || !scrollContainer) return;
+      scrollContainer.innerHTML = '';
+      images.forEach(function (src) {
+        var img = document.createElement('img');
+        img.src = src;
+        scrollContainer.appendChild(img);
       });
+      if (mobileCounter) mobileCounter.textContent = (index + 1) + ' / ' + images.length;
+      scrollContainer.onscroll = function () {
+        var i = Math.round(scrollContainer.scrollLeft / scrollContainer.clientWidth);
+        if (mobileCounter) mobileCounter.textContent = (i + 1) + ' / ' + images.length;
+      };
+      lightboxMobile.style.display = 'flex';
+      scrollContainer.scrollLeft = index * scrollContainer.clientWidth;
+    };
+
+    window.closeLightboxMobile = function () {
+      if (!lightboxMobile || !scrollContainer) return;
+      lightboxMobile.style.display = 'none';
+      scrollContainer.innerHTML = '';
+    };
+
+    function openAt(index) {
+      if (window.matchMedia('(max-width: 550px)').matches) {
+        window.openLightboxMobile(index);
+      } else {
+        window.openLightbox(index);
+      }
+    }
+
+    mainImg.addEventListener('click', function () { openAt(0); });
+    thumbImgs.forEach(function (thumbImg, i) {
+      thumbImg.addEventListener('click', function () { openAt(i + 1); });
     });
+
+    if (lightbox) {
+      lightbox.addEventListener('click', function (e) {
+        if (e.target === lightbox) window.closeLightbox();
+      });
+    }
   });
 });

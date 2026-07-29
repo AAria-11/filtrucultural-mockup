@@ -75,6 +75,13 @@ body {
   max-width: 100%;
 }
 
+/* Article galleries expand into the shared lightbox on click (same pattern
+   as the map pin galleries on index.html). */
+.image-gallery-container .main-image img,
+.image-gallery-container .thumbnail-article img {
+  cursor: zoom-in;
+}
+
 .engage-image {
   max-width: 100%;
   margin-left: auto;
