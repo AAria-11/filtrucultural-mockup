@@ -114,7 +114,12 @@ body {
   .engage-image {
     max-width: 340px;
     height: auto;
-    margin: 24px auto;
+    /* Extra top margin (32px vs. 24px) compensates for the button's
+       .engage-button-shadow, which overhangs 8px below the button
+       (bottom: -8px, set in styles.css's mobile rules) and otherwise eats
+       into the visual gap above the image without a matching effect below
+       it, making the two gaps look uneven even though the margins match. */
+    margin: 32px auto 24px auto;
   }
 
   .page-content .engage-button-container {
