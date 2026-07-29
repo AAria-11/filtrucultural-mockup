@@ -61,6 +61,12 @@ body {
   .page-content {
     margin-top: 74px;
   }
+
+  /* Reserve room for the fixed-position bottom mobile toolbar (60px tall,
+     see .mobile-toolbar in styles.css) so it doesn't cover page content. */
+  body.has-mobile-toolbar {
+    padding-bottom: 60px;
+  }
 }
 
 /* Despre noi / Participă / Articole / Arhivă content, ported from the old
