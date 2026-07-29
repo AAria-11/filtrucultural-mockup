@@ -147,6 +147,28 @@ body {
   justify-content: center;
 }
 
+/* Match the Evenimente page's mobile card treatment (styles.css's
+   .recent-events-container .event-card under this same breakpoint): a
+   single stacked column of full-width cards instead of the small
+   fixed-242px cards the base styles.css rules give articles. */
+@media (max-width: 550px) {
+  .articles-grid {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .article-card {
+    width: 100%;
+    max-width: none;
+    height: 330px;
+  }
+
+  .article-card img {
+    height: 170px;
+  }
+}
+
 /* Map sidebar (index.html): a single accordion replacing the old
    Obiective/Filtre icon-tab-toggle panels. All the underlying filter
    checkboxes/logic in app-part1.js are unchanged, this just relocates the
@@ -230,12 +252,11 @@ body {
 
 /* #partners is a fixed 1200px in styles.css (sized for the old full-width
    modal), and styles.css's own mobile media query shrinks it further to a
-   barely-legible 112px (also sized for the old modal's layout). Apply the
-   same responsive scaling at every width so the logos stay legible on
-   mobile too. */
+   barely-legible 112px (also sized for the old modal's layout). Make it
+   span the same width as the surrounding paragraph text instead. */
 #partners {
-  max-width: 57.8%;
-  width: 57.8%;
+  max-width: 100%;
+  width: 100%;
   height: auto;
 }
 

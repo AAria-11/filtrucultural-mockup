@@ -2107,7 +2107,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
    FOOTER
    ============================================================================ */
 .footer-container {
-    background-color: #2e0f15;
+    background-color: #551C36;
     padding-top: 24px;
     padding-bottom: 32px;
     padding-left: 24px;
@@ -4298,7 +4298,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     }
 
     .footer-container {
-        background-color: #2e0f15;
+        background-color: #551C36;
         border-radius: 5px;
         padding: 24px 16px;
         padding-bottom: 0px;
@@ -4318,7 +4318,16 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
         width: 100%;
     }
 
-    .footer-title {
+    .footer-title,
+    .footer-title .footer-highlight {
+        /* The live filtrucultural.ro site sets this same 26px heading in
+           Anton, an ultra-condensed display face, so it wraps onto two
+           tidy lines on mobile. This mockup uses Afacad Bold for headings
+           site-wide instead, which is noticeably wider at the same size and
+           was wrapping awkwardly across more lines — sized down here to
+           get comparably comfortable wrapping while keeping the mockup's
+           own heading font. */
+        font-size: 22px;
         /* tighten your headings a bit */
         margin-bottom: 8px;
     }
