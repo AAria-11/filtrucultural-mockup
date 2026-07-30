@@ -1565,7 +1565,7 @@ function populateRecentEvents(events) {
   const countEl = document.getElementById('results-count');
   const container = document.getElementById('recent-events-container');
   container.innerHTML = '';             // clear old
-  countEl.textContent = `${events.length} rezultate`;
+  countEl.textContent = currentLang === 'ro' ? `${events.length} rezultate` : `${events.length} results`;
 
   events.forEach(ev => {
     // build the <article class="event-card">…

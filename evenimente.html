@@ -61,7 +61,7 @@
     <div class="calendar-wrapper">
       <button class="filter-item" id="calendar-btn" onclick="toggleCalendar()">
         <img src="CalendarBlank.svg" alt="Calendar Icon" class="filter-icon"/>
-        <span class="filter-text">Calendar</span>
+        <span class="filter-text" id="calendar-btn-text">Calendar</span>
         <img src="x-white.svg" class="calendar-clear-btn" alt="Clear" style="display:none;"/>
       </button>
 
@@ -87,13 +87,13 @@
         </header>
 
         <section class="weekday-header">
-          <div class="weekday">LUN</div>
-          <div class="weekday">MAR</div>
-          <div class="weekday">MIE</div>
-          <div class="weekday">JOI</div>
-          <div class="weekday">VIN</div>
-          <div class="weekday">SAM</div>
-          <div class="weekday">DUM</div>
+          <div class="weekday" id="weekday-mon">LUN</div>
+          <div class="weekday" id="weekday-tue">MAR</div>
+          <div class="weekday" id="weekday-wed">MIE</div>
+          <div class="weekday" id="weekday-thu">JOI</div>
+          <div class="weekday" id="weekday-fri">VIN</div>
+          <div class="weekday" id="weekday-sat">SAM</div>
+          <div class="weekday" id="weekday-sun">DUM</div>
         </section>
 
         <section class="calendar-grid" id="calendar-grid">
@@ -105,15 +105,15 @@
   </template>
 
   <div class="page-content">
-    <h1>Program Evenimente</h1>
-    <p>Descoperă evenimentele culturale din București.</p>
+    <h1 id="events-page-title">Program Evenimente</h1>
+    <p id="events-page-subtitle">Descoperă evenimentele culturale din București.</p>
 
     <div id="events-container" class="events-container">
       <div class="filter-bar">
         <div class="filter-item" style="padding-right: 0px;">
           <img src="Binoculars.svg" alt="Binoculars Icon" class="filter-icon"/>
           <div class="search-bar-events" id="search-bar-events-desktop">
-            <input type="search" placeholder="Caută evenimente" oninput="handleEventsSearch(event)">
+            <input type="search" id="events-search-input-desktop" placeholder="Caută evenimente" oninput="handleEventsSearch(event)">
           </div>
         </div>
 
@@ -121,7 +121,7 @@
 
         <div class="dropdown-wrapper">
           <button class="filter-item" id="event-type-btn" onclick="toggleTypePanel()">
-            <span class="filter-text">Tipul evenimentelor</span>
+            <span class="filter-text" id="event-type-btn-text">Tipul evenimentelor</span>
             <img src="CaretDown.svg" class="dropdown-icon" alt="Toggle" />
           </button>
 
@@ -132,7 +132,7 @@
 
         <div class="dropdown-wrapper">
           <button class="filter-item" id="keywords-btn" onclick="toggleKeywordsPanel()">
-            <span class="filter-text">Cuvinte cheie</span>
+            <span class="filter-text" id="keywords-btn-text">Cuvinte cheie</span>
             <img src="CaretDown.svg" class="dropdown-icon" alt="Toggle" />
           </button>
 
@@ -142,46 +142,46 @@
         </div>
 
         <div class="filter-item" id="free-entry-btn" type="button">
-          <div class="filter-text">Intrare libera</div>
+          <div class="filter-text" id="free-entry-btn-text">Intrare liberă</div>
         </div>
 
         <div class="filter-item" id="ticket-btn" type="button">
-          <div class="filter-text">Bilet</div>
+          <div class="filter-text" id="ticket-btn-text">Bilet</div>
         </div>
       </div>
 
       <div class="filter-bar-mobile">
         <div class="dropdown-wrapper" id="mobile-categories-dropdown">
           <button class="filter-item" id="mobile-events-categories-btn">
-            <span class="filter-text">Categorii</span>
+            <span class="filter-text" id="mobile-events-categories-btn-text">Categorii</span>
             <img src="tag.svg" class="dropdown-icon" alt="Tag">
           </button>
 
           <div class="dropdown-panel" id="mobile-events-categories-panel">
             <div class="mobile-categories-header">
-              <h3>Categorii</h3>
+              <h3 id="mobile-categories-header-title">Categorii</h3>
               <button id="mobile-close-categories">
                 <img src="x-close-black.svg" alt="Închide" />
               </button>
             </div>
 
             <section>
-              <h3>Tipul evenimentelor</h3>
+              <h3 id="mobile-type-section-title">Tipul evenimentelor</h3>
               <div id="mobile-type-list"></div>
             </section>
 
             <section>
-              <h3>Intrare</h3>
+              <h3 id="mobile-entry-section-title">Intrare</h3>
               <label class="dropdown-option">
-                <input type="checkbox" id="mobile-free-entry"/> Liberă
+                <input type="checkbox" id="mobile-free-entry"/> <span id="mobile-free-entry-text">Liberă</span>
               </label>
               <label class="dropdown-option">
-                <input type="checkbox" id="mobile-ticket"/> Bilet
+                <input type="checkbox" id="mobile-ticket"/> <span id="mobile-ticket-text">Bilet</span>
               </label>
             </section>
 
             <section>
-              <h3>Cuvinte cheie</h3>
+              <h3 id="mobile-keywords-section-title">Cuvinte cheie</h3>
               <div id="mobile-keywords-list"></div>
             </section>
 
@@ -193,7 +193,7 @@
         </div>
       </div>
       <div class="search-bar" id="search-bar-events-mobile">
-        <input type="search" placeholder="Caută evenimente" oninput="handleEventsSearch(event)">
+        <input type="search" id="events-search-input-mobile" placeholder="Caută evenimente" oninput="handleEventsSearch(event)">
       </div>
 
       <div id="filterLabelsContainer" class="filter-labels" style="display: none;"></div>
@@ -202,7 +202,7 @@
 
       <div id="recent-events-section">
         <div id="results-count" class="results-count"></div>
-        <h2 class="recent-events-title">Evenimente recente</h2>
+        <h2 class="recent-events-title" id="recent-events-title">Evenimente recente</h2>
         <hr class="recent-events-separator" />
         <div id="recent-events-container" class="recent-events-container">
           <!-- cards will be injected here by JS -->

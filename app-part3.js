@@ -807,11 +807,21 @@ async function changeLanguage(event, langToChangeTo = null) {
 
     if (isMobile) {
         const trans = translations[newLang];
-        document.querySelector('#mobile-discover-panel .discover-title').childNodes[0].nodeValue = trans['discover-title-mobile'];
-        document.getElementById('mobile-filters-panel-name').childNodes[0].nodeValue = trans['filters-title-mobile'];
+        const mobileDiscoverTitle = document.querySelector('#mobile-discover-panel .discover-title');
+        if (mobileDiscoverTitle && mobileDiscoverTitle.childNodes.length > 0) {
+          mobileDiscoverTitle.childNodes[0].nodeValue = trans['discover-title-mobile'];
+        }
+        const mobileFiltersPanelName = document.getElementById('mobile-filters-panel-name');
+        if (mobileFiltersPanelName && mobileFiltersPanelName.childNodes.length > 0) {
+          mobileFiltersPanelName.childNodes[0].nodeValue = trans['filters-title-mobile'];
+        }
 
-        document.getElementById('mobileSearchInput').placeholder = trans['searchInput'];
-        
+        const mobileSearchInputEl = document.getElementById('mobileSearchInput');
+        if (mobileSearchInputEl) mobileSearchInputEl.placeholder = trans['searchInput'];
+
+        const eventsSearchInputMobile = document.getElementById('events-search-input-mobile');
+        if (eventsSearchInputMobile) eventsSearchInputMobile.placeholder = trans['events-search-input-mobile'];
+
         const selectAllMobile = document.getElementById('mobileSelectAllLabelText');
         if (selectAllMobile) selectAllMobile.textContent = trans['selectAllLabelText'];
 
@@ -861,10 +871,16 @@ async function changeLanguage(event, langToChangeTo = null) {
         }
     }
 
-    document.getElementById('searchInput').placeholder = translations[newLang]['searchInput'];
-    document.getElementById('about-us-first-p').innerHTML = translations[newLang]['about-us-first-p'];
-    document.getElementById('about-us-second-p').innerHTML = translations[newLang]['about-us-second-p'];
-    document.getElementById('disclaimer-afcn').innerHTML = translations[newLang]['disclaimer-afcn'];
+    const searchInputEl = document.getElementById('searchInput');
+    if (searchInputEl) searchInputEl.placeholder = translations[newLang]['searchInput'];
+    const eventsSearchInputDesktop = document.getElementById('events-search-input-desktop');
+    if (eventsSearchInputDesktop) eventsSearchInputDesktop.placeholder = translations[newLang]['events-search-input-desktop'];
+    const aboutUsFirstP = document.getElementById('about-us-first-p');
+    if (aboutUsFirstP) aboutUsFirstP.innerHTML = translations[newLang]['about-us-first-p'];
+    const aboutUsSecondP = document.getElementById('about-us-second-p');
+    if (aboutUsSecondP) aboutUsSecondP.innerHTML = translations[newLang]['about-us-second-p'];
+    const disclaimerAfcn = document.getElementById('disclaimer-afcn');
+    if (disclaimerAfcn) disclaimerAfcn.innerHTML = translations[newLang]['disclaimer-afcn'];
 
     const listItems = document.querySelectorAll('#custom-bulleted-list li, #mobileCustomBulletedList li');
     listItems.forEach(li => {
@@ -875,7 +891,7 @@ async function changeLanguage(event, langToChangeTo = null) {
     });
 
     let labelContainer = document.getElementById("dynamicLabelContainer");
-    if (labelContainer.children.length > 0 && labelContainer.style.display !== 'none') {
+    if (labelContainer && labelContainer.children.length > 0 && labelContainer.style.display !== 'none') {
       Array.from(labelContainer.children).forEach(child => {
         let textField = child.querySelector('.dynamic-label-text');
         const oldLabel = textField.textContent;
@@ -962,7 +978,20 @@ async function changeLanguage(event, langToChangeTo = null) {
 
     refreshOrFillReadMore();
 
-    if (document.getElementById('article-container').style.display !== 'none') {
+    // Re-render the events list (evenimente.html only) so event cards'
+    // language-dependent bits (ticket/free-entry tags, results count) pick
+    // up the new language immediately instead of waiting for the next filter change.
+    if (document.getElementById('results-count')) {
+      applyAllEventsFiltersAndPopulate();
+    }
+
+    const eventDetailPanelEl = document.getElementById('eventDetailPanel');
+    if (eventDetailPanelEl && eventDetailPanelEl.classList.contains('visible') && currentOpenEventData) {
+      openEventDetailPanel(currentOpenEventData.title);
+    }
+
+    const articleContainerEl = document.getElementById('article-container');
+    if (articleContainerEl && articleContainerEl.style.display !== 'none') {
       var articleTitleElem = document.querySelector('.article-title');
       if (articleTitleElem) openArticle(null, articleTitleElem.textContent, false, false);
     }
