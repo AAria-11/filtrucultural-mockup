@@ -58,8 +58,9 @@
   <!-- ===== End shared nav ===== -->
 
   <div class="page-content">
-    <a href="articole.html" class="link-decorator back-to-articles-link">← Articole</a>
+    <a href="articole.html" class="link-decorator back-to-articles-link" id="back-to-articles-link">← Articole</a>
 
+    <div id="article-content-root" data-article-slug="muzeul-hartilor">
     <div class="article-title">Muzeul Hărților</div>
     <div class="article-authors-date">de Alex Budurescu <span class="article-date">• 28 iunie 2026</span></div>
     <img src="muzeulhartilor.png" class="article-photo" id="article-photo">
@@ -156,7 +157,8 @@
       <p>
       Poate că acesta este, până la urmă, cel mai important lucru pe care îl descoperi la Muzeul Hărților: faptul că hărțile nu vorbesc doar despre locuri. Vorbesc despre oameni. Despre cei care le-au desenat, cei care le-au folosit și cei care continuă să le privească astăzi, încercând să înțeleagă unde se află în propria lor poveste.
       </p>
-      <div class="image-gallery-container" id="image-gallery-container-article">
+      </div>
+    <div class="image-gallery-container" id="image-gallery-container-article">
         <div class="main-image">
           <img src="pics/muzeul_hartilor_si_cartii_vechi/0.jpg">
           <div class="num-pics-label" id="num-pics-label-article"></div>
@@ -245,6 +247,9 @@
     });
   </script>
   <script src="articles/article.js"></script>
+  <script src="app-part1.js"></script>
+  <script src="app-part2.js"></script>
+  <script src="app-part3.js"></script>
 
   <div class="mobile-toolbar">
     <button class="toolbar-button" id="mobile-toolbar-map" onclick="handleToolbarClick(this)">

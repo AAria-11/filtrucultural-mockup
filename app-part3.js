@@ -990,6 +990,12 @@ async function changeLanguage(event, langToChangeTo = null) {
       openEventDetailPanel(currentOpenEventData.title);
     }
 
+    // Standalone article pages (articol-*.html) only: swap in the matching
+    // RO/EN content+audio fragment. See articles/article.js.
+    if (typeof window.refreshArticlePageLanguage === 'function') {
+      window.refreshArticlePageLanguage();
+    }
+
     const articleContainerEl = document.getElementById('article-container');
     if (articleContainerEl && articleContainerEl.style.display !== 'none') {
       var articleTitleElem = document.querySelector('.article-title');

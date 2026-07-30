@@ -70,18 +70,18 @@
       </div>
       <div class="about-us-section" id="about-team">
         <div class="about-us-section-title" id="about-us-second-title">Echipa de proiect</div>
-        <p><span class="about-us-role">Manager de proiect</span> • <span class="about-us-name">Corina Munteanu</span><br>
-        <span class="about-us-role">Asistent manager</span> • <span class="about-us-name">Teodora-Melania Munteanu</span><br>
-        <span class="about-us-role">Director artistic și arhitect consultant</span> • <span class="about-us-name">Irina Antohe</span></p>
-        <p><span class="about-us-role">Articole</span> • <span class="about-us-name">Raluca Bujor, Nicoleta Moise, Octavian Puric, Alexandru Budurescu</span><br>
-        <span class="about-us-role">Texte</span> • <span class="about-us-name">Evelin Rencsik, Ana Stan, Crina Stanciu, Raluca Bujor</span><br>
-        <span class="about-us-role">Traducere</span> • <span class="about-us-name">Octavian Puric</span><br>
-        <span class="about-us-role">Ilustrații</span> • <span class="about-us-name">Maria Mălcică</span><br>
-        <span class="about-us-role">Fotografii</span> • <span class="about-us-name">Rareș Toma, Alex Budurescu</span><br>
-        <span class="about-us-role">Web design, UX design</span> • <span class="about-us-name">Bianca Basan</span><br>
-        <span class="about-us-role">Programator</span> • <span class="about-us-name">Alexandru Militaru</span></p>
-        <p><span class="about-us-role">Voluntari Ediția a III-a</span> • <span class="about-us-name">Dobrescu Elena, Ignatescu Ilinca, Nichifor Florin, Ivașcu Bianca, Necula Ioana</span></p>
-        <p><span class="about-us-role">Voluntari Ediția a II-a</span> • <span class="about-us-name">Drăghicescu Daria Maria, Ionescu Irina Maria, Vișan Victoria, Rădoi Ana-Maria, Cuțătoi Andreea Claudia, Pătru Daria Maria, Bălănică Maria Sofia, Teodora Nicolae, Ivanciu Ilinca, Păpușoi Vlad Ion, Naghi Sabin Mihai, Sara Maria Floricel, Anastasia Melinte</span></p>
+        <p><span class="about-us-role" id="mgmt-role">Manager de proiect</span> • <span class="about-us-name">Corina Munteanu</span><br>
+        <span class="about-us-role" id="as-mgmt-role">Asistent manager</span> • <span class="about-us-name">Teodora-Melania Munteanu</span><br>
+        <span class="about-us-role" id="arch-role">Director artistic și arhitect consultant</span> • <span class="about-us-name">Irina Antohe</span></p>
+        <p><span class="about-us-role" id="about-team-articles-role">Articole</span> • <span class="about-us-name">Raluca Bujor, Nicoleta Moise, Octavian Puric, Alexandru Budurescu</span><br>
+        <span class="about-us-role" id="about-team-texts-role">Texte</span> • <span class="about-us-name">Evelin Rencsik, Ana Stan, Crina Stanciu, Raluca Bujor</span><br>
+        <span class="about-us-role" id="trans-role">Traducere</span> • <span class="about-us-name">Octavian Puric</span><br>
+        <span class="about-us-role" id="ilstr-role">Ilustrații</span> • <span class="about-us-name">Maria Mălcică</span><br>
+        <span class="about-us-role" id="about-team-photo-role">Fotografii</span> • <span class="about-us-name">Rareș Toma, Alex Budurescu</span><br>
+        <span class="about-us-role" id="ux-role">Web design, UX design</span> • <span class="about-us-name">Bianca Basan</span><br>
+        <span class="about-us-role" id="prog-role">Programator</span> • <span class="about-us-name">Alexandru Militaru</span></p>
+        <p><span class="about-us-role" id="about-team-volunteers-3-role">Voluntari Ediția a III-a</span> • <span class="about-us-name">Dobrescu Elena, Ignatescu Ilinca, Nichifor Florin, Ivașcu Bianca, Necula Ioana</span></p>
+        <p><span class="about-us-role" id="about-team-volunteers-2-role">Voluntari Ediția a II-a</span> • <span class="about-us-name">Drăghicescu Daria Maria, Ionescu Irina Maria, Vișan Victoria, Rădoi Ana-Maria, Cuțătoi Andreea Claudia, Pătru Daria Maria, Bălănică Maria Sofia, Teodora Nicolae, Ivanciu Ilinca, Păpușoi Vlad Ion, Naghi Sabin Mihai, Sara Maria Floricel, Anastasia Melinte</span></p>
       </div>
       <div class="about-us-section">
         <div class="about-us-section-title" id="about-us-third-title">Parteneri</div>
@@ -136,6 +136,13 @@
       menu.style.display = menu.style.display === 'none' ? 'flex' : 'none';
     });
   </script>
+
+  <!-- Shared language-switching logic (same three files index.html uses). The
+       map/events-specific portions inside these files no-op on this page since
+       there's no #map or events UI here — see the guards in those files. -->
+  <script src="app-part1.js"></script>
+  <script src="app-part2.js"></script>
+  <script src="app-part3.js"></script>
 
   <div class="mobile-toolbar">
     <button class="toolbar-button active" id="mobile-toolbar-map" onclick="handleToolbarClick(this)">

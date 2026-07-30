@@ -9,7 +9,12 @@ window.toggleCDRFText = function (event) {
   el.classList.toggle('expanded');
   var btn = document.getElementById('expand-text-btn');
   if (btn) {
-    btn.textContent = el.classList.contains('expanded') ? 'Vezi mai puțin ↑' : 'Continuați să citiți ↓';
+    var lang = typeof currentLang !== 'undefined' ? currentLang : 'ro';
+    if (el.classList.contains('expanded')) {
+      btn.textContent = lang === 'ro' ? 'Vezi mai puțin ↑' : 'Show less ↑';
+    } else {
+      btn.textContent = lang === 'ro' ? 'Continuați să citiți ↓' : 'Read more ↓';
+    }
   }
 };
 
@@ -20,7 +25,17 @@ window.scrollToSection = function (id, event) {
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 };
 
-document.addEventListener('DOMContentLoaded', function () {
+function formatTime(seconds) {
+  if (!isFinite(seconds)) return '00:00';
+  var m = Math.floor(seconds / 60);
+  var s = Math.floor(seconds % 60);
+  return (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s);
+}
+
+// Wires up the audio player controls. Called on initial load, and again
+// after the RO/EN content swap (see refreshArticlePageLanguage below)
+// since that replaces the <audio> element and its controls entirely.
+function initAudioPlayer() {
   var audio = document.getElementById('articleAudioPlayer');
   var playPauseBtn = document.querySelector('.play-pause-button');
   var rewindBtn = document.querySelector('.rewind-button');
@@ -29,68 +44,66 @@ document.addEventListener('DOMContentLoaded', function () {
   var currentTimeEl = document.querySelector('.current-time');
   var totalTimeEl = document.querySelector('.total-time');
 
-  function formatTime(seconds) {
-    if (!isFinite(seconds)) return '00:00';
-    var m = Math.floor(seconds / 60);
-    var s = Math.floor(seconds % 60);
-    return (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s);
-  }
+  if (!audio || !playPauseBtn) return;
 
-  if (audio && playPauseBtn) {
-    playPauseBtn.classList.add('play');
+  playPauseBtn.classList.add('play');
 
-    audio.addEventListener('loadedmetadata', function () {
-      totalTimeEl.textContent = formatTime(audio.duration);
-    });
+  audio.addEventListener('loadedmetadata', function () {
+    totalTimeEl.textContent = formatTime(audio.duration);
+  });
 
-    audio.addEventListener('timeupdate', function () {
-      if (audio.duration) {
-        progressBar.value = (audio.currentTime / audio.duration) * 100;
-      }
-      currentTimeEl.textContent = formatTime(audio.currentTime);
-    });
+  audio.addEventListener('timeupdate', function () {
+    if (audio.duration) {
+      progressBar.value = (audio.currentTime / audio.duration) * 100;
+    }
+    currentTimeEl.textContent = formatTime(audio.currentTime);
+  });
 
-    playPauseBtn.addEventListener('click', function () {
-      if (audio.paused) {
-        audio.play();
-        playPauseBtn.classList.remove('play');
-        playPauseBtn.classList.add('pause');
-      } else {
-        audio.pause();
-        playPauseBtn.classList.remove('pause');
-        playPauseBtn.classList.add('play');
-      }
-    });
-
-    audio.addEventListener('ended', function () {
+  playPauseBtn.addEventListener('click', function () {
+    if (audio.paused) {
+      audio.play();
+      playPauseBtn.classList.remove('play');
+      playPauseBtn.classList.add('pause');
+    } else {
+      audio.pause();
       playPauseBtn.classList.remove('pause');
       playPauseBtn.classList.add('play');
+    }
+  });
+
+  audio.addEventListener('ended', function () {
+    playPauseBtn.classList.remove('pause');
+    playPauseBtn.classList.add('play');
+  });
+
+  if (rewindBtn) {
+    rewindBtn.addEventListener('click', function () {
+      audio.currentTime = Math.max(0, audio.currentTime - 15);
     });
-
-    if (rewindBtn) {
-      rewindBtn.addEventListener('click', function () {
-        audio.currentTime = Math.max(0, audio.currentTime - 15);
-      });
-    }
-
-    if (forwardBtn) {
-      forwardBtn.addEventListener('click', function () {
-        audio.currentTime = Math.min(audio.duration || audio.currentTime, audio.currentTime + 15);
-      });
-    }
-
-    if (progressBar) {
-      progressBar.addEventListener('input', function () {
-        if (audio.duration) {
-          audio.currentTime = (progressBar.value / 100) * audio.duration;
-        }
-      });
-    }
   }
 
-  // Bottom photo gallery: click any image to expand it full-screen. Desktop
-  // gets click arrows + keyboard, mobile gets native swipe (same lightbox
-  // pattern used for the map pin galleries on index.html).
+  if (forwardBtn) {
+    forwardBtn.addEventListener('click', function () {
+      audio.currentTime = Math.min(audio.duration || audio.currentTime, audio.currentTime + 15);
+    });
+  }
+
+  if (progressBar) {
+    progressBar.addEventListener('input', function () {
+      if (audio.duration) {
+        audio.currentTime = (progressBar.value / 100) * audio.duration;
+      }
+    });
+  }
+}
+
+// Bottom photo gallery: click any image to expand it full-screen. Desktop
+// gets click arrows + keyboard, mobile gets native swipe (same lightbox
+// pattern used for the map pin galleries on index.html). The gallery lives
+// outside #article-content-root so it's untouched by the RO/EN content
+// swap -- only its "Fotografii:"/"Photos:" caption needs translating (done
+// separately in refreshArticlePageLanguage), so this only needs to run once.
+function initGallery() {
   document.querySelectorAll('.image-gallery-container').forEach(function (gallery) {
     var mainImg = gallery.querySelector('.main-image img');
     var thumbImgs = Array.from(gallery.querySelectorAll('.thumbnail-article img'));
@@ -187,4 +200,48 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     }
   });
+}
+
+// Called by changeLanguage() (app-part3.js) after it flips currentLang, on
+// any page that has #article-content-root. Fetches the matching RO/EN
+// content fragment (articles/{slug}_{lang}.html -- these already contain
+// the translated title, byline, body text, and a same-language <audio>
+// element) and swaps it in, then rewires the audio player against the
+// fresh markup. The fragment files' own gallery markup is stale (empty
+// image srcs), so we cut the fetched text off before that section and
+// leave the page's real gallery — which doesn't need translating besides
+// its caption — untouched.
+window.refreshArticlePageLanguage = function () {
+  var root = document.getElementById('article-content-root');
+  if (!root) return;
+  var slug = root.getAttribute('data-article-slug');
+  if (!slug) return;
+  var lang = typeof currentLang !== 'undefined' ? currentLang : 'ro';
+
+  fetch('articles/' + slug + '_' + lang + '.html')
+    .then(function (response) {
+      if (!response.ok) throw new Error('HTTP ' + response.status);
+      return response.text();
+    })
+    .then(function (html) {
+      var galleryMarker = '<div class="image-gallery-container"';
+      var cut = html.indexOf(galleryMarker);
+      root.innerHTML = cut === -1 ? html : html.slice(0, cut);
+      initAudioPlayer();
+    })
+    .catch(function (error) {
+      console.warn('No ' + lang + ' content available for article "' + slug + '":', error);
+    });
+
+  var photosBy = document.querySelector('.photosby');
+  if (photosBy) {
+    var text = photosBy.textContent;
+    var name = text.replace(/^(Fotografii|Photos):\s*/, '');
+    photosBy.textContent = (lang === 'ro' ? 'Fotografii: ' : 'Photos: ') + name;
+  }
+};
+
+document.addEventListener('DOMContentLoaded', function () {
+  initAudioPlayer();
+  initGallery();
 });

@@ -58,8 +58,9 @@
   <!-- ===== End shared nav ===== -->
 
   <div class="page-content">
-    <a href="articole.html" class="link-decorator back-to-articles-link">← Articole</a>
+    <a href="articole.html" class="link-decorator back-to-articles-link" id="back-to-articles-link">← Articole</a>
 
+    <div id="article-content-root" data-article-slug="masca">
     <div class="article-title">Teatrul Masca</div>
     <div class="article-authors-date">de Nicoleta Moise<span class="article-date"> • 25 iulie 2025</span></div>
     <img src="masca.png" class="article-photo" id="article-photo">
@@ -161,7 +162,8 @@
       <p>
       „Unul dintre mesajele ascunse este că noi continuăm nebunia fondatorilor. Este o cercetare în curs, iar eu sunt curios cum va fi documentată la următoarea aniversare — de 70 de ani.”, încheie Cristinel Dâdăl.
       </p>
-      <div class="image-gallery-container" id="image-gallery-container-article">
+      </div>
+    <div class="image-gallery-container" id="image-gallery-container-article">
         <div class="main-image">
           <img src="pics/teatrul_masca/0.jpg">
           <div class="num-pics-label" id="num-pics-label-article"></div>
@@ -241,6 +243,9 @@
     });
   </script>
   <script src="articles/article.js"></script>
+  <script src="app-part1.js"></script>
+  <script src="app-part2.js"></script>
+  <script src="app-part3.js"></script>
 
   <div class="mobile-toolbar">
     <button class="toolbar-button" id="mobile-toolbar-map" onclick="handleToolbarClick(this)">

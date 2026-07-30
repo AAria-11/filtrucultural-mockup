@@ -58,8 +58,9 @@
   <!-- ===== End shared nav ===== -->
 
   <div class="page-content">
-    <a href="articole.html" class="link-decorator back-to-articles-link">← Articole</a>
+    <a href="articole.html" class="link-decorator back-to-articles-link" id="back-to-articles-link">← Articole</a>
 
+    <div id="article-content-root" data-article-slug="pprt">
     <div class="article-title">Paper Traffic</div>
     <div class="article-authors-date">de Octavian Puric <span class="article-date">• 1 august 2025</span></div>
     <img src="pprt.png" class="article-photo" id="article-photo">
@@ -207,7 +208,8 @@
       <p>
       Dacă Oborul persistă de trei secole, o face fiindcă reușește să țină pasul cu nevoile vieții cotidiene. E o relație de simbioză între oraș și piață, dar care, judecând după vârsta înaintată a marii majorități a oamenilor care vin astăzi în Obor, pare că riscă ca în câteva zeci de ani să se sfârșească. Nu poți să nu te întrebi dacă condițiile vieții nu s-au schimbat prea mult și prea repede în ultimele decenii, încât formula de piață pe care o propune Oborul să nu mai poată ține pasul. Și totuși, luând ultima gură de <i>flat white</i> în drum spre restaurantul srilankez, mi-e greu să nu constat că poate Oborul a început deja să se adapteze.
       </p>
-      <div class="image-gallery-container" id="image-gallery-container-article">
+      </div>
+    <div class="image-gallery-container" id="image-gallery-container-article">
         <div class="main-image">
           <img src="pics/paper_traffic/0.jpg">
           <div class="num-pics-label" id="num-pics-label-article"></div>
@@ -287,6 +289,9 @@
     });
   </script>
   <script src="articles/article.js"></script>
+  <script src="app-part1.js"></script>
+  <script src="app-part2.js"></script>
+  <script src="app-part3.js"></script>
 
   <div class="mobile-toolbar">
     <button class="toolbar-button" id="mobile-toolbar-map" onclick="handleToolbarClick(this)">

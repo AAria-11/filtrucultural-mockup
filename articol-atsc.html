@@ -58,8 +58,9 @@
   <!-- ===== End shared nav ===== -->
 
   <div class="page-content">
-    <a href="articole.html" class="link-decorator back-to-articles-link">← Articole</a>
+    <a href="articole.html" class="link-decorator back-to-articles-link" id="back-to-articles-link">← Articole</a>
 
+    <div id="article-content-root" data-article-slug="atsc">
     <div class="article-title">Atelierele Scânteia</div>
     <div class="article-authors-date">de Nicoleta Moise & Raluca Bujor <span class="article-date">• 20 octombrie 2024</span></div>
     <img src="atsc.png" class="article-photo" id="article-photo">
@@ -158,7 +159,8 @@
       <p>
       Dacă extrapolăm, ce se întâmplă în prezent la Atelierele Scânteia seamănă cu o calcifiere sau o sedimentare lentă și fragilă a unui proiect și a unei comunități. Din păcate, toate acestea se întâmplă (deocamdată) fără sprijinul politic și financiar al instituțiilor centrale ale statului.
       </p>
-      <div class="image-gallery-container" id="image-gallery-container-article">
+      </div>
+    <div class="image-gallery-container" id="image-gallery-container-article">
         <div class="main-image">
           <img src="pics/atelierele_scanteia/1.jpg">
           <div class="num-pics-label" id="num-pics-label-article"></div>
@@ -238,6 +240,9 @@
     });
   </script>
   <script src="articles/article.js"></script>
+  <script src="app-part1.js"></script>
+  <script src="app-part2.js"></script>
+  <script src="app-part3.js"></script>
 
   <div class="mobile-toolbar">
     <button class="toolbar-button" id="mobile-toolbar-map" onclick="handleToolbarClick(this)">

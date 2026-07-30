@@ -10,6 +10,7 @@
     "objList" : "Listă obiective",
 
     "filters-panel-name" : "Filtre",
+    "categorie-title": "Categorie",
     "filtre-organizatii" : "A. Organizații",
     "ong-txt" : "ONG",
     "fund-txt": "Fundație",
@@ -46,6 +47,11 @@
     "mgmt-role": "Manager de proiect",
     "as-mgmt-role": "Asistent manager",
     "voluntar-role": "Voluntari",
+    "about-team-articles-role": "Articole",
+    "about-team-texts-role": "Texte",
+    "about-team-photo-role": "Fotografii",
+    "about-team-volunteers-3-role": "Voluntari Ediția a III-a",
+    "about-team-volunteers-2-role": "Voluntari Ediția a II-a",
     "about-us-third-title": "Parteneri",
     "about-us-fourth-title": "Organizator",
     "disclaimer-afcn": "<p>Proiect cultural co-finanțat de Administrația Fondului Cultural Național. Proiectul nu reprezintă în mod necesar poziția Administrației Fondului Cultural Național. AFCN nu este responsabilă de conținutul proiectului sau de modul în care rezultatele proiectului pot fi folosite. Acestea sunt în întregime responsabilitatea beneficiarului finanțării.</p>",
@@ -158,5 +164,9 @@
     "eventDetailOrgSectionTitle": "Organizator",
     "eventDetailDescReadMoreBtn": "Continuați să citiți",
     "eventDetailShareSectionTitle": "Distribuie acest eveniment",
-    "eventDetailRelatedSectionTitle": "Alte evenimente care s-ar putea să-ți placă!"
+    "eventDetailRelatedSectionTitle": "Alte evenimente care s-ar putea să-ți placă!",
+
+    "articles-page-title": "Articole",
+    "articles-page-subtitle": "Descoperă actori ai scenei culturale bucureștene în profunzime.",
+    "back-to-articles-link": "← Articole"
 }

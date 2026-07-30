@@ -58,8 +58,8 @@
   <!-- ===== End shared nav ===== -->
 
   <div class="page-content">
-    <h1>Articole</h1>
-    <p>Descoperă actori ai scenei culturale bucureștene în profunzime.</p>
+    <h1 id="articles-page-title">Articole</h1>
+    <p id="articles-page-subtitle">Descoperă actori ai scenei culturale bucureștene în profunzime.</p>
     <div class="articles-grid">
       <a href="articol-suprainfinit.html" class="article-card">
         <img src="suprainfinit.png" alt="Suprainfinit Gallery">
@@ -148,6 +148,13 @@
       menu.style.display = menu.style.display === 'none' ? 'flex' : 'none';
     });
   </script>
+
+  <!-- Shared language-switching logic (same three files index.html uses). The
+       map/events-specific portions inside these files no-op on this page since
+       there's no #map or events UI here — see the guards in those files. -->
+  <script src="app-part1.js"></script>
+  <script src="app-part2.js"></script>
+  <script src="app-part3.js"></script>
 
   <div class="mobile-toolbar">
     <button class="toolbar-button" id="mobile-toolbar-map" onclick="handleToolbarClick(this)">

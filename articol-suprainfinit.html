@@ -58,8 +58,9 @@
   <!-- ===== End shared nav ===== -->
 
   <div class="page-content">
-    <a href="articole.html" class="link-decorator back-to-articles-link">← Articole</a>
+    <a href="articole.html" class="link-decorator back-to-articles-link" id="back-to-articles-link">← Articole</a>
 
+    <div id="article-content-root" data-article-slug="suprainfinit">
     <div class="article-title">Suprainfinit Gallery</div>
     <div class="article-authors-date">de Raluca Bujor & Nicoleta Moise <span class="article-date">• 13 iunie 2024</span></div>
     <img src="suprainfinit.png" class="article-photo" id="article-photo">
@@ -202,7 +203,8 @@
       <p>M. Foucault, „Altfel de spații” în <i>Theatrum philosophicum</i>, trad. Bogdan Ghiu, Editura Casei Cărții de Știință, Cluj, 2001.</p>
       <p>S. Stavrides, <i>Spațiul comun. Orașul ca bun comun</i>, trad. Deniz Otay și Ilinca Pop, Editura Velant, București, 2023.</p>
       </div>
-      <div class="image-gallery-container" id="image-gallery-container-article">
+      </div>
+    <div class="image-gallery-container" id="image-gallery-container-article">
         <div class="main-image">
           <img src="pics/suprainfinit_gallery/0.jpg">
           <div class="num-pics-label" id="num-pics-label-article"></div>
@@ -282,6 +284,9 @@
     });
   </script>
   <script src="articles/article.js"></script>
+  <script src="app-part1.js"></script>
+  <script src="app-part2.js"></script>
+  <script src="app-part3.js"></script>
 
   <div class="mobile-toolbar">
     <button class="toolbar-button" id="mobile-toolbar-map" onclick="handleToolbarClick(this)">

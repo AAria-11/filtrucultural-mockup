@@ -58,8 +58,9 @@
   <!-- ===== End shared nav ===== -->
 
   <div class="page-content">
-    <a href="articole.html" class="link-decorator back-to-articles-link">← Articole</a>
+    <a href="articole.html" class="link-decorator back-to-articles-link" id="back-to-articles-link">← Articole</a>
 
+    <div id="article-content-root" data-article-slug="arghezi">
     <div class="article-title">Casa Memorială Tudor Arghezi — Mărțișor</div>
     <div class="article-authors-date">de Raluca Bujor <span class="article-date">• 18 august 2025</span></div>
     <img src="arghezi.png" class="article-photo" id="article-photo">
@@ -198,7 +199,8 @@
       <p><a href="https://www.scena9.ro/article/arghezi-martisor-bucuresti" class="link-decorator" target="_blank">https://www.scena9.ro/article/arghezi-martisor-bucuresti</a></p>
       <p><a href="https://www.radioromaniacultural.ro/sectiuni-articole/muzica-dans-arte/" class="link-decorator" target="_blank">https://www.radioromaniacultural.ro/sectiuni-articole/muzica-dans-arte/</a></p>
       </div>
-      <div class="image-gallery-container" id="image-gallery-container-article">
+      </div>
+    <div class="image-gallery-container" id="image-gallery-container-article">
         <div class="main-image">
           <img src="pics/casa_memoriala_tudor_arghezi_—_martisor/0.jpg">
           <div class="num-pics-label" id="num-pics-label-article"></div>
@@ -278,6 +280,9 @@
     });
   </script>
   <script src="articles/article.js"></script>
+  <script src="app-part1.js"></script>
+  <script src="app-part2.js"></script>
+  <script src="app-part3.js"></script>
 
   <div class="mobile-toolbar">
     <button class="toolbar-button" id="mobile-toolbar-map" onclick="handleToolbarClick(this)">

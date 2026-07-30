@@ -58,8 +58,9 @@
   <!-- ===== End shared nav ===== -->
 
   <div class="page-content">
-    <a href="articole.html" class="link-decorator back-to-articles-link">← Articole</a>
+    <a href="articole.html" class="link-decorator back-to-articles-link" id="back-to-articles-link">← Articole</a>
 
+    <div id="article-content-root" data-article-slug="cdrf">
     <div class="article-title">Centrul de Resurse în Fotografie (CdRF)</div>
     <div class="article-authors-date">de Raluca Bujor & Nicoleta Moise <span class="article-date">• 29 septembrie 2024</span></div>
     <img src="cdrf.png" class="article-photo" id="article-photo">
@@ -229,7 +230,8 @@
         </div>
         <button class="expand-text" id="expand-text-btn" onclick="toggleCDRFText(event)">Continuați să citiți ↓</button>
       </div>
-      <div class="image-gallery-container" id="image-gallery-container-article">
+      </div>
+    <div class="image-gallery-container" id="image-gallery-container-article">
         <div class="main-image">
           <img src="pics/centrul_de_resurse_in_fotografie/0.jpg">
           <div class="num-pics-label" id="num-pics-label-article"></div>
@@ -309,6 +311,9 @@
     });
   </script>
   <script src="articles/article.js"></script>
+  <script src="app-part1.js"></script>
+  <script src="app-part2.js"></script>
+  <script src="app-part3.js"></script>
 
   <div class="mobile-toolbar">
     <button class="toolbar-button" id="mobile-toolbar-map" onclick="handleToolbarClick(this)">
