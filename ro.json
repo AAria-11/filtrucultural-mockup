@@ -184,5 +184,13 @@
 
     "footer-title": "Administrezi un spațiu cultural?<br><span class=\"footer-highlight\">Devino partener Filtru Cultural!</span>",
     "footer-subtitle": "Adaugă gratuit spațiul tău și evenimentele tale în platformă.<br>Ajută-ne să creștem harta culturală a orașului, pas cu pas.",
-    "footer-button-text": "Devino partener"
+    "footer-button-text": "Devino partener",
+
+    "mobile-nav-events-link": "Evenimente",
+    "mobile-nav-articles-link": "Articole",
+    "mobile-nav-architecture-link": "Arhitectură",
+    "mobile-nav-ideas-link": "Idei",
+    "mobile-nav-archive-link": "Arhivă",
+    "mobile-nav-about-us-link": "Despre noi",
+    "mobile-nav-engage-link": "Participă"
 }

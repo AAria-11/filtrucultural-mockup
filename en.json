@@ -185,5 +185,13 @@
 
     "footer-title": "Do you run a cultural venue?<br><span class=\"footer-highlight\">Become a Filtru Cultural partner!</span>",
     "footer-subtitle": "Add your venue and your events to the platform for free.<br>Help us grow the city's cultural map, step by step.",
-    "footer-button-text": "Become a partner"
+    "footer-button-text": "Become a partner",
+
+    "mobile-nav-events-link": "Events",
+    "mobile-nav-articles-link": "Articles",
+    "mobile-nav-architecture-link": "Architecture",
+    "mobile-nav-ideas-link": "Ideas",
+    "mobile-nav-archive-link": "Archive",
+    "mobile-nav-about-us-link": "About us",
+    "mobile-nav-engage-link": "Get involved"
 }
