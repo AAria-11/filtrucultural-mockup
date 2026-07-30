@@ -756,18 +756,25 @@ async function changeLanguage(event, langToChangeTo = null) {
     const isMobile = window.matchMedia("(max-width: 550px)").matches;
 
     if (isMobile) {
-      document.getElementById("langro").style.textDecoration = "none";
-      document.getElementById("langen").style.textDecoration = "none";
+      const langroElem = document.getElementById("langro");
+      const langenElem = document.getElementById("langen");
+      if (langroElem) langroElem.style.textDecoration = "none";
+      if (langenElem) langenElem.style.textDecoration = "none";
       var element = document.getElementById("lang" + newLang);
-      element.style.textDecoration = "underline";
-      element.style.textUnderlineOffset = "2px";
-      element.style.textDecorationThickness = "1px";
+      if (element) {
+        element.style.textDecoration = "underline";
+        element.style.textUnderlineOffset = "2px";
+        element.style.textDecorationThickness = "1px";
+      }
 
       var menuButton = document.querySelector('.mobile-menu-button');
-      let spanElem = menuButton.querySelector('span');
+      let spanElem = menuButton ? menuButton.querySelector('span') : null;
       if (spanElem) {
         spanElem.textContent = newLang === 'ro' ? "ÎNCHIDE" : "CLOSE";
       }
+
+      const mobileLanguageLink = document.getElementById('mobileLanguageLink');
+      if (mobileLanguageLink) mobileLanguageLink.textContent = oldLang.toUpperCase();
     }
 
     Object.keys(translations[newLang]).forEach(elemId => {
@@ -1224,6 +1231,16 @@ if (filterLabelsContainer) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  const languageLink = document.getElementById('language-link');
+  if (languageLink) {
+    languageLink.addEventListener('click', (event) => changeLanguage(event));
+  }
+
+  const mobileLanguageLink = document.getElementById('mobileLanguageLink');
+  if (mobileLanguageLink) {
+    mobileLanguageLink.addEventListener('click', (event) => changeLanguage(event));
+  }
+
   ['free-entry-btn', 'ticket-btn'].forEach(btnId => {
     const btn = document.getElementById(btnId);
     if (!btn) return;

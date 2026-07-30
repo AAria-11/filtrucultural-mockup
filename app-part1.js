@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 } // end of the #map-only guard opened above
 
-var uniqueCategories;
+var uniqueCategories = new Set();
 var geojsonData;
 var picsDirToNum = {};
 var categoryToData = {
