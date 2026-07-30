@@ -58,8 +58,8 @@
   <!-- ===== End shared nav ===== -->
 
   <div class="page-content">
-    <h1>Arhiva evenimentelor noastre</h1>
-    <p>Inițiative cu focus pe cultură, arhitectură și oameni.</p>
+    <h1 id="arhiva-page-title">Arhiva evenimentelor noastre</h1>
+    <p id="arhiva-page-subtitle">Inițiative cu focus pe cultură, arhitectură și oameni.</p>
     <div id="archive-container">
       <div class="archive-timeline" id="archiveTimeline"></div>
     </div>
@@ -69,16 +69,16 @@
   <footer class="footer-container">
     <div class="footer-inner">
       <div class="footer-text">
-        <h2 class="footer-title">
+        <h2 class="footer-title" id="footer-title">
           Administrezi un spațiu cultural?<br>
           <span class="footer-highlight">Devino partener Filtru Cultural!</span>
         </h2>
-        <p class="footer-subtitle">
+        <p class="footer-subtitle" id="footer-subtitle">
           Adaugă gratuit spațiul tău și evenimentele tale în platformă.<br>
           Ajută-ne să creștem harta culturală a orașului, pas cu pas.
         </p>
         <div class="engage-button-container">
-          <a href="participa.html" class="engage-button">Devino partener</a>
+          <a href="participa.html" class="engage-button" id="footer-button-text">Devino partener</a>
           <div class="engage-button-shadow"></div>
         </div>
       </div>
@@ -93,6 +93,13 @@
     </div>
   </footer>
   <!-- ===== End shared footer ===== -->
+
+  <!-- Shared language-switching logic (same three files index.html uses). The
+       map/events-specific portions inside these files no-op on this page since
+       there's no #map or events UI here — see the guards in those files. -->
+  <script src="app-part1.js"></script>
+  <script src="app-part2.js"></script>
+  <script src="app-part3.js"></script>
 
   <script>
     document.getElementById('mobileMenuBtn').addEventListener('click', function () {

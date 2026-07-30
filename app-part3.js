@@ -899,6 +899,10 @@ async function changeLanguage(event, langToChangeTo = null) {
     if (aboutUsSecondP) aboutUsSecondP.innerHTML = translations[newLang]['about-us-second-p'];
     const disclaimerAfcn = document.getElementById('disclaimer-afcn');
     if (disclaimerAfcn) disclaimerAfcn.innerHTML = translations[newLang]['disclaimer-afcn'];
+    const footerTitle = document.getElementById('footer-title');
+    if (footerTitle) footerTitle.innerHTML = translations[newLang]['footer-title'];
+    const footerSubtitle = document.getElementById('footer-subtitle');
+    if (footerSubtitle) footerSubtitle.innerHTML = translations[newLang]['footer-subtitle'];
 
     const listItems = document.querySelectorAll('#custom-bulleted-list li, #mobileCustomBulletedList li');
     listItems.forEach(li => {

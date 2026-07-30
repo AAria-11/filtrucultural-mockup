@@ -179,5 +179,11 @@
     "arhitectura-page-title": "Architecture",
     "arhitectura-page-subtitle": "Architectural landmarks that shaped the city.",
     "idei-page-title": "Ideas",
-    "idei-page-subtitle": "Perspectives and projects that inspire us."
+    "idei-page-subtitle": "Perspectives and projects that inspire us.",
+    "arhiva-page-title": "Archive of our events",
+    "arhiva-page-subtitle": "Initiatives focused on culture, architecture, and people.",
+
+    "footer-title": "Do you run a cultural venue?<br><span class=\"footer-highlight\">Become a Filtru Cultural partner!</span>",
+    "footer-subtitle": "Add your venue and your events to the platform for free.<br>Help us grow the city's cultural map, step by step.",
+    "footer-button-text": "Become a partner"
 }
