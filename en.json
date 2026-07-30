@@ -81,8 +81,10 @@
 
     "engage-title-1": "Upload a new space on the map!",
     "engage-text-1": "Bucharest is a dynamic city with cultural initiatives that deserve to be highlighted. If you represent or know of such an initiative, help us update the cultural map by filling out the form below.",
-    "engage-title-2": "Is your space already on the map, but you don't know how to upload events?",
-    "engage-text-2": "Write to us at <i>filtrucultural@gmail.com</i> and we will send you the access details for the Filtru Cultural Calendar!",
+    "engage-title-2": "Upload your events to the Filtru Cultural Calendar!",
+    "engage-text-2": "You want your events to reach a wider audience, beyond your usual community? Upload them to the Filtru Cultural calendar! It only takes 2 minutes.",
+    "engage-button-text": "Upload a space",
+    "engage-button-text-2": "Upload an event",
     "constr-period-title": "Construction period",
     "period-1401-txt": "1401 - 1500",
     "period-1701-txt": "1701 - 1800",
@@ -169,5 +171,10 @@
 
     "articles-page-title": "Articles",
     "articles-page-subtitle": "Discover the actors of the Bucharest cultural scene in depth.",
-    "back-to-articles-link": "← Articles"
+    "back-to-articles-link": "← Articles",
+
+    "arhitectura-page-title": "Architecture",
+    "arhitectura-page-subtitle": "Architectural landmarks that shaped the city.",
+    "idei-page-title": "Ideas",
+    "idei-page-subtitle": "Perspectives and projects that inspire us."
 }

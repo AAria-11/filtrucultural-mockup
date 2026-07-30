@@ -714,6 +714,24 @@ function handleSelectAll(isFromSelectAllCheckbox = false) {
   populateGalleryContainer();
 }
 
+const LANG_STORAGE_KEY = 'filtruCulturalLang';
+
+function getSavedLang() {
+  try {
+    return localStorage.getItem(LANG_STORAGE_KEY);
+  } catch (e) {
+    return null;
+  }
+}
+
+function saveLang(lang) {
+  try {
+    localStorage.setItem(LANG_STORAGE_KEY, lang);
+  } catch (e) {
+    // localStorage unavailable (e.g. privacy mode) -- language just won't persist
+  }
+}
+
 let currentLang = 'ro';
 
 const translations = {
@@ -955,6 +973,7 @@ async function changeLanguage(event, langToChangeTo = null) {
     });
 
     currentLang = newLang;
+    saveLang(currentLang);
 
     if (lastClickedFeatureName !== null) {
       let feature = nameToFeature[lastClickedFeatureName];
@@ -1274,6 +1293,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const mobileLanguageLink = document.getElementById('mobileLanguageLink');
   if (mobileLanguageLink) {
     mobileLanguageLink.addEventListener('click', (event) => changeLanguage(event));
+  }
+
+  // Apply a previously-chosen language on fresh page loads/navigation, so
+  // the site stays in English (or Romanian) across pages until the user
+  // explicitly switches back, instead of always starting in Romanian.
+  const savedLang = getSavedLang();
+  if (savedLang && savedLang !== currentLang) {
+    changeLanguage({ preventDefault: () => {} }, savedLang);
   }
 
   ['free-entry-btn', 'ticket-btn'].forEach(btnId => {

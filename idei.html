@@ -58,8 +58,8 @@
   <!-- ===== End shared nav ===== -->
 
   <div class="page-content">
-    <h1>Idei</h1>
-    <p>Perspective și proiecte care ne inspiră.</p>
+    <h1 id="idei-page-title">Idei</h1>
+    <p id="idei-page-subtitle">Perspective și proiecte care ne inspiră.</p>
     <div id="archive-container">
       <div class="archive-timeline" id="archiveTimeline"></div>
     </div>
@@ -93,6 +93,13 @@
     </div>
   </footer>
   <!-- ===== End shared footer ===== -->
+
+  <!-- Shared language-switching logic (same three files index.html uses). The
+       map/events-specific portions inside these files no-op on this page since
+       there's no #map or events UI here — see the guards in those files. -->
+  <script src="app-part1.js"></script>
+  <script src="app-part2.js"></script>
+  <script src="app-part3.js"></script>
 
   <script>
     document.getElementById('mobileMenuBtn').addEventListener('click', function () {

@@ -77,7 +77,7 @@
       <h2 class="engage-title" id="engage-title-2">Încarcă evenimentele tale pe Calendarul Filtru Cultural!</h2>
       <p id="engage-text-2">Vrei ca evenimentele tale să ajungă la un public mai larg, dincolo de comunitatea obișnuită? Încarcă evenimentele în calendarul Filtru Cultural! Durează doar 2 minute.</p>
       <div class="engage-button-container">
-        <a href="https://baserow.io/form/01I5E4kTpG99v5wdZlVfFb7YNURFPbdrYwU9xbi4H2c" class="engage-button" target="_blank" rel="noopener noreferrer">Încarcă un eveniment</a>
+        <a href="https://baserow.io/form/01I5E4kTpG99v5wdZlVfFb7YNURFPbdrYwU9xbi4H2c" class="engage-button" id="engage-button-text-2" target="_blank" rel="noopener noreferrer">Încarcă un eveniment</a>
         <div class="engage-button-shadow"></div>
       </div>
     </div>
@@ -118,6 +118,13 @@
       menu.style.display = menu.style.display === 'none' ? 'flex' : 'none';
     });
   </script>
+
+  <!-- Shared language-switching logic (same three files index.html uses). The
+       map/events-specific portions inside these files no-op on this page since
+       there's no #map or events UI here — see the guards in those files. -->
+  <script src="app-part1.js"></script>
+  <script src="app-part2.js"></script>
+  <script src="app-part3.js"></script>
 
   <div class="mobile-toolbar">
     <button class="toolbar-button active" id="mobile-toolbar-map" onclick="handleToolbarClick(this)">
