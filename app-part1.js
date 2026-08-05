@@ -1620,6 +1620,14 @@ function buildPicPath(subDir, picNum) {
   return mainPicsDir + '/' + subDir + '/' + picNum + '.jpg';
 }
 
+// Shown instead of a real photo for locations/articles whose pictures
+// haven't been uploaded yet, rather than silently falling back to another
+// location's photos.
+function buildNoPhotoPlaceholder() {
+  const label = currentLang === 'ro' ? 'În curând' : 'Coming soon';
+  return 'https://placehold.co/1160x700/E5E1DC/8A8078?text=' + encodeURIComponent(label);
+}
+
 function openReadMore(elementOrFeatureName) {
   let feature;
   let title, categoryName, address, fbLink, siteLink, instaLink, mapsLink;
@@ -1642,9 +1650,7 @@ function openReadMore(elementOrFeatureName) {
       instaLink = fixLinkIfNeeded(feature.properties.Insta);
       mapsLink = fixLinkIfNeeded(feature.properties.Gmaps);
 
-      const defaultPicsDir = 'cinema_union'; // Default if no specific pics
-      const featurePicsDirName = titleToPicsDir(title);
-      featurePicsDir = featurePicsDirName in picsDirToNum ? featurePicsDirName : defaultPicsDir;
+      featurePicsDir = titleToPicsDir(title);
       numFeaturePics = picsDirToNum[featurePicsDir] || 0;
 
   } else if (elementOrFeatureName && elementOrFeatureName.parentNode) {
@@ -1665,9 +1671,7 @@ function openReadMore(elementOrFeatureName) {
       instaLink = fixLinkIfNeeded(feature.properties.Insta);
       mapsLink = fixLinkIfNeeded(feature.properties.Gmaps);
 
-      const defaultPicsDir = 'cinema_union';
-      const featurePicsDirName = titleToPicsDir(title);
-      featurePicsDir = featurePicsDirName in picsDirToNum ? featurePicsDirName : defaultPicsDir;
+      featurePicsDir = titleToPicsDir(title);
       numFeaturePics = picsDirToNum[featurePicsDir] || 0;
   } else {
       console.error("Invalid argument passed to openReadMore:", elementOrFeatureName);
@@ -1737,8 +1741,9 @@ function openReadMore(elementOrFeatureName) {
           mainImgElement.setAttribute('onclick', `openLightboxMobile('${featurePicsDir}')`);
           mainImage.querySelector('.num-pics-label').textContent = '1 / ' + numFeaturePics;
       }
-  } else { // Handle case with no pictures
-      mainImgElement.src = ''; // Clear image or set placeholder
+  } else { // No pictures uploaded yet for this location
+      mainImgElement.src = buildNoPhotoPlaceholder();
+      mainImgElement.removeAttribute('onclick');
       if (window.matchMedia("(max-width: 550px)").matches) {
            mainImage.querySelector('.num-pics-label').textContent = '';
       }

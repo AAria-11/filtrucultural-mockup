@@ -527,8 +527,6 @@ async function openArticle(event, articleName, shouldScrollToTop = true, shouldC
 
   const isLoaded = await loadArticle(articleName);
   if (isLoaded) {
-      const defaultPicsDir = 'cinema_union';
-
       let correctArticleName = articleName;
       if (correctArticleName.includes("(CdRF)") || correctArticleName.includes("Photography Resource Centre")) {
         correctArticleName = "Centrul de Resurse în Fotografie";
@@ -542,9 +540,8 @@ async function openArticle(event, articleName, shouldScrollToTop = true, shouldC
         correctArticleName = "Casa Memorială Tudor Arghezi — Mărțișor"
       }
 
-      const featurePicsDirName = titleToPicsDir(correctArticleName);
-      const featurePicsDir = featurePicsDirName in picsDirToNum ? featurePicsDirName : defaultPicsDir;
-      const numFeaturePics = picsDirToNum[featurePicsDir];
+      const featurePicsDir = titleToPicsDir(correctArticleName);
+      const numFeaturePics = picsDirToNum[featurePicsDir] || 0;
 
       // Set currentImageDir and currentImageIndex for lightbox
       currentImageIndex = 0;
@@ -561,6 +558,10 @@ async function openArticle(event, articleName, shouldScrollToTop = true, shouldC
           mainImgElement.setAttribute('onclick', `openLightboxMobile('${featurePicsDir}')`);
         }
         mainImage.querySelector('.num-pics-label').textContent = '1 / ' + numFeaturePics;
+      } else { // No pictures uploaded yet for this article
+        mainImgElement.src = buildNoPhotoPlaceholder();
+        mainImgElement.removeAttribute('onclick');
+        mainImage.querySelector('.num-pics-label').textContent = '';
       }
 
       if (!window.matchMedia("(max-width: 550px)").matches) {
@@ -1516,8 +1517,8 @@ function createRelatedFeatureCardElement(featureData, clickHandler) {
   if (numFeaturePics > 0) {
       imageUrl = buildPicPath(featurePicsDirName, 0); // Assumes buildPicPath is globally available
   } else {
-      // Fallback if feature has no images in picsDirToNum
-      imageUrl = 'https://placehold.co/284x180/E0E0E0/E0E0E0'; // Generic placeholder
+      const noPhotoLabel = currentLang === 'ro' ? 'În curând' : 'Coming soon';
+      imageUrl = 'https://placehold.co/284x180/E5E1DC/8A8078?text=' + encodeURIComponent(noPhotoLabel);
   }
 
   const altImageText = (currentLang === 'ro' ? 'Imagine locație: ' : 'Location image: ') + featureName;
