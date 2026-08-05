@@ -551,6 +551,7 @@ async function openArticle(event, articleName, shouldScrollToTop = true, shouldC
       let mainImage = imageContainer.querySelector('.main-image');
       var mainImgElement = mainImage.querySelector('img');
       if (numFeaturePics > 0) {
+        hideNoPhotoLabel(mainImage);
         mainImgElement.src = buildPicPath(featurePicsDir, 0);
         if (!window.matchMedia("(max-width: 550px)").matches) {
           mainImgElement.setAttribute('onclick', `openLightbox('${buildPicPath(featurePicsDir, 0)}', 0)`);
@@ -562,6 +563,7 @@ async function openArticle(event, articleName, shouldScrollToTop = true, shouldC
         mainImgElement.src = buildNoPhotoPlaceholder();
         mainImgElement.removeAttribute('onclick');
         mainImage.querySelector('.num-pics-label').textContent = '';
+        showNoPhotoLabel(mainImage);
       }
 
       if (!window.matchMedia("(max-width: 550px)").matches) {
@@ -1517,8 +1519,13 @@ function createRelatedFeatureCardElement(featureData, clickHandler) {
   if (numFeaturePics > 0) {
       imageUrl = buildPicPath(featurePicsDirName, 0); // Assumes buildPicPath is globally available
   } else {
+      // Inline SVG (not an external placeholder service — that only renders
+      // a generic broken-image icon and ignores custom text) with the label
+      // baked in, since this card's markup is built as a one-shot innerHTML
+      // string below rather than persistent DOM we could overlay text onto.
       const noPhotoLabel = currentLang === 'ro' ? 'În curând' : 'Coming soon';
-      imageUrl = 'https://placehold.co/284x180/E5E1DC/8A8078?text=' + encodeURIComponent(noPhotoLabel);
+      const noPhotoSvg = `<svg xmlns='http://www.w3.org/2000/svg' width='284' height='180'><rect width='284' height='180' fill='#E5E1DC'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='Inter, sans-serif' font-size='16' fill='#8A8078'>${noPhotoLabel}</text></svg>`;
+      imageUrl = 'data:image/svg+xml,' + encodeURIComponent(noPhotoSvg);
   }
 
   const altImageText = (currentLang === 'ro' ? 'Imagine locație: ' : 'Location image: ') + featureName;

@@ -279,6 +279,23 @@ body {
   height: auto;
 }
 
+/* Text overlay shown on top of the flat grey placeholder image (see
+   buildNoPhotoPlaceholder() in app-part1.js) for locations/articles whose
+   photos haven't been uploaded yet. .main-image/.main-image-article already
+   have position: relative, so this centers over whatever's set as the img's
+   src underneath it. */
+.no-photo-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  color: #8A8078;
+  text-align: center;
+  pointer-events: none;
+}
+
 /* Arhitectură/Idei entries (arhitectura.html / idei.html) sometimes embed a
    list inside a description paragraph (see archive-description p innerHTML
    in styles.css). */

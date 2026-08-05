@@ -1622,10 +1622,33 @@ function buildPicPath(subDir, picNum) {
 
 // Shown instead of a real photo for locations/articles whose pictures
 // haven't been uploaded yet, rather than silently falling back to another
-// location's photos.
+// location's photos. A flat-color inline SVG (rather than an external
+// placeholder service) so the "În curând"/"Coming soon" label can be a real
+// HTML overlay (see showNoPhotoLabel) sized in actual CSS px instead of text
+// baked into the image at a size that scales with the image itself.
 function buildNoPhotoPlaceholder() {
-  const label = currentLang === 'ro' ? 'În curând' : 'Coming soon';
-  return 'https://placehold.co/1160x700/E5E1DC/8A8078?text=' + encodeURIComponent(label);
+  return "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='%23E5E1DC'/%3E%3C/svg%3E";
+}
+
+// mainImageContainer is the .main-image/.main-image-article element (which
+// has position: relative) — the label is centered over whatever img is
+// inside it via .no-photo-label's own absolute positioning.
+function showNoPhotoLabel(mainImageContainer) {
+  if (!mainImageContainer) return;
+  let label = mainImageContainer.querySelector('.no-photo-label');
+  if (!label) {
+    label = document.createElement('div');
+    label.className = 'no-photo-label';
+    mainImageContainer.appendChild(label);
+  }
+  label.textContent = currentLang === 'ro' ? 'În curând' : 'Coming soon';
+  label.style.display = '';
+}
+
+function hideNoPhotoLabel(mainImageContainer) {
+  if (!mainImageContainer) return;
+  const label = mainImageContainer.querySelector('.no-photo-label');
+  if (label) label.style.display = 'none';
 }
 
 function openReadMore(elementOrFeatureName) {
@@ -1734,6 +1757,7 @@ function openReadMore(elementOrFeatureName) {
   var mainImgElement = mainImage.querySelector('img');
 
   if (numFeaturePics > 0) {
+      hideNoPhotoLabel(mainImage);
       mainImgElement.src = buildPicPath(featurePicsDir, 0);
       if (!window.matchMedia("(max-width: 550px)").matches) {
           mainImgElement.setAttribute('onclick', `openLightbox('${buildPicPath(featurePicsDir, 0)}', 0)`);
@@ -1744,6 +1768,7 @@ function openReadMore(elementOrFeatureName) {
   } else { // No pictures uploaded yet for this location
       mainImgElement.src = buildNoPhotoPlaceholder();
       mainImgElement.removeAttribute('onclick');
+      showNoPhotoLabel(mainImage);
       if (window.matchMedia("(max-width: 550px)").matches) {
            mainImage.querySelector('.num-pics-label').textContent = '';
       }
@@ -1886,6 +1911,17 @@ function refreshOrFillReadMore(featureToRefresh) {
     readMoreUploaded.style.display = 'none';
     photosBy.textContent = photoTxt + "Rareș Toma";
   }
+
+  // No "Fotografii: ..." credit line when there are no actual photos to
+  // credit — just the "În curând" placeholder.
+  const featurePicsDirName = titleToPicsDir(feature.properties.Name);
+  const numFeaturePics = picsDirToNum[featurePicsDirName] || 0;
+  photosBy.style.display = numFeaturePics > 0 ? '' : 'none';
+  if (numFeaturePics === 0) {
+    const mainImageContainer = readMoreContainer.querySelector('.main-image');
+    showNoPhotoLabel(mainImageContainer);
+  }
+
   if (currentFeatureName) {
       populateRelatedEventsForReadMore(currentFeatureName);
       const currentCategoriesKey = `Categories_${currentLang}`;
