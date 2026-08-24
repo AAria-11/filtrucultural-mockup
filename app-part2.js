@@ -1635,7 +1635,6 @@ function openEventDetailPanel(eventTitle) {
   const organizerDescriptionEl = document.getElementById('eventDetailOrganizerDescription');
   const organizerSocialLinksEl = document.getElementById('eventDetailOrganizerSocialLinks');
 
-  const fbShareButtonContainer = document.getElementById('eventDetailFbShareButton');
   const relatedEventsContainer = document.getElementById('eventDetailRelatedEvents');
 
   const datetimeOriginalContentEl = dateTimeTextEl.parentNode;
@@ -1907,7 +1906,7 @@ function openEventDetailPanel(eventTitle) {
           }
       });
   } else { // Fallback if organizerFeature is not found
-      organizerNameEl.textContent = organizerLocationName || (currentLang === 'ro' ? "Organizator" : "Organizer");
+      organizerNameEl.textContent = organizerLocationName || (currentLang === 'ro' ? "Spațiul gazdă" : "Host");
       organizerNameEl.removeAttribute('href');
       organizerNameEl.onclick = null; // No click action if no feature
 
@@ -1915,20 +1914,13 @@ function openEventDetailPanel(eventTitle) {
       const organizerArrowIconUnavailable = organizerDescriptionEl ? organizerDescriptionEl.querySelector('.organizer-description-arrow-icon') : null;
 
       if (organizerDescTextSpanUnavailable) {
-          organizerDescTextSpanUnavailable.textContent = currentLang === 'ro' ? "Detalii despre organizator indisponibile." : "Organizer details unavailable.";
+          organizerDescTextSpanUnavailable.textContent = currentLang === 'ro' ? "Detalii despre spațiul gazdă indisponibile." : "Host details unavailable.";
       }
       if (organizerArrowIconUnavailable) {
           organizerArrowIconUnavailable.style.display = 'none';
       }
 
       organizerSocialLinksEl.innerHTML = '';
-  }
-
-  // Share Button
-  const eventPageUrl = window.location.href; 
-  fbShareButtonContainer.setAttribute('data-href', eventPageUrl);
-  if (typeof FB !== 'undefined') {
-      FB.XFBML.parse(fbShareButtonContainer.parentNode);
   }
 
   // Related Events
