@@ -2036,7 +2036,8 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
   
 .event-title {
     color: rgba(62, 25, 40, 1);
-    font-size: 18px;
+    font-size: 22px;
+    line-height: 24px;
     font-family:
       Afacad,
       -apple-system,
@@ -2044,18 +2045,27 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
       Helvetica,
       sans-serif;
     font-weight: 700;
-    margin: 0;
+    margin: 0 0 12px 0;
     white-space: normal;
     overflow-wrap: anywhere;
 }
-  
+
 .event-location {
     display: flex;
     width: 100%;
-    align-items: end;
+    align-items: start;
     gap: 2px;
     font-weight: 500;
     justify-content: start;
+}
+
+/* Scoped to .event-location so this beats site.css's ".page-content p"
+   (higher specificity) - otherwise that rule's line-height (1.6) makes
+   wrapped multi-line addresses look loose on pages like evenimente.html/
+   arhitectura.html where event cards sit inside .page-content. */
+.event-location .location-address {
+    font-size: 16px;
+    line-height: 20px;
 }
   
 .location-icon {
