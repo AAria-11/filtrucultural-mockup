@@ -65,6 +65,26 @@
     </div>
   </div>
 
+  <div id="lightbox" class="lightbox" style="display: none;">
+    <button class="lightbox-close" onclick="closeLightbox()">
+      <img src="Close.svg"/>
+    </button>
+    <img class="lightbox-prev" onclick="changeImage(-1)" src="lightbox-arrow-left.svg">
+    <img id="lightbox-img" src="">
+    <img class="lightbox-next" onclick="changeImage(1)" src="lightbox-arrow-right.svg">
+    <div class="lightbox-counter"></div>
+  </div>
+
+  <div id="lightbox-mobile" class="lightbox" style="display: none;">
+    <button class="lightbox-close" onclick="closeLightboxMobile()">
+      <img src="Close.svg"/>
+    </button>
+    <div class="scroll-container" id="scrollContainer">
+      <!-- Images will be dynamically inserted here -->
+    </div>
+    <div class="lightbox-counter" id="mobileLightboxCounter"></div>
+  </div>
+
   <!-- ===== Shared footer (same block as index.html) ===== -->
   <footer class="footer-container">
     <div class="footer-inner">
@@ -169,14 +189,24 @@
           });
           el.appendChild(description);
 
+          // openLightbox()/changeImage() (app-part2.js) read the total photo
+          // count for this dir from the shared picsDirToNum map — normally
+          // populated from the map page's Baserow data, which never loads
+          // here, so it's filled in for archive dirs directly.
+          picsDirToNum[entry.galleryDir] = ARCHIVE_GALLERY_PHOTO_COUNT;
+
           var gallery = document.createElement('div');
           gallery.className = 'archive-gallery';
-          for (var i = 0; i < ARCHIVE_GALLERY_PHOTO_COUNT; i++) {
-            var thumb = document.createElement('div');
+          for (let i = 0; i < ARCHIVE_GALLERY_PHOTO_COUNT; i++) {
+            const thumb = document.createElement('div');
             thumb.className = 'thumbnail-archive';
-            var img = document.createElement('img');
+            const img = document.createElement('img');
             img.src = 'pics/' + entry.galleryDir + '/' + i + '.jpg';
             img.alt = entry.title;
+            img.onclick = function () {
+              currentImageDir = entry.galleryDir;
+              openLightbox(img.src, i);
+            };
             thumb.appendChild(img);
             gallery.appendChild(thumb);
           }
@@ -189,6 +219,9 @@
           var mobileImg = document.createElement('img');
           mobileImg.src = 'pics/' + entry.galleryDir + '/0.jpg';
           mobileImg.alt = entry.title;
+          mobileMain.onclick = function () {
+            openLightboxMobile(mobileImg.src);
+          };
           mobileMain.appendChild(mobileImg);
           galleryMobile.appendChild(mobileMain);
           el.appendChild(galleryMobile);
