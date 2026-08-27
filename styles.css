@@ -1078,19 +1078,39 @@ body {
     position: relative;
 }
 
-.thumbnails, .thumbnails-article {
+.thumbnails {
     display: flex;
     justify-content: space-between;
+}
+
+/* Article-page gallery: unlike the map card's .thumbnails (a handful of
+   photos in one row), an article can have anywhere from 5 to 15+ photos.
+   A single flex row would either overflow or squash every thumbnail down
+   to a sliver, so this wraps them into a fixed 2-row grid instead (3 rows
+   of photos total once you count the big main image above it) -- filling
+   top-to-bottom then left-to-right (grid-auto-flow: column) keeps each
+   thumbnail at a readable, constant size no matter how many photos there
+   are, and any overflow beyond what fits simply scrolls horizontally. */
+.thumbnails-article {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(2, 133px);
+    grid-auto-columns: 174px;
+    gap: 6px;
+    overflow-x: auto;
 }
 
 .thumbnail, .thumbnail-article {
     width: 174px;
     height: 133px;
     background-color: #FBF7F2; /* Placeholder color */
+}
+
+.thumbnails .thumbnail {
     margin-right: 6px;
 }
 
-.thumbnails .thumbnail:last-child, .thumbnails-article .thumbnail-article:last-child {
+.thumbnails .thumbnail:last-child {
     margin-right: 0px;
 }
 
