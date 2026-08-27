@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       const page = await response.json();
       rows = rows.concat(page.results);
-      nextUrl = page.next;
+      nextUrl = page.next ? page.next.replace(/^http:\/\//i, 'https://') : null;
     }
 
     return rows;
