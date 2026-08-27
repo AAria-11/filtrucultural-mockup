@@ -1134,7 +1134,7 @@ function createGalleryItem(item) {
       } else {
         map.once('moveend', function() {
           refreshIconState(nameToFeature[item.title]);
-          createAndDisplayCard(nameToFeature[item.title], adjustMap = false);
+          createAndDisplayCard(nameToFeature[item.title], adjustMap = true);
         });
 
         map.flyTo({
