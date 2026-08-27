@@ -115,6 +115,20 @@ function initGallery() {
       thumbImgs.map(function (t) { return t.getAttribute('src'); })
     );
 
+    // The visible strip only shows a handful of thumbnails (so it doesn't
+    // get cramped), but the folder can hold more photos than that. When
+    // data-photo-count on the container says so, rebuild the full sequential
+    // list (0.jpg, 1.jpg, ...) so the lightbox's next/prev arrows can still
+    // page through every photo in the folder, not just the visible ones.
+    var photoCount = parseInt(gallery.getAttribute('data-photo-count'), 10);
+    if (photoCount && photoCount > images.length) {
+      var folder = mainImg.getAttribute('src').replace(/\/[^/]*$/, '');
+      images = [];
+      for (var i = 0; i < photoCount; i++) {
+        images.push(folder + '/' + i + '.jpg');
+      }
+    }
+
     var numPicsLabel = gallery.querySelector('.num-pics-label');
     if (numPicsLabel && window.matchMedia('(max-width: 550px)').matches) {
       numPicsLabel.textContent = '1 / ' + images.length;
