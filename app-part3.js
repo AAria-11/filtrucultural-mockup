@@ -525,6 +525,23 @@ async function openArticle(event, articleName, shouldScrollToTop = true, shouldC
     event.preventDefault();
   }
 
+  // The embedded article overlay (#article-container/#article-content-id)
+  // was removed from index.html when articles moved to standalone
+  // articol-*.html pages, but this function is still reached from pin cards,
+  // map-hash deep links, and inline links inside archive.json's descriptions.
+  // On any page without that overlay, just navigate to the real article page
+  // instead of silently failing (loadArticle()'s try/catch used to swallow
+  // the resulting null-reference error and no-op).
+  if (!document.getElementById('article-container')) {
+    const slug = ARTICLE_NAME_TO_SLUG[articleName];
+    if (slug) {
+      window.location.href = `articol-${slug}.html`;
+    } else {
+      console.error('No article page known for:', articleName);
+    }
+    return;
+  }
+
   const isLoaded = await loadArticle(articleName);
   if (isLoaded) {
       let correctArticleName = articleName;
@@ -1046,7 +1063,8 @@ function getArticleDescr(articleName) {
       "Atelierele Scânteia" : "Ultimul text din cadrul proiectului Filtru Cultural București intră în dialog cu Atelierele Scânteia.",
       "Paper Traffic": "Al patrulea text din cadrul proiectului Filtru Cultural București intră în dialog cu Paper Traffic, un spațiu hibrid între librărie, galerie și frizerie, aflat pe terasa de la etajul Halelor Obor.",
       "Teatrul Masca": "Pentru cea de-a doua ediție a proiectului Filtru Cultural, care și-a extins granițele către inițiative culturale din inelul doi al Bucureștiului, am deschis un dialog cu Teatrul Masca.",
-      "Casa Memorială Tudor Arghezi — Mărțișor": "Textul are ca punct de plecare o vizită la Casa Memorială „Tudor Arghezi” din București, unde am stat de vorbă cu Dorotheea Nicolescu, muzeografă aici de peste 15 ani."
+      "Casa Memorială Tudor Arghezi — Mărțișor": "Textul are ca punct de plecare o vizită la Casa Memorială „Tudor Arghezi” din București, unde am stat de vorbă cu Dorotheea Nicolescu, muzeografă aici de peste 15 ani.",
+      "NON artspace": "Filtru Cultural București a fost într-o scurtă vizită la NON Art Space, o inițiativă independentă, nonprofit, dedicată artiștilor emergenți."
     },
 
     en: {
@@ -1103,24 +1121,11 @@ function toggleCDRFText() {
 }
 
 async function loadArticle(articleName) {
-  let nameToFile = {
-    "Suprainfinit Gallery" : "suprainfinit",
-    "Centrul de Resurse în Fotografie" : "cdrf",
-    "Atelierele Scânteia" : "atsc",
-    "Paper Traffic" : "pprt",
-    "Teatrul Masca" : "masca",
-    "Masca Theater" : "masca",
-    "Casa Memorială Tudor Arghezi — Mărțișor" : "arghezi",
-    "The “Tudor Arghezi” Memorial House" : "arghezi",
-    "Scânteia Workshops" : "atsc",
-    "Photography Resource Centre (CdRF)" : "cdrf",
-    "Photography Resource Centre" : "cdrf",
-    "Centrul de Resurse în Fotografie (CdRF)" : "cdrf",
-  };
+  // ARTICLE_NAME_TO_SLUG is defined in app-part1.js.
   const articleContent = document.getElementById('article-content-id');
   try {
       // Fetch the HTML file for the selected article and language
-      const response = await fetch(`articles/${nameToFile[articleName]}_${currentLang}.html`);
+      const response = await fetch(`articles/${ARTICLE_NAME_TO_SLUG[articleName]}_${currentLang}.html`);
       const data = await response.text();
 
       // Replace the content of the article section with the loaded HTML
@@ -1628,10 +1633,8 @@ async function populateRelatedFeaturesByCategory(currentFeatureName, currentFeat
       const descriereKey = `Descriere_${currentLang}`;
       const description = feature.properties[descriereKey];
       // These locations have separate articles, so they are valid even without a description in the spreadsheet.
-      const specialArticleLocations = ["Suprainfinit Gallery", "Centrul de Resurse în Fotografie", 
-          "Atelierele Scânteia", "Paper Traffic", "Teatrul Masca", "Casa Memorială Tudor Arghezi — Mărțișor"];
-
-      if ((!description || description.trim() === '') && !specialArticleLocations.includes(feature.properties.Name)) {
+      // (EPONYMOUS_ARTICLE_LOCATIONS is defined in app-part1.js.)
+      if ((!description || description.trim() === '') && !hasEponymousArticle(feature.properties.Name)) {
           return false; // Exclude if description is empty and it's not a special article location
       }
 

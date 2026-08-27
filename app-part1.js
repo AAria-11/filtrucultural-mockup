@@ -187,6 +187,46 @@ const customLinks = {
   "Casa Memorială Tudor Arghezi — Mărțișor": "casa-memoriala-tudor-arghezi"
 };
 
+// Locations (Baserow "Name", plus a couple of legacy EN alt-names still used
+// as lookup keys in a few places) that also have a dedicated standalone
+// article (articol-*.html) — single source of truth for both "does this
+// location have an article" (EPONYMOUS_ARTICLE_LOCATIONS, RO Baserow names
+// only) and "which articol-*.html file is it" (used by loadArticle() in
+// app-part3.js and by openArticle()'s standalone-page redirect below).
+const ARTICLE_NAME_TO_SLUG = {
+  "Suprainfinit Gallery" : "suprainfinit",
+  "Centrul de Resurse în Fotografie" : "cdrf",
+  "Atelierele Scânteia" : "atsc",
+  "Paper Traffic" : "pprt",
+  "Teatrul Masca" : "masca",
+  "Masca Theater" : "masca",
+  "Casa Memorială Tudor Arghezi — Mărțișor" : "arghezi",
+  "The “Tudor Arghezi” Memorial House" : "arghezi",
+  "Scânteia Workshops" : "atsc",
+  "Photography Resource Centre (CdRF)" : "cdrf",
+  "Photography Resource Centre" : "cdrf",
+  "Centrul de Resurse în Fotografie (CdRF)" : "cdrf",
+  "Cinema Europa" : "cinema-europa",
+  "Muzeul Hărților și Cărții Vechi" : "muzeul-hartilor",
+  "NON artspace" : "non-art-space",
+};
+
+const EPONYMOUS_ARTICLE_LOCATIONS = [
+  "Suprainfinit Gallery",
+  "Centrul de Resurse în Fotografie",
+  "Atelierele Scânteia",
+  "Paper Traffic",
+  "Teatrul Masca",
+  "Casa Memorială Tudor Arghezi — Mărțișor",
+  "Cinema Europa",
+  "Muzeul Hărților și Cărții Vechi",
+  "NON artspace"
+];
+
+function hasEponymousArticle(locationName) {
+  return EPONYMOUS_ARTICLE_LOCATIONS.includes(locationName);
+}
+
 function openPin(clickedFeature) {
   refreshIconState(clickedFeature);
   createAndDisplayCard(clickedFeature);
@@ -243,12 +283,7 @@ function initializeMapWithFeatures(data) {
           clickedFeature = nameToFeature[linkNameToTitle[decodeStringIfNecessary(hash)]];
           openPin(clickedFeature);
           const cardReadMore = document.getElementById('card-read-more');
-          if (clickedFeature.properties.Name === "Suprainfinit Gallery" ||
-              clickedFeature.properties.Name === "Centrul de Resurse în Fotografie"
-              || clickedFeature.properties.Name === "Atelierele Scânteia"
-              || clickedFeature.properties.Name === "Paper Traffic"
-              || clickedFeature.properties.Name === "Teatrul Masca"
-              || clickedFeature.properties.Name === "Casa Memorială Tudor Arghezi — Mărțișor") {
+          if (hasEponymousArticle(clickedFeature.properties.Name)) {
             openArticle(null, clickedFeature.properties.Name);
             if (isMobile) {
               openMobileArticlesPage();
@@ -557,6 +592,29 @@ function preventDefaultAction(event) {
   event.preventDefault();
 }
 
+// Fills in the pin card's teaser text + "read more" action. Baserow's own
+// description always wins when present; the hardcoded article teaser
+// (getArticleDescr) is only a fallback for eponymous-article locations whose
+// Baserow "Descriere" is empty, and the generic placeholder is the last
+// resort so we never render literal "undefined" for a location/language
+// combo that has neither (e.g. an article-only location with no EN teaser).
+function fillCardTextAndReadMore(cardTitle, contentArr) {
+  const cardText = document.querySelector('.card-text');
+  const readMoreBtn = document.querySelector('.card-read-more');
+  const fallbackMsg = currentLang === 'ro' ? "Mai multe detalii în curând." : "More details soon.";
+
+  if (hasEponymousArticle(cardTitle.textContent)) {
+    readMoreBtn.onclick = function() { openArticle(null, cardTitle.textContent); };
+    cardText.textContent = contentArr[0] || getArticleDescr(cardTitle.textContent) || fallbackMsg;
+  } else if (contentArr.length === 0) {
+    readMoreBtn.onclick = function() { };
+    cardText.textContent = fallbackMsg;
+  } else {
+    readMoreBtn.onclick = function() { openReadMore(readMoreBtn); };
+    cardText.textContent = contentArr[0];
+  }
+}
+
 function createAndDisplayCard(clickedFeature, adjustMap = true) {
     const card = document.querySelector('.card');
     card.classList.add('hidden-element');
@@ -713,31 +771,7 @@ function createAndDisplayCard(clickedFeature, adjustMap = true) {
           card.style.top = `${point.y - heightAdjustment}px`;
           card.style.transform = 'translate(-50%, -100%)'; // Adjusts for the width and height of the card
           card.classList.remove('hidden-element');
-          const cardText = document.querySelector('.card-text');
-          if (contentArr.length === 0) {
-            const readMoreBtn = document.querySelector('.card-read-more');
-            if (cardTitle.textContent === "Suprainfinit Gallery" ||
-                cardTitle.textContent === "Centrul de Resurse în Fotografie" ||
-                cardTitle.textContent === "Atelierele Scânteia") {
-              readMoreBtn.onclick = function() { openArticle(null, cardTitle.textContent); };
-              cardText.textContent = getArticleDescr(cardTitle.textContent);
-            } else {
-              readMoreBtn.onclick = function() { };
-              cardText.textContent = currentLang === 'ro' ? "Mai multe detalii în curând." : "More details soon.";
-            }
-          } else {
-            if (cardTitle.textContent === "Paper Traffic" ||
-                cardTitle.textContent === "Teatrul Masca" ||
-                cardTitle.textContent === "Casa Memorială Tudor Arghezi — Mărțișor") {
-              const readMoreBtn = document.querySelector('.card-read-more');
-              readMoreBtn.onclick = function() { openArticle(null, cardTitle.textContent); };
-              cardText.textContent = getArticleDescr(cardTitle.textContent);
-            } else {
-              const readMoreBtn = document.querySelector('.card-read-more');
-              readMoreBtn.onclick = function() { openReadMore(readMoreBtn); };
-              cardText.textContent = contentArr[0];
-            }
-          }
+          fillCardTextAndReadMore(cardTitle, contentArr);
         });
 
         map.easeTo({
@@ -746,31 +780,7 @@ function createAndDisplayCard(clickedFeature, adjustMap = true) {
         });
     } else {
         card.classList.remove('hidden-element');
-        const cardText = document.querySelector('.card-text');
-        if (contentArr.length === 0) {
-          const readMoreBtn = document.querySelector('.card-read-more');
-          if (cardTitle.textContent === "Suprainfinit Gallery" ||
-              cardTitle.textContent === "Centrul de Resurse în Fotografie" ||
-              cardTitle.textContent === "Atelierele Scânteia") {
-            readMoreBtn.onclick = function() { openArticle(null, cardTitle.textContent); };
-            cardText.textContent = getArticleDescr(cardTitle.textContent);
-          } else {
-            readMoreBtn.onclick = function() { };
-            cardText.textContent = currentLang === 'ro' ? "Mai multe detalii în curând." : "More details soon.";
-          }
-        } else {
-          if (cardTitle.textContent === "Paper Traffic" ||
-              cardTitle.textContent === "Teatrul Masca" || 
-              cardTitle.textContent === "Casa Memorială Tudor Arghezi — Mărțișor") {
-            const readMoreBtn = document.querySelector('.card-read-more');
-            readMoreBtn.onclick = function() { openArticle(null, cardTitle.textContent); };
-            cardText.textContent = getArticleDescr(cardTitle.textContent);
-          } else {
-            const readMoreBtn = document.querySelector('.card-read-more');
-            readMoreBtn.onclick = function() { openReadMore(readMoreBtn); };
-            cardText.textContent = contentArr[0];
-          }
-        }
+        fillCardTextAndReadMore(cardTitle, contentArr);
     }
 }
 
