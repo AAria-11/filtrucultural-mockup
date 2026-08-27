@@ -1913,8 +1913,22 @@ function openEventDetailPanel(eventTitle) {
       const organizerDescTextSpanUnavailable = document.getElementById('organizerDescriptionTextPreview');
       const organizerArrowIconUnavailable = organizerDescriptionEl ? organizerDescriptionEl.querySelector('.organizer-description-arrow-icon') : null;
 
+      // No map feature matched the event's host location (name mismatch, or
+      // the space just isn't a mapped location), but it might still have a
+      // standalone profile article -- link to that instead of a dead end.
+      const organizerArticleSlug = organizerLocationName ? ARTICLE_NAME_TO_SLUG[organizerLocationName] : null;
+
       if (organizerDescTextSpanUnavailable) {
-          organizerDescTextSpanUnavailable.textContent = currentLang === 'ro' ? "Detalii despre spațiul gazdă indisponibile." : "Host details unavailable.";
+          if (organizerArticleSlug) {
+              organizerDescTextSpanUnavailable.innerHTML = '';
+              const organizerArticleLink = document.createElement('a');
+              organizerArticleLink.href = `articol-${organizerArticleSlug}.html`;
+              organizerArticleLink.className = 'link-decorator';
+              organizerArticleLink.textContent = currentLang === 'ro' ? 'Citește articolul despre spațiul gazdă' : 'Read the article about the host space';
+              organizerDescTextSpanUnavailable.appendChild(organizerArticleLink);
+          } else {
+              organizerDescTextSpanUnavailable.textContent = currentLang === 'ro' ? "Detalii despre spațiul gazdă indisponibile." : "Host details unavailable.";
+          }
       }
       if (organizerArrowIconUnavailable) {
           organizerArrowIconUnavailable.style.display = 'none';
