@@ -209,6 +209,7 @@ const ARTICLE_NAME_TO_SLUG = {
   "Cinema Europa" : "cinema-europa",
   "Muzeul Hărților și Cărții Vechi" : "muzeul-hartilor",
   "NON artspace" : "non-art-space",
+  "Nod Makerspace" : "nod-makerspace",
 };
 
 const EPONYMOUS_ARTICLE_LOCATIONS = [
@@ -220,7 +221,8 @@ const EPONYMOUS_ARTICLE_LOCATIONS = [
   "Casa Memorială Tudor Arghezi — Mărțișor",
   "Cinema Europa",
   "Muzeul Hărților și Cărții Vechi",
-  "NON artspace"
+  "NON artspace",
+  "Nod Makerspace"
 ];
 
 function hasEponymousArticle(locationName) {
