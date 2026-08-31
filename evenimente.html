@@ -378,6 +378,16 @@
             }
           };
         });
+      }).then(() => {
+        // The event detail panel may already be open and rendered before this
+        // fetch resolved (it isn't awaited before card clicks are enabled), in
+        // which case its "Spațiul gazdă" section would have shown the
+        // "unavailable" fallback since nameToFeature was still empty.
+        // Re-render just that section now that the location data is in --
+        // not the whole panel, so an open read doesn't lose its scroll position.
+        if (currentOpenEventData && currentOpenEventData.airtableFields) {
+          renderEventOrganizerSection(currentOpenEventData.airtableFields);
+        }
       }).catch(error => console.error('Failed to load Obiective data for event organizer info:', error));
     }
 

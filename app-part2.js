@@ -1606,6 +1606,138 @@ function populateRecentEvents(events) {
   });
 }
 
+// Renders the "Spațiul gazdă" (host space) section of the event detail panel
+// for the given event's raw fields. Factored out of openEventDetailPanel so
+// it can be re-run on its own once nameToFeature is populated, without
+// re-running (and visually resetting) the rest of the panel -- see
+// evenimente.html's fetchObiectiveForEventOrganizerInfo, which populates
+// nameToFeature asynchronously and may resolve after the panel already
+// rendered with it empty.
+function renderEventOrganizerSection(fields) {
+  const organizerNameEl = document.getElementById('eventDetailOrganizerName');
+  const organizerDescriptionEl = document.getElementById('eventDetailOrganizerDescription');
+  const organizerSocialLinksEl = document.getElementById('eventDetailOrganizerSocialLinks');
+
+  // Organizer Details
+  const organizerLocationName = fields.Location;
+  const organizerFeature = nameToFeature ? nameToFeature[organizerLocationName] : null;
+
+  const handleOrganizerDirectReadMore = () => {
+    if (organizerLocationName && nameToFeature[organizerLocationName]) {
+        const featureToOpen = nameToFeature[organizerLocationName];
+        closeEventDetailPanel();
+        if (typeof closeEvents === 'function') {
+            closeEvents();
+        }
+
+        openPin(featureToOpen);
+        if (featureToOpen.properties[`Descriere_${currentLang}`]) {
+            openReadMore(organizerLocationName);
+        }
+    } else {
+        console.warn("Organizer feature not found for click interaction:", organizerLocationName);
+    }
+  };
+
+  if (organizerFeature) {
+      organizerNameEl.textContent = currentLang === 'ro' ? `Descoperă ${organizerLocationName}` : `Discover ${organizerLocationName}`;
+      organizerNameEl.href = "#";
+
+      const orgDescKey = `Descriere_${currentLang}`;
+      const organizerDescTextSpan = document.getElementById('organizerDescriptionTextPreview');
+      const organizerArrowIcon = organizerDescriptionEl ? organizerDescriptionEl.querySelector('.organizer-description-arrow-icon') : null;
+
+      const fullOrganizerDesc = (organizerFeature.properties[orgDescKey]) ? organizerFeature.properties[orgDescKey].split('\n')[0] : "";
+      const organizerPreviewLength = window.matchMedia("(max-width: 550px)").matches ? 150 : 250;
+
+      if (organizerDescTextSpan && organizerArrowIcon) {
+          if (fullOrganizerDesc && fullOrganizerDesc.length > organizerPreviewLength) {
+              organizerDescTextSpan.textContent = fullOrganizerDesc.substring(0, organizerPreviewLength).trim() + "...";
+              organizerArrowIcon.style.display = 'inline-block';
+          } else if (fullOrganizerDesc) {
+              organizerDescTextSpan.textContent = fullOrganizerDesc;
+              organizerArrowIcon.style.display = 'none';
+          } else {
+              organizerDescTextSpan.textContent = (currentLang === 'ro' ? "Mai multe detalii în curând." : "More details soon.");
+              organizerArrowIcon.style.display = 'none';
+          }
+      } else if (organizerDescTextSpan) {
+           organizerDescTextSpan.textContent = fullOrganizerDesc || (currentLang === 'ro' ? "Mai multe detalii în curând." : "More details soon.");
+      }
+
+      const organizerNameLineEl = organizerNameEl.closest('.organizer-name-line');
+      if (organizerNameLineEl) {
+          organizerNameLineEl.style.cursor = 'pointer';
+          organizerNameLineEl.onclick = handleOrganizerDirectReadMore;
+          // Prevent the <a> tag's default navigation since the parent div handles the click
+          organizerNameEl.onclick = (e) => {
+              e.preventDefault();
+          };
+      } else if (organizerNameEl) { // Fallback if only the name element itself is targeted
+          organizerNameEl.style.cursor = 'pointer';
+          organizerNameEl.onclick = (e) => {
+              e.preventDefault();
+              handleOrganizerDirectReadMore();
+          };
+      }
+
+      if (organizerDescriptionEl) { // This is the <p> tag
+          organizerDescriptionEl.style.cursor = 'pointer';
+          organizerDescriptionEl.onclick = handleOrganizerDirectReadMore;
+      }
+
+      organizerSocialLinksEl.innerHTML = '';
+      const socialPlatforms = [
+          { idPrefix: 'eventOrganizerSite', field: 'Site', icon: 'Site.svg', textKey: 'site'},
+          { idPrefix: 'eventOrganizerInsta', field: 'Insta', icon: 'Instagram.svg', textKey: 'instagram'},
+          { idPrefix: 'eventOrganizerFb', field: 'FB', icon: 'Facebook.svg', textKey: 'facebook'},
+          { idPrefix: 'eventOrganizerMaps', field: 'Gmaps', icon: 'Maps.svg', textKey: 'googleMaps'}
+      ];
+      socialPlatforms.forEach(platform => {
+          if (organizerFeature.properties[platform.field] && organizerFeature.properties[platform.field].trim() !== "") {
+              const linkElement = document.createElement('a');
+              linkElement.className = 'read-more-social-link';
+              linkElement.id = `${platform.idPrefix}Link`;
+              linkElement.href = fixLinkIfNeeded(organizerFeature.properties[platform.field]);
+              linkElement.target = '_blank';
+              linkElement.rel = 'noopener noreferrer';
+              linkElement.innerHTML = `<div class="read-more-social-icon"><img src="${platform.icon}" alt="${platform.field}"></div>`;
+              organizerSocialLinksEl.appendChild(linkElement);
+          }
+      });
+  } else { // Fallback if organizerFeature is not found
+      organizerNameEl.textContent = organizerLocationName || (currentLang === 'ro' ? "Spațiul gazdă" : "Host");
+      organizerNameEl.removeAttribute('href');
+      organizerNameEl.onclick = null; // No click action if no feature
+
+      const organizerDescTextSpanUnavailable = document.getElementById('organizerDescriptionTextPreview');
+      const organizerArrowIconUnavailable = organizerDescriptionEl ? organizerDescriptionEl.querySelector('.organizer-description-arrow-icon') : null;
+
+      // No map feature matched the event's host location (name mismatch, or
+      // the space just isn't a mapped location), but it might still have a
+      // standalone profile article -- link to that instead of a dead end.
+      const organizerArticleSlug = organizerLocationName ? ARTICLE_NAME_TO_SLUG[organizerLocationName] : null;
+
+      if (organizerDescTextSpanUnavailable) {
+          if (organizerArticleSlug) {
+              organizerDescTextSpanUnavailable.innerHTML = '';
+              const organizerArticleLink = document.createElement('a');
+              organizerArticleLink.href = `articol-${organizerArticleSlug}.html`;
+              organizerArticleLink.className = 'link-decorator';
+              organizerArticleLink.textContent = currentLang === 'ro' ? 'Citește articolul despre spațiul gazdă' : 'Read the article about the host space';
+              organizerDescTextSpanUnavailable.appendChild(organizerArticleLink);
+          } else {
+              organizerDescTextSpanUnavailable.textContent = currentLang === 'ro' ? "Detalii despre spațiul gazdă indisponibile." : "Host details unavailable.";
+          }
+      }
+      if (organizerArrowIconUnavailable) {
+          organizerArrowIconUnavailable.style.display = 'none';
+      }
+
+      organizerSocialLinksEl.innerHTML = '';
+  }
+}
+
 function openEventDetailPanel(eventTitle) {
   // Find the event data from masterEventList
   const eventData = masterEventList.find(event => event.title === eventTitle && event.airtableFields);
@@ -1629,11 +1761,7 @@ function openEventDetailPanel(eventTitle) {
   const dateTimeTextEl = document.getElementById('eventDetailDateTimeText');
   
   const ticketButtonContainerEl = document.getElementById('eventDetailTicketButtonContainer');
-  const ticketButtonEl = document.getElementById('eventDetailTicketButton'); 
-
-  const organizerNameEl = document.getElementById('eventDetailOrganizerName');
-  const organizerDescriptionEl = document.getElementById('eventDetailOrganizerDescription');
-  const organizerSocialLinksEl = document.getElementById('eventDetailOrganizerSocialLinks');
+  const ticketButtonEl = document.getElementById('eventDetailTicketButton');
 
   const relatedEventsContainer = document.getElementById('eventDetailRelatedEvents');
 
@@ -1818,124 +1946,7 @@ function openEventDetailPanel(eventTitle) {
       }
   }
 
-  // Organizer Details
-  const organizerLocationName = fields.Location;
-  const organizerFeature = nameToFeature ? nameToFeature[organizerLocationName] : null; 
-
-  const handleOrganizerDirectReadMore = () => {
-    if (organizerLocationName && nameToFeature[organizerLocationName]) {
-        const featureToOpen = nameToFeature[organizerLocationName];
-        closeEventDetailPanel();
-        if (typeof closeEvents === 'function') {
-            closeEvents();
-        }
-
-        openPin(featureToOpen);
-        if (featureToOpen.properties[`Descriere_${currentLang}`]) {
-            openReadMore(organizerLocationName);
-        }
-    } else {
-        console.warn("Organizer feature not found for click interaction:", organizerLocationName);
-    }
-  };
-
-  if (organizerFeature) {
-      organizerNameEl.textContent = currentLang === 'ro' ? `Descoperă ${organizerLocationName}` : `Discover ${organizerLocationName}`;
-      organizerNameEl.href = "#";
-
-      const orgDescKey = `Descriere_${currentLang}`;
-      const organizerDescTextSpan = document.getElementById('organizerDescriptionTextPreview');
-      const organizerArrowIcon = organizerDescriptionEl ? organizerDescriptionEl.querySelector('.organizer-description-arrow-icon') : null;
-
-      const fullOrganizerDesc = (organizerFeature.properties[orgDescKey]) ? organizerFeature.properties[orgDescKey].split('\n')[0] : "";
-      const organizerPreviewLength = window.matchMedia("(max-width: 550px)").matches ? 150 : 250;
-
-      if (organizerDescTextSpan && organizerArrowIcon) {
-          if (fullOrganizerDesc && fullOrganizerDesc.length > organizerPreviewLength) {
-              organizerDescTextSpan.textContent = fullOrganizerDesc.substring(0, organizerPreviewLength).trim() + "...";
-              organizerArrowIcon.style.display = 'inline-block';
-          } else if (fullOrganizerDesc) {
-              organizerDescTextSpan.textContent = fullOrganizerDesc;
-              organizerArrowIcon.style.display = 'none';
-          } else {
-              organizerDescTextSpan.textContent = (currentLang === 'ro' ? "Mai multe detalii în curând." : "More details soon.");
-              organizerArrowIcon.style.display = 'none';
-          }
-      } else if (organizerDescTextSpan) {
-           organizerDescTextSpan.textContent = fullOrganizerDesc || (currentLang === 'ro' ? "Mai multe detalii în curând." : "More details soon.");
-      }
-
-      const organizerNameLineEl = organizerNameEl.closest('.organizer-name-line');
-      if (organizerNameLineEl) {
-          organizerNameLineEl.style.cursor = 'pointer';
-          organizerNameLineEl.onclick = handleOrganizerDirectReadMore;
-          // Prevent the <a> tag's default navigation since the parent div handles the click
-          organizerNameEl.onclick = (e) => {
-              e.preventDefault();
-          };
-      } else if (organizerNameEl) { // Fallback if only the name element itself is targeted
-          organizerNameEl.style.cursor = 'pointer';
-          organizerNameEl.onclick = (e) => {
-              e.preventDefault();
-              handleOrganizerDirectReadMore();
-          };
-      }
-
-      if (organizerDescriptionEl) { // This is the <p> tag
-          organizerDescriptionEl.style.cursor = 'pointer';
-          organizerDescriptionEl.onclick = handleOrganizerDirectReadMore;
-      }
-
-      organizerSocialLinksEl.innerHTML = ''; 
-      const socialPlatforms = [
-          { idPrefix: 'eventOrganizerSite', field: 'Site', icon: 'Site.svg', textKey: 'site'},
-          { idPrefix: 'eventOrganizerInsta', field: 'Insta', icon: 'Instagram.svg', textKey: 'instagram'},
-          { idPrefix: 'eventOrganizerFb', field: 'FB', icon: 'Facebook.svg', textKey: 'facebook'},
-          { idPrefix: 'eventOrganizerMaps', field: 'Gmaps', icon: 'Maps.svg', textKey: 'googleMaps'}
-      ];
-      socialPlatforms.forEach(platform => {
-          if (organizerFeature.properties[platform.field] && organizerFeature.properties[platform.field].trim() !== "") {
-              const linkElement = document.createElement('a');
-              linkElement.className = 'read-more-social-link'; 
-              linkElement.id = `${platform.idPrefix}Link`;
-              linkElement.href = fixLinkIfNeeded(organizerFeature.properties[platform.field]);
-              linkElement.target = '_blank';
-              linkElement.rel = 'noopener noreferrer';
-              linkElement.innerHTML = `<div class="read-more-social-icon"><img src="${platform.icon}" alt="${platform.field}"></div>`;
-              organizerSocialLinksEl.appendChild(linkElement);
-          }
-      });
-  } else { // Fallback if organizerFeature is not found
-      organizerNameEl.textContent = organizerLocationName || (currentLang === 'ro' ? "Spațiul gazdă" : "Host");
-      organizerNameEl.removeAttribute('href');
-      organizerNameEl.onclick = null; // No click action if no feature
-
-      const organizerDescTextSpanUnavailable = document.getElementById('organizerDescriptionTextPreview');
-      const organizerArrowIconUnavailable = organizerDescriptionEl ? organizerDescriptionEl.querySelector('.organizer-description-arrow-icon') : null;
-
-      // No map feature matched the event's host location (name mismatch, or
-      // the space just isn't a mapped location), but it might still have a
-      // standalone profile article -- link to that instead of a dead end.
-      const organizerArticleSlug = organizerLocationName ? ARTICLE_NAME_TO_SLUG[organizerLocationName] : null;
-
-      if (organizerDescTextSpanUnavailable) {
-          if (organizerArticleSlug) {
-              organizerDescTextSpanUnavailable.innerHTML = '';
-              const organizerArticleLink = document.createElement('a');
-              organizerArticleLink.href = `articol-${organizerArticleSlug}.html`;
-              organizerArticleLink.className = 'link-decorator';
-              organizerArticleLink.textContent = currentLang === 'ro' ? 'Citește articolul despre spațiul gazdă' : 'Read the article about the host space';
-              organizerDescTextSpanUnavailable.appendChild(organizerArticleLink);
-          } else {
-              organizerDescTextSpanUnavailable.textContent = currentLang === 'ro' ? "Detalii despre spațiul gazdă indisponibile." : "Host details unavailable.";
-          }
-      }
-      if (organizerArrowIconUnavailable) {
-          organizerArrowIconUnavailable.style.display = 'none';
-      }
-
-      organizerSocialLinksEl.innerHTML = '';
-  }
+  renderEventOrganizerSection(fields);
 
   // Related Events
   populateRelatedEvents(eventData, relatedEventsContainer);
