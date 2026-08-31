@@ -251,7 +251,10 @@ function normalizeLocationList(rawLocation) {
 async function fetchAndPrepareInitialEventData() {
   try {
     const rows = await fetchAllBaserowEventRows(BASEROW_EVENTS_API_URL);
-    rows.sort((a, b) => new Date(a.Start || 0) - new Date(b.Start || 0));
+    // Newest-added first. Baserow's row `id` is assigned sequentially at
+    // creation and never reused, so it's a reliable "date added" proxy --
+    // unlike `order`, which just reflects manual drag-reordering in the grid.
+    rows.sort((a, b) => (b.id || 0) - (a.id || 0));
 
     masterEventList = rows.map(row => {
       const imageUrl = (row.Picture && row.Picture.length > 0 && row.Picture[0].url)
