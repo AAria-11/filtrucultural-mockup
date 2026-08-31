@@ -1442,11 +1442,12 @@ async function populateRelatedEventsForReadMore(featureName) {
   todayForFilter.setHours(0, 0, 0, 0);
 
   const eventsAtLocation = masterEventList.filter(event => {
-      if (!event.airtableFields || !event.airtableFields.Location || !event.airtableFields.Start) {
+      if (!event.airtableFields || !event.airtableFields.Location || !event.airtableFields.Location.length || !event.airtableFields.Start) {
           return false;
       }
-      // Case-insensitive and trim comparison for location
-      if (event.airtableFields.Location.trim().toLowerCase() !== featureName.trim().toLowerCase()) {
+      // An event can have multiple locations -- match if featureName is any of them.
+      const normalizedFeatureName = featureName.trim().toLowerCase();
+      if (!event.airtableFields.Location.some(loc => loc.trim().toLowerCase() === normalizedFeatureName)) {
           return false;
       }
 

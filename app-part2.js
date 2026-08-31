@@ -238,6 +238,16 @@ async function fetchAllBaserowEventRows(url) {
   return rows;
 }
 
+// Location is a Baserow select field on the events table. It's moving from
+// single_select (API returns one {id,value,color} object) to
+// multiple_select (API returns an array of those) -- this accepts either
+// shape, plus null/undefined, and always returns an array of name strings.
+function normalizeLocationList(rawLocation) {
+  if (!rawLocation) return [];
+  const options = Array.isArray(rawLocation) ? rawLocation : [rawLocation];
+  return options.map(option => option.value).filter(Boolean);
+}
+
 async function fetchAndPrepareInitialEventData() {
   try {
     const rows = await fetchAllBaserowEventRows(BASEROW_EVENTS_API_URL);
@@ -264,7 +274,7 @@ async function fetchAndPrepareInitialEventData() {
         Start: row.Start,
         End: row.End,
         Picture: row.Picture,
-        Location: row.Location ? row.Location.value : null,
+        Location: normalizeLocationList(row.Location),
         Entry: row.Entry ? row.Entry.value : null,
         Ticket_details: row.Ticket_details,
         Event_type: eventTypeArray,
@@ -276,7 +286,7 @@ async function fetchAndPrepareInitialEventData() {
         category: categoryString,
         title: fields.Title || "Eveniment fără titlu",
         eventTypes: eventTypeArray,
-        address: fields.Location || "Locație neprecizată",
+        address: fields.Location.join(', '),
         time: formatEventDateTime(fields.Start, fields.End),
         airtableFields: fields
       };
@@ -1618,8 +1628,9 @@ function renderEventOrganizerSection(fields) {
   const organizerDescriptionEl = document.getElementById('eventDetailOrganizerDescription');
   const organizerSocialLinksEl = document.getElementById('eventDetailOrganizerSocialLinks');
 
-  // Organizer Details
-  const organizerLocationName = fields.Location;
+  // Organizer Details -- an event can have multiple Location selections;
+  // this section only ever shows the first one.
+  const organizerLocationName = (fields.Location && fields.Location[0]) || null;
   const organizerFeature = nameToFeature ? nameToFeature[organizerLocationName] : null;
 
   const handleOrganizerDirectReadMore = () => {
@@ -1830,8 +1841,11 @@ function openEventDetailPanel(eventTitle) {
 
   // 4. Location, Date/Time
   if (locationTextEl) {
-    locationTextEl.textContent = fields.Location || "N/A";
-    const locationNameForPinInteraction = fields.Location;
+    locationTextEl.textContent = fields.Location.length ? fields.Location.join(', ') : "N/A";
+    // Click opens the pin on the map, which can only show one feature --
+    // when an event has multiple locations, this targets the first one
+    // (same convention as the "Spațiul gazdă" section below).
+    const locationNameForPinInteraction = fields.Location[0] || null;
 
     locationTextEl.style.cursor = 'pointer';
     locationTextEl.onclick = null;
