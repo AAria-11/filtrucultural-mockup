@@ -2032,6 +2032,12 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 .event-category {
     text-transform: uppercase;
     margin: 0;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
   
 .event-title {
@@ -2080,6 +2086,12 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     width: 248px;
     margin: 0;
     font-size: 12px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .results-count {
