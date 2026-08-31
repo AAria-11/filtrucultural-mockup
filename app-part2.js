@@ -1624,13 +1624,26 @@ function populateRecentEvents(events) {
 // nameToFeature asynchronously and may resolve after the panel already
 // rendered with it empty.
 function renderEventOrganizerSection(fields) {
+  const organizerSectionTitleEl = document.getElementById('eventDetailOrgSectionTitle');
+  const organizerSectionEl = document.querySelector('.event-detail-organizer');
+
+  // "Spațiul gazdă" only makes sense for a single, unambiguous host -- an
+  // event with several Location selections hides the section entirely
+  // rather than showing just one of them as if it were the host.
+  if (!fields.Location || fields.Location.length !== 1) {
+      if (organizerSectionTitleEl) organizerSectionTitleEl.style.display = 'none';
+      if (organizerSectionEl) organizerSectionEl.style.display = 'none';
+      return;
+  }
+  if (organizerSectionTitleEl) organizerSectionTitleEl.style.display = '';
+  if (organizerSectionEl) organizerSectionEl.style.display = '';
+
   const organizerNameEl = document.getElementById('eventDetailOrganizerName');
   const organizerDescriptionEl = document.getElementById('eventDetailOrganizerDescription');
   const organizerSocialLinksEl = document.getElementById('eventDetailOrganizerSocialLinks');
 
-  // Organizer Details -- an event can have multiple Location selections;
-  // this section only ever shows the first one.
-  const organizerLocationName = (fields.Location && fields.Location[0]) || null;
+  // Organizer Details
+  const organizerLocationName = fields.Location[0];
   const organizerFeature = nameToFeature ? nameToFeature[organizerLocationName] : null;
 
   const handleOrganizerDirectReadMore = () => {
