@@ -1765,6 +1765,21 @@ function renderEventOrganizerSection(fields) {
   }
 }
 
+function escapeHtml(text) {
+  return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+// Turns URLs written in an event's plain-text description into clickable
+// links. Must run on already-escaped text (so it doesn't have to worry about
+// existing markup) and its own <a> output must not be escaped afterward.
+function linkifyEscapedText(escapedText) {
+  const urlPattern = /\b((?:https?:\/\/|www\.)[^\s<]+[^\s<.,;:!?'")\]])/gi;
+  return escapedText.replace(urlPattern, (match) => {
+    const href = /^https?:\/\//i.test(match) ? match : `https://${match}`;
+    return `<a href="${href}" target="_blank" rel="noopener noreferrer" class="link-decorator">${match}</a>`;
+  });
+}
+
 function openEventDetailPanel(eventTitle) {
   // Find the event data from masterEventList
   const eventData = masterEventList.find(event => event.title === eventTitle && event.airtableFields);
@@ -1939,11 +1954,11 @@ function openEventDetailPanel(eventTitle) {
       }
   } else {
       const paragraphs = descText.split(/\n\s*\n+|\n\n+/).map(pText => pText.trim()).filter(pText => pText.length > 0);
-      const fullHtml = paragraphs.map(p => `<p>${p.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</p>`).join('');
+      const fullHtml = paragraphs.map(p => `<p>${linkifyEscapedText(escapeHtml(p))}</p>`).join('');
       const previewCharLimit = 500;
 
       if (descText.length <= previewCharLimit || paragraphs.length < 1) {
-          descriptionContainer.innerHTML = fullHtml || `<p>${descText.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</p>`;
+          descriptionContainer.innerHTML = fullHtml || `<p>${linkifyEscapedText(escapeHtml(descText))}</p>`;
       } else {
           let visibleHtml = '';
           let charCount = 0;
@@ -1951,14 +1966,10 @@ function openEventDetailPanel(eventTitle) {
               if ((charCount + p.length) > previewCharLimit && charCount > 0) {
                   const remainingChars = previewCharLimit - charCount;
                   const visiblePart = p.substring(0, remainingChars > 3 ? remainingChars - 3 : 0);
-                  const pElement = document.createElement('p');
-                  pElement.textContent = visiblePart + '...';
-                  visibleHtml += pElement.outerHTML;
+                  visibleHtml += `<p>${linkifyEscapedText(escapeHtml(visiblePart + '...'))}</p>`;
                   break;
               } else {
-                  const pElement = document.createElement('p');
-                  pElement.textContent = p;
-                  visibleHtml += pElement.outerHTML;
+                  visibleHtml += `<p>${linkifyEscapedText(escapeHtml(p))}</p>`;
                   charCount += p.length;
               }
           }
