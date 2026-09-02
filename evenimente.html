@@ -355,7 +355,13 @@
           if (!response.ok) throw new Error(`Baserow request failed: ${response.status}`);
           const page = await response.json();
           rows = rows.concat(page.results);
-          nextUrl = page.next;
+          // Baserow's pagination links come back as http://, which the browser
+          // silently blocks as mixed content on this https:// page -- that
+          // failure was rejecting this whole fetch (and with 212 Obiective rows
+          // needing 2 pages, it always hit page 2, so nameToFeature never got
+          // populated and "Spațiul gazdă" always fell back to "unavailable",
+          // even for events with a single, correctly-matching location).
+          nextUrl = page.next ? page.next.replace(/^http:\/\//i, 'https://') : null;
         }
         return rows;
       }

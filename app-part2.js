@@ -232,7 +232,11 @@ async function fetchAllBaserowEventRows(url) {
 
     const page = await response.json();
     rows = rows.concat(page.results);
-    nextUrl = page.next;
+    // Baserow's pagination links come back as http://, which browsers block as
+    // mixed content on an https:// page -- upgrade it so pagination doesn't
+    // silently break once this table grows past one page (currently under the
+    // 200-row page size, but see the same fix in app-part1.js/evenimente.html).
+    nextUrl = page.next ? page.next.replace(/^http:\/\//i, 'https://') : null;
   }
 
   return rows;
