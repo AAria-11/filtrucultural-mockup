@@ -210,6 +210,7 @@ const ARTICLE_NAME_TO_SLUG = {
   "Muzeul Hărților și Cărții Vechi" : "muzeul-hartilor",
   "NON artspace" : "non-art-space",
   "Nod Makerspace" : "nod-makerspace",
+  "GAEP" : "gaep",
 };
 
 const EPONYMOUS_ARTICLE_LOCATIONS = [
@@ -222,7 +223,8 @@ const EPONYMOUS_ARTICLE_LOCATIONS = [
   "Cinema Europa",
   "Muzeul Hărților și Cărții Vechi",
   "NON artspace",
-  "Nod Makerspace"
+  "Nod Makerspace",
+  "GAEP"
 ];
 
 function hasEponymousArticle(locationName) {
