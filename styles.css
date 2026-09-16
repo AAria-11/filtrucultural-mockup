@@ -1067,14 +1067,15 @@ body {
 }
 
 .image-gallery-container {
-    width: 717px;
+    width: 100%;
+    max-width: 1160px;
 }
 
 .main-image, .main-image-article {
     width: 100%;
     height: 590px;
     background-color: #ddd; /* Placeholder color */
-    margin-bottom: 8px; 
+    margin-bottom: 8px;
     position: relative;
 }
 
@@ -1088,6 +1089,15 @@ body {
     height: 133px;
     background-color: #FBF7F2; /* Placeholder color */
     margin-right: 6px;
+}
+
+/* The map's pin galleries (.thumbnail/.thumbnails) keep their fixed 174px
+   width above -- but on article pages .image-gallery-container now spans
+   the same width as .article-photo, so the thumbnail row needs to stretch
+   to fill it evenly instead of leaving a gap after the fixed-width boxes. */
+.thumbnail-article {
+    width: auto;
+    flex: 1 1 0;
 }
 
 .thumbnails .thumbnail:last-child, .thumbnails-article .thumbnail-article:last-child {
@@ -2579,7 +2589,8 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 }
 
 .article-content-text {
-    width: 748px;
+    width: 100%;
+    max-width: 1160px;
     display: flex;
     flex-direction: column;
     position: relative;
