@@ -1,8 +1,8 @@
 [
     {
       "date": "7 – 21 octombrie 2026",
-      "title": "Expoziția „A certain gaze” & Proiecție de film",
-      "subtitle": "Expoziție de fotografie de arhitectură și proiecție de film la Cinema Europa",
+      "title": "Cinema Europa",
+      "subtitle": "Expoziția de fotografie de arhitectură A certain gaze și proiecție de film",
       "mainImage": "archive/posters/acertaingaze.png",
       "description": [
         "Expoziția a reunit lucrările realizate de 10 participanți în cadrul atelierului de fotografie de arhitectură coordonat de Marius Vasile. Având Calea Moșilor Vechi ca fir călăuzitor, participanții au explorat zona cu o atenție sporită pentru detalii, umbre, structuri și unghiuri surprinzătoare. Titlul <i>A Certain Gaze</i> împrumută din spiritul secțiunii cinematografice <i>Un Certain Regard</i>, propunând o privire curioasă, care zăbovește asupra detaliilor.",
@@ -13,8 +13,8 @@
     },
     {
       "date": "4 octombrie 2026",
-      "title": "Lansare de bandă desenată: Pe sub apă",
-      "subtitle": "Lansare de volum ilustrat de Maria Mălcică, în cadrul Dâmbovița Delivery",
+      "title": "Nod Makerspace",
+      "subtitle": "Lansare de bandă desenată: Pe sub apă în cadrul Dâmbovița Delivery",
       "mainImage": "archive/posters/pesubapa.png",
       "description": [
         "Lansarea volumului de bandă desenată <i>Pe sub apă</i>, realizat de Maria Mălcică, a avut loc în cadrul evenimentului Dâmbovița Delivery – Regie. Proiectul a propus o reevaluare a râului Dâmbovița prin intermediul unei narațiuni fantastice fundamentate pe date științifice reale.",
@@ -24,8 +24,8 @@
     },
     {
       "date": "3 octombrie 2026",
-      "title": "Tur ghidat în Floreasca",
-      "subtitle": "Tur de arhitectură cu istoricul Andrei Răzvan Voinea (Studio Zona)",
+      "title": "Galeria GAEP",
+      "subtitle": "Tur ghidat de arhitectură în cartierul Floreasca",
       "mainImage": "archive/posters/gaeptur.png",
       "description": [
         "Turul ghidat de istoricul de arhitectură Andrei Răzvan Voinea (Studio Zona) a analizat evoluția urbanistică a cartierului Floreasca, urmărind tranziția de la spațiul semirural de la marginea orașului la ansamblurile rezidențiale bine structurate.",
@@ -35,8 +35,8 @@
     },
     {
       "date": "26 septembrie 2026",
-      "title": "Artist Talk: Arta în spațiul domestic",
-      "subtitle": "Discuție despre artă și spațiul casnic la NON art space",
+      "title": "NON art space",
+      "subtitle": "Artist Talk: Arta în spațiul domestic",
       "mainImage": "archive/posters/nontalk.png",
       "description": [
         "Discuția a analizat parcursul artei în spațiul casnic, de la primele cabinete de curiozități (<i>Wunderkammern</i>) până la practicile contemporane independent-alternative, urmărind modul în care cadrul spațial influențează producția artistică, expunerea și relația cu publicul.",
@@ -46,8 +46,8 @@
     },
     {
       "date": "2 – 20 septembrie 2026",
-      "title": "Expoziția 1:1",
-      "subtitle": "Expoziție de fotografie de arhitectură la Muzeul Hărților și Cărții Vechi",
+      "title": "Muzeul Hărților și Cărții Vechi",
+      "subtitle": "Expoziția de fotografie de arhitectură 1:1",
       "mainImage": "archive/posters/expo11.png",
       "description": [
         "Expoziția 1:1 te invită să descoperi detaliile care au atras atenția celor ce au parcurs la pas străzile din Dorobanți. Expoziția se poziționează la intersecția dintre două moduri de a percepe spațiul: cel abstract (de sus în jos) și cel personal (de jos în sus). Prin fotografie, zona cartografiată își pierde caracterul teoretic și devine un loc trăit, adus la viață prin explorare directă și prin privirile intersectate ale mai multor observatori.",
@@ -59,7 +59,7 @@
     {
       "date": "Mai – Septembrie 2026",
       "title": "Cerc de lectură: Spațiu. Corp. Oraș",
-      "subtitle": "Serie de întâlniri teoretice despre spațiu și arhitectură la Biblioteca CdRF",
+      "subtitle": "Întâlniri teoretice despre spațiu și arhitectură la Biblioteca CdRF",
       "mainImage": "archive/posters/cerclectura.png",
       "description": [
         "Seria de întâlniri a propus o reflecție teoretică asupra spațiului și arhitecturii, structurată pe parcursul a cinci sesiuni lunare, găzduite de <a href='#' onclick=\"openArticle(event, 'Centrul de Resurse în Fotografie')\" class='link-decorator'>Centrul de Resurse în Fotografie</a>. Plecând de la studii și concepte fundamentale, discuțiile au urmărit de-familiarizarea temporară în raport cu mediul construit cotidian și explorarea unor teme precum gestul de a construi, spațiul domestic, dimensiunea politică a spațiului public și heterotopiile.",
@@ -71,7 +71,7 @@
     {
       "date": "8 – 10 mai 2026",
       "title": "Atelier de fotografie de arhitectură",
-      "subtitle": "Atelier coordonat de arh. și fotograf Marius Vasile, la MATER Library (Nod Makerspace)",
+      "subtitle": "Atelier coordonat de arh. și fotograf Marius Vasile",
       "mainImage": "archive/posters/atelierfoto.png",
       "description": [
         "Atelierul coordonat de arhitectul și fotograful Marius Vasile a propus o explorare a spațiului construit din București ca instrument de înțelegere și analiză a mediului urban. Structurat pe parcursul a trei zile, modulul a combinat o sesiune teoretică și practică la MATER Library (<a href='#' onclick=\"openArticle(event, 'Nod Makerspace')\" class='link-decorator'>Nod Makerspace</a>) cu două aplicații de teren.",
