@@ -3590,6 +3590,10 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
         margin-top: 48px;
     }
 
+    .archive-title {
+        line-height: 120%;
+    }
+
     #archive-container .archive-timeline::before {
         left: 16px;
     }
