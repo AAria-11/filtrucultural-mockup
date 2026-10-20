@@ -228,8 +228,8 @@
     }
 
     // Placed right after afterEl (the last building list) when given, so it
-    // stays next to what it expands; otherwise at the end of the entry.
-    function appendGalleryToggle(entryEl, afterEl) {
+    // stays next to what it expands; otherwise at the end of parent.
+    function appendGalleryToggle(entryEl, afterEl, parent) {
       var toggle = document.createElement('button');
       toggle.type = 'button';
       toggle.className = 'arch-gallery-toggle';
@@ -244,7 +244,7 @@
         if (!expanded) toggle.scrollIntoView({ block: 'nearest', behavior: scrollBehavior() });
       };
       if (afterEl) afterEl.after(toggle);
-      else entryEl.appendChild(toggle);
+      else parent.appendChild(toggle);
     }
 
     // ===== Sticky style menu =====
@@ -270,15 +270,6 @@
         if (isActive) chipsById[key].setAttribute('aria-current', 'true');
         else chipsById[key].removeAttribute('aria-current');
       });
-      // Keep the active chip visible in the single-row mobile strip. Scrolls
-      // the strip only — chip.scrollIntoView() would also move the page.
-      var chip = chipsById[id];
-      if (chip && chipsEl.scrollWidth > chipsEl.clientWidth) {
-        chipsEl.scrollTo({
-          left: chip.offsetLeft - (chipsEl.clientWidth - chip.offsetWidth) / 2,
-          behavior: scrollBehavior()
-        });
-      }
     }
 
     // While a chip click / deep link smooth-scrolls, the sections it passes
@@ -336,10 +327,56 @@
       var section = document.getElementById(id);
       if (!section || styleSections.indexOf(section) === -1) return;
       var behavior = smooth ? scrollBehavior() : 'auto';
+      setOpenSection(section);
       setActiveChip(id);
       if (behavior === 'smooth') lockActiveChip();
       section.scrollIntoView({ block: 'start', behavior: behavior });
       if (location.hash !== '#' + id) history.replaceState(null, '', '#' + id);
+    }
+
+    // ===== Mobile accordion =====
+    // On phones (site.css, max-width: 550px) the chip menu is hidden and each
+    // style is an accordion row (the map sidebar's .sidebar-accordion-header
+    // look) whose content opens right under it; only .is-open sections show
+    // their content. On desktop the rows are hidden and every section shows.
+    function setOpenSection(section) {
+      styleSections.forEach(function (s) {
+        var open = s === section;
+        s.classList.toggle('is-open', open);
+        s.querySelector('.arch-accordion-header').setAttribute('aria-expanded', String(open));
+      });
+    }
+
+    function addAccordionHeader(entryEl, id, label) {
+      var header = document.createElement('button');
+      header.type = 'button';
+      header.className = 'sidebar-accordion-header arch-accordion-header';
+      header.setAttribute('aria-expanded', 'false');
+      header.setAttribute('aria-controls', id + '-content');
+      var text = document.createElement('span');
+      text.textContent = label;
+      var chevron = document.createElement('img');
+      chevron.className = 'sidebar-accordion-chevron';
+      chevron.src = 'CaretDown.svg';
+      chevron.alt = '';
+      header.appendChild(text);
+      header.appendChild(chevron);
+      header.addEventListener('click', function () {
+        var opening = !entryEl.classList.contains('is-open');
+        setOpenSection(opening ? entryEl : null);
+        if (opening) {
+          // Closing a section above this one moves this row, possibly out of
+          // view.
+          var top = header.getBoundingClientRect().top;
+          if (top < 0 || top > window.innerHeight - 2 * header.offsetHeight) {
+            entryEl.scrollIntoView({ block: 'start', behavior: scrollBehavior() });
+          }
+          history.replaceState(null, '', '#' + id);
+        } else if (location.hash === '#' + id) {
+          history.replaceState(null, '', location.pathname + location.search);
+        }
+      });
+      entryEl.appendChild(header);
     }
 
     function addStyleChip(id, label) {
@@ -383,21 +420,29 @@
           el.className = 'archive-entry';
           el.id = id;
 
+          // Mobile-only accordion row, then everything else in the content
+          // wrapper it opens/closes.
+          addAccordionHeader(el, id, entry.title);
+          var content = document.createElement('div');
+          content.className = 'arch-entry-content';
+          content.id = id + '-content';
+          el.appendChild(content);
+
           var marker = document.createElement('div');
           marker.className = 'archive-timeline-marker';
-          el.appendChild(marker);
+          content.appendChild(marker);
 
           var title = document.createElement('div');
           title.className = 'archive-title';
           title.textContent = entry.title;
-          el.appendChild(title);
+          content.appendChild(title);
 
           if (entry.mainImage) {
             var mainImage = document.createElement('img');
             mainImage.className = 'archive-main-image';
             mainImage.src = entry.mainImage;
             mainImage.alt = entry.title;
-            el.appendChild(mainImage);
+            content.appendChild(mainImage);
           }
 
           var description = document.createElement('div');
@@ -407,10 +452,10 @@
             p.innerHTML = paragraph;
             description.appendChild(p);
           });
-          el.appendChild(description);
+          content.appendChild(description);
 
           if (entry.galleryDir) {
-            appendGallery(el, entry.galleryDir, entry.photoCount || 1, entry.title, style);
+            appendGallery(content, entry.galleryDir, entry.photoCount || 1, entry.title, style);
           }
 
           // Optional per-building galleries: [{ name, galleryDir, photoCount, html? }],
@@ -453,7 +498,7 @@
               // The text-only buildings only show once "Vezi toate" is pressed.
               textList.classList.add('arch-extra');
             } else {
-              el.appendChild(buildingList);
+              content.appendChild(buildingList);
             }
           }
 
@@ -465,7 +510,7 @@
             // After the text-only list when there is one: collapsed, that list is
             // hidden and the button sits right under the photos; expanded, the
             // list opens above it.
-            appendGalleryToggle(el, el.querySelector('ul.arch-extra') || (buildingList.parentNode ? buildingList : null));
+            appendGalleryToggle(el, el.querySelector('ul.arch-extra') || (buildingList.parentNode ? buildingList : null), content);
           }
 
           timeline.appendChild(el);

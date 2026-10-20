@@ -452,14 +452,12 @@ body.arhitectura-page {
 }
 
 /* .page-content is a margin:auto flex item of body, so it shrink-wraps its
-   content; the mobile single-row chip strip would make that ~1500px wide
-   (capped at 900px) and push the page wider than the phone. */
+   content (capped at 900px) instead of following the viewport width. */
 body.arhitectura-page .page-content {
   width: 100%;
 }
 
 .arch-style-chips {
-  position: relative; /* offsetParent for the chips' active-chip scrolling */
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -578,30 +576,71 @@ body.arhitectura-page .page-content {
   transform: rotate(45deg);
 }
 
+/* Mobile-only accordion row per style (see addAccordionHeader in
+   arhitectura.html); also carries .sidebar-accordion-header for the map
+   sidebar's look, which this hides on desktop. */
+.arch-accordion-header {
+  display: none;
+}
+
 @media (max-width: 550px) {
-  /* Edge to edge via .page-content's own 24px padding rather than 100vw,
-     which would also count any scrollbar. */
-  .arch-style-nav {
-    margin: 24px -24px 0 -24px;
-    padding: 10px 0;
-  }
-
-  /* One horizontally scrolling row, edge to edge. */
-  .arch-style-chips {
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    overflow-x: auto;
-    padding: 0 24px;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-
-  .arch-style-chips::-webkit-scrollbar {
-    display: none;
-  }
-
   .arch-back-to-top {
     right: 16px;
     bottom: calc(60px + 16px); /* above the fixed mobile toolbar */
+  }
+
+  /* Phones: the chip menu and the dashed timeline give way to an accordion
+     (one style open at a time) using the full width, with a 16px gutter.
+     All scoped to this page: arhiva.html shares the timeline classes. */
+  body.arhitectura-page .page-content {
+    padding: 0 16px;
+  }
+
+  .arch-style-nav {
+    display: none;
+  }
+
+  body.arhitectura-page #archive-container .archive-timeline {
+    padding-left: 0;
+    margin-top: 32px;
+  }
+
+  body.arhitectura-page #archive-container .archive-timeline::before,
+  body.arhitectura-page .archive-timeline-marker,
+  body.arhitectura-page .archive-entry .archive-title {
+    display: none;
+  }
+
+  /* Separator and open/closed behaviour copied from .sidebar-accordion-section
+     / .sidebar-accordion-content (not reused as classes: those would also
+     hide the content on desktop). */
+  body.arhitectura-page .archive-entry {
+    margin-bottom: 0;
+    border-bottom: 1px dashed #D9C9C0;
+  }
+
+  body.arhitectura-page .archive-entry:first-child {
+    border-top: 1px dashed #D9C9C0;
+  }
+
+  .arch-accordion-header {
+    display: flex;
+    padding: 16px 0;
+  }
+
+  .archive-entry.is-open .arch-accordion-header {
+    color: #CC4205;
+  }
+
+  .archive-entry.is-open .sidebar-accordion-chevron {
+    transform: rotate(180deg);
+  }
+
+  .archive-entry:not(.is-open) .arch-entry-content {
+    display: none;
+  }
+
+  .arch-entry-content {
+    padding-bottom: 24px;
   }
 }
