@@ -5,7 +5,12 @@
       "Neogoticul a pătruns în contextul arhitectural bucureștean cu precădere în cea de-a doua jumătate a secolului al XIX-lea. În acea perioadă orașul capitală se regăsea într-un proces de modernizare și occidentalizare. Acesta s-a regăsit însă mai mult ca o reinterpretare selectivă și filtrată pentru a se putea adapta la cerințele locale.",
       "Astfel că, sub influența curentelor venite din vestul Europei, renașterea gotică promovată de Augustus Pugin în Anglia și Viollet-le-Duc în Franța, arhitecții români au început să preia elemente din acest vocabular redescoperit. Mesajul era unul care depășea esteticul: se dorea un București cu o legitimitate istorică și cu aspirații europene, un act de împrumut cultural intenționat pentru un oraș capitală al Principatelor Unite.",
       "<strong>Trăsături arhitecturale definitorii:</strong><ul><li>Arcadele ogivale sunt compuse dintr-un arc frânt, element definitoriu al stilului gotic. Se regăsesc preponderent în fațadă, permițând ferestrelor să fie zvelte și cu goluri largi, dar și la interior, sub forma unor portaluri;</li><li>Turnurile înalte cu fleșe reprezintă alt element preluat din repertoriul stilului gotic, care accentuează încă o dată înălțimea construcției;</li><li>Ferestrele cu vitralii, în special rozete și elemente florale;</li><li>Contrafortul și pinaclul – prezente în țesutul bucureștean mai mult cu rol decorativ decât structural.</li></ul>",
-      "În București nu sunt numeroase clădiri care să prezinte elementele anterior menționate, neogoticul manifestându-se mai mult în arhitectura religioasă și cea a clădirilor publice, dar pot fi menționate și câteva exemple de construcții cu caracter rezidențial."
+      "În București nu sunt numeroase clădiri care să prezinte elementele anterior menționate, neogoticul manifestându-se mai mult în arhitectura religioasă și cea a clădirilor publice, dar pot fi menționate și câteva exemple de construcții cu caracter rezidențial.",
+      "<strong>Clădiri reprezentative:</strong>"
+    ],
+    "buildings": [
+      { "name": "Casa Breslelor, Strada Stelea 10", "galleryDir": "neogotic_casa_breslelor_strada_stelea_10", "photoCount": 3 },
+      { "name": "Fabrica de Trăsuri \"H.I. Rieber\", Strada Romulus nr. 15-17, București", "galleryDir": "neogotic_fabrica_de_trasuri_h_i_rieber_strada_romulus_nr_15_17_bucuresti", "photoCount": 5 }
     ]
   },
   {
@@ -17,7 +22,16 @@
       "<strong>Trăsături arhitecturale definitorii:</strong><ul><li>Colonada (ansamblu de coloane cu capiteluri dorice și/sau corintice);</li><li>Frontonul clasic (triunghiular, cu sau fără decorații);</li><li>Simetria riguroasă față de un ax central (ferestre, pilaștri și ornamente urmăresc această linie invizibilă).</li></ul>",
       "Toate aceste elemente caută să evoce gravitatea și rigoarea specifice imaginii templului antic, integrând în același timp convingerea iluministă potrivit căreia frumosul își are rădăcinile în ordinea matematică și în rațiune. O fațadă tipică acestui stil în București se compune din pilaștri (coloane aplatizate integrate în zid), cu antablament alcătuit din arhitravă, frize și cornișe profilate care încheie fiecare nivel al construcției. De cele mai multe ori, pereții parterului primesc un tratament diferit, din blocuri de zidărie cu rosturi adânci, care conferă greutate și masivitate specifice bazei clădirilor, lăsând etajele să pară mai ușoare, cu ferestre mai mari și cu mai multă decorație.",
       "Plimbându-te prin oraș, stilul neoclasic se poate identifica ușor în arhitectura construcțiilor publice, de învățământ, dar și a celor rezidențiale destinate elitelor. Printre exemplele relevante se numără Universitatea din București, proiectată de Alexandru Orăscu, cu fațada definită de un portic cu coloane ionice, un fronton central și o simetrie riguroasă. Cu funcțiuni rezidențiale, Palatul Știrbei și Palatul Ghica-Tei ilustrează felul în care elita bucureșteană și-a însușit stilul neoclasic pentru a-și afirma apartenența la lumea europeană.",
-      "<strong>Clădiri reprezentative:</strong><ul><li><strong>Universitatea din București | 1869 | arh. Alexandru Orăscu | Bd. Regina Elisabeta 4-12</strong><br>portic cu coloane ionice, fronton central cu basorelief alegoric</li><li><strong>Palatul Știrbei | 1835 | arh. Michel Sanjouand | Calea Victoriei 107</strong><br>casă boierească cu fațadă neoclasică, pilaștri cu capiteluri în stil corintic, cornișă profilată și plan axial riguros</li><li><strong>Palatul Ghica-Tei | 1822 | arh. Xavier Villacrosse | Strada Doamna Ghica 5</strong><br>vilă suburbană cu loggie cu arcade semicirculare și pilaștri ionici, simbol al neoclasicismului rezidențial de influență vienezo-italiană</li></ul>"
+      "<strong>Clădiri reprezentative:</strong><ul><li><strong>Universitatea din București | 1869 | arh. Alexandru Orăscu | Bd. Regina Elisabeta 4-12</strong><br>portic cu coloane ionice, fronton central cu basorelief alegoric</li><li><strong>Palatul Ghica-Tei | 1822 | arh. Xavier Villacrosse | Strada Doamna Ghica 5</strong><br>vilă suburbană cu loggie cu arcade semicirculare și pilaștri ionici, simbol al neoclasicismului rezidențial de influență vienezo-italiană</li></ul>"
+    ],
+    "buildings": [
+      { "name": "Bulevardul Nicolae Bălcescu 17-19", "galleryDir": "neoclasic_bulevardul_nicolae_balcescu_17_19", "photoCount": 4 },
+      {
+        "name": "Palatul Știrbei, Calea Victoriei 107",
+        "galleryDir": "neoclasic_palatul_stirbei_calea_victoriei_107",
+        "photoCount": 5,
+        "html": "<strong>Palatul Știrbei | 1835 | arh. Michel Sanjouand | Calea Victoriei 107</strong><br>casă boierească cu fațadă neoclasică, pilaștri cu capiteluri în stil corintic, cornișă profilată și plan axial riguros"
+      }
     ]
   },
   {
@@ -56,6 +70,10 @@
       "<strong>Trăsături arhitecturale definitorii:</strong><ul><li>Volumetria pitorească propune o neregularitate deliberată, cu corpuri articulate liber, cu turnuri adosate unor volume joase, terase ieșite din planul fațadei. Asemenea unei siluete organice, acest tip de construcție se integrează ideal în peisajul stâncos specific regiunii.</li><li>Galeriile deschise în plin centru situate fie la etaj, fie la parter, creează de cele mai multe ori spații intermediare între interior și exterior. Acest element este îndeosebi preluat din vocabularul arhitectural roman.</li><li>Materialitatea caldă este, de asemenea, un element care face acest stil recognoscibil. Astfel, acoperișurile din teracotă, fațadele tencuite în culori naturale (ocru, siena, alb calcinat), ferestrele cu tâmplărie și obloane vopsite în nuanțe vegetale compun un ansamblu care evocă pitorescul Toscanei sau Provenței. Alt material specific este și ceramica smălțuită în albastru și galben, dar și elementele decorative din ceramică (jardiniere, fântâni).</li></ul>",
       "În București, clădirile care pot fi menționate ca fiind relevante pentru acest stil se regăsesc în cartierele rezidențiale cu locuințe individuale ale orașului. Străzi precum Șoseaua Kiseleff, Aleea Alexandru sau Bulevardul Aviatorilor sunt presărate cu case cu logii în arcade, acoperișuri de teracotă și grădini cu fântâni de piatră. În cartierul Dorobanți (îndeosebi pe strada Paris și strada Madrid) se păstrează și astăzi o densitate remarcabilă de astfel de vile cu caracter vizibil mediteranean.",
       "<strong>Clădiri reprezentative:</strong><ul><li><strong>Muzeul Hărților | Strada Londra 39</strong></li></ul>"
+    ],
+    "buildings": [
+      { "name": "Strada General Eremia Grigorescu 4", "galleryDir": "pitoresc_strada_general_eremia_grigorescu_4", "photoCount": 6 },
+      { "name": "Strada George Vraca 7", "galleryDir": "pitoresc_strada_george_vraca_7", "photoCount": 5 }
     ]
   },
   {
@@ -81,6 +99,10 @@
       "<strong>Trăsături arhitecturale definitorii:</strong><ul><li>Arcadele trilobate ce articulează atât ferestrele, pridvoarele, cât și logiile reprezintă unul dintre cele mai recognoscibile elemente ale stilului neoromânesc. Acest element a fost preluat din limbajul marilor ansambluri mănăstirești ale secolului al XV-lea și al XVI-lea (Mănăstirea Curtea de Argeș, Voroneț).</li><li>Odată cu acest tip de arcade apare în compoziție un element la fel de important: foișorul. Ca spațiu de tranziție, el este moștenit din arhitectura boierească și este un element fără echivalent în limbajul arhitectural occidental.</li><li>Coloanele răsucite cu capiteluri decorate cu elemente vegetale, dar și realizarea de ancadramente de piatră sculptate, de asemenea cu astfel de simboluri, conferă fațadelor un ritm bogat și organic. Rozete, vrejuri, turnuri octogonale împodobesc fațadele și le dau un ritm natural.</li><li>Din punct de vedere al materialității, stilul se distinge prin crearea unui colaj contrastant de texturi. Un prim exemplu este adăugarea elementelor ceramice colorate și smălțuite (discuri, panouri) în câmpurile de zidărie. Dispuse în brâuri sau ca elemente de detaliu ale ancadramentelor, acestea creează un contrast puternic cu textura rugoasă a fațadei (piatră cioplită sau cărămidă aparentă). Lemnul este utilizat în tratarea consolelor, a balustradelor și a elementelor de tâmplărie, fiind prelucrat cu motive geometrice sau vegetale ce reiau vocabularul ornamental al artei populare românești.</li></ul>",
       "În București, stilul arhitectural neoromânesc își atinge punctul de maturitate în perioada interbelică. Acesta a lăsat în urmă clădiri cu programe de mare importanță — bănci, primării, palate administrative, dar și sedii universitare, devenind astfel un instrument în definirea legitimității culturale, statul având nevoie să afirme atât tradiția, cât și continuitatea istorică în care poporul român s-a format.",
       "<strong>Clădiri reprezentative:</strong><ul><li><strong>Muzeul Național al Țăranului Român | 1912–1941 | arh. Nicolae Ghika-Budești | Șoseaua Pavel D. Kiseleff 3</strong></li><li><strong>Universitatea de Arhitectură și Urbanism „Ion Mincu\" — corpul vechi | 1912–1927 | arh. Grigore Cerchez | Strada Academiei 18-20</strong></li><li><strong>Casa Memorială Ion Mincu | cca. 1890 (restaurare și extensie) | arh. Ion Mincu | Strada Pictor Arthur Verona 19</strong></li></ul>"
+    ],
+    "buildings": [
+      { "name": "Strada Barbu Delavrancea 49", "galleryDir": "neoromanesc_strada_barbu_delavrancea_49", "photoCount": 5 },
+      { "name": "Vila Zottu Strada C. A. Rosetti 7", "galleryDir": "neoromanesc_vila_zottu_strada_c_a_rosetti_7", "photoCount": 5 }
     ]
   },
   {
@@ -124,6 +146,9 @@
       "<strong>Trăsături arhitecturale definitorii:</strong><ul><li>Trăsăturile definitorii ale acestei perioade sunt monumentalitatea, controlul și excesul. Pe linia orizontului bucureștean se prefigurau volume masive, cu înălțimi exagerate, ieșite din scara umană. Acestea erau de cele mai multe ori construite în jurul unei simetrii axiale riguroase (turnul poziționat în axul de simetrie), cu corpuri de clădire laterale dispuse ordonat și ierarhic.</li><li>Limbajul arhitectural al acestui stil cuprinde elemente precum turnul, piramida în trepte, sfera, bara etc. Scopul acestor corpuri geometrice perfecte, curate, era acela de a face omul să devină un punct insignifiant în comparație cu statul omnipotent. Scara colosală a noilor construcții nu urmărea altceva decât să îl supună pe cetățean, într-un mod cât mai pașnic, noii ordini.</li><li>Corpurile menționate mai sus primeau, la rândul lor, ornamente clasicizante (pilaștri corintici și cornișe clasice) combinate cu iconografia comunistă (secera și ciocanul, spicul de grâu, roți dințate, soldatul, figuri ale muncitorului și țăranului în relief sculptural academic).</li><li>La fel de relevante erau și fațadele și interioarele narative, folosite ca instrumente de propagandă — basoreliefuri, mozaicuri sau simple picturi murale — toate făceau parte, de asemenea, din vocabularul epocii.</li></ul>",
       "În București, urbanismul de tip realist-socialist nu a făcut decât să completeze un tablou deja aparent haotic: țesutul construit cu străzi înguste a fost tăiat de noile bulevarde largi, bordate de construcții care nu se racordau la scara deja existentă. Cu toate acestea, perioada a produs și lucrări cu calități arhitecturale reale, între care Casa Scânteii (azi Casa Presei Libere), Sala Palatului, blocurile clasicizante de pe Bulevardul Magheru (Blocul Eva, Blocul ITB) și ansamblurile rezidențiale din cartierele Floreasca și Vatra Luminoasă.",
       "<strong>Clădiri reprezentative:</strong><ul><li><strong>Casa Presei Libere (fostă Casa Scânteii) | 1952–1957 | arh. Horia Maicu &amp; colectiv | Piața Presei Libere 1</strong></li></ul>"
+    ],
+    "buildings": [
+      { "name": "Șoseaua Panduri 60-68", "galleryDir": "realism_socialist_soseaua_panduri_60_68", "photoCount": 7 }
     ]
   },
   {
@@ -134,7 +159,12 @@
       "<strong>Trăsături arhitecturale definitorii:</strong><ul><li>Panourile prefabricate din beton au conturat cartiere-dormitor. Aceste plăci standardizate, turnate în uzine și puse în operă direct pe șantier, au generat fațade cu ritm monoton, cu ferestre mici, standardizate, cu registre și rosturi continue.</li><li>Volumul construcțiilor devine, de asemenea, un modul standardizat, de la blocul tip lamelă (construcție lungă, îngustă și înaltă, de multe ori dispusă liber în peisaj, nerespectând neapărat alinierea la stradă) la blocuri de tip turn sau chiar cortine de blocuri care mărgineau bulevardele cele mai importante. Acest stil este preponderent vizibil în cartierele Drumul Taberei, Titan, Berceni, Militari și Colentina. Aceste ansambluri de mii de locuințe, cu spații verzi și dotări sociale, au fost realizate în etape succesive, incorporând în țesutul rezidențial și funcțiuni social-culturale.</li></ul>",
       "În paralel se definește o arhitectură de autor: hoteluri, săli polivalente, ansambluri universitare. Acestea aveau să rămână ulterior ca opere de arhitectură de foarte bună calitate, lucrări brutalist-socialiste care se pot compara cu proiecte din Vest. În această serie putem încadra Hotelul Intercontinental, Sala Polivalentă și Complexul Unirea din Piața Unirii.",
       "Ultimii zece ani ai acestei perioade au rămas cunoscuți ca „deceniul demolărilor\", un tabula rasa care a prăbușit cartiere întregi (cartierul Uranus) și numeroase monumente istorice pentru a face loc altor construcții relevante aspirațiilor perioadei (Centrul Civic, Casa Poporului).",
-      "<strong>Clădiri reprezentative:</strong><ul><li><strong>Blocul Eva | cca. 1960–1961 | arh. M. Dima | Bulevardul Gheorghe Magheru 7</strong></li><li><strong>Sala Palatului | 1958 | arh. Horia Maicu, Romeo Belea &amp; colectiv | Calea Victoriei 28-30</strong></li><li><strong>Hotel Intercontinental (azi Grand Hotel Bucharest) | 1968–1971 | arh. Dinu Hariton, Gheorghe Nădrag, Ion Moscu, Romeo Belea | Bulevardul Nicolae Bălcescu 4</strong></li><li><strong>Teatrul Național „I.L. Caragiale\" | 1964–1973 | arh. Horia Maicu, Romeo Belea &amp; colectiv | Bulevardul Nicolae Bălcescu 2</strong></li><li><strong>Complexul Unirea | 1975 | arh. Gheorghe Leahu | Piața Unirii 1</strong></li></ul>"
+      "<strong>Clădiri reprezentative:</strong><ul><li><strong>Blocul Eva | cca. 1960–1961 | arh. M. Dima | Bulevardul Gheorghe Magheru 7</strong></li><li><strong>Hotel Intercontinental (azi Grand Hotel Bucharest) | 1968–1971 | arh. Dinu Hariton, Gheorghe Nădrag, Ion Moscu, Romeo Belea | Bulevardul Nicolae Bălcescu 4</strong></li><li><strong>Teatrul Național „I.L. Caragiale\" | 1964–1973 | arh. Horia Maicu, Romeo Belea &amp; colectiv | Bulevardul Nicolae Bălcescu 2</strong></li><li><strong>Complexul Unirea | 1975 | arh. Gheorghe Leahu | Piața Unirii 1</strong></li></ul>"
+    ],
+    "buildings": [
+      { "name": "Calea Victoriei 21", "galleryDir": "modernism_socialist_calea_victoriei_21", "photoCount": 7 },
+      { "name": "Sala Palatului", "galleryDir": "modernism_socialist_sala_palatului", "photoCount": 10 },
+      { "name": "Strada Gării de Nord 1", "galleryDir": "modernism_socialist_strada_garii_de_nord_1", "photoCount": 6 }
     ]
   },
   {
@@ -175,7 +205,15 @@
       "<strong>Trăsături arhitecturale definitorii:</strong><ul><li>Definitoriu pentru acest stil este citatul istoric ironic: alipirea unui fronton triunghiular la o fațadă a unei clădiri de birouri din sticlă, marcarea cu coloane a unei intrări de supermarket, folosirea culorilor stridente la clădiri cu funcțiuni importante. Această reactivare a unor elemente ale trecutului nu se realizează îndeosebi pentru a continua o tradiție, ci mai degrabă pentru a face un comentariu estetic sau pentru a lăsa gestul creator cât mai liber.</li><li>Formele geometrice juxtapuse sunt de asemenea utilizate în mod recurent: intersecții de cilindru cu paralelipiped, un acoperiș în ape alăturat unuia în terasă.</li></ul>",
       "În această perioadă s-a conturat și o arhitectură a mall-ului inspirată direct din modelul american, un spațiu scenografic care îmbină la interior „citate\" din toate epocile. În București, arhitectura rezidențială suburbană a anilor 2000 este cea care răspunde cel mai adesea acestui stil, de la vile cu turnulețe și metereze până la case cu fațade în culori stridente.",
       "Cu funcțiuni comerciale putem enumera World Trade Center București, Hotelul Marriott de pe Calea 13 Septembrie și mall-urile AFI Palace Cotroceni și Plaza România. În această perioadă au fost construite, de asemenea, și clădiri cu funcțiuni publice, precum Corpul Boema al Bibliotecii Centrale Universitare și Înalta Curte de Casație și Justiție. Dacă excludem judecata de gust personal, se poate afirma că apariția acestui stil a marcat ireversibil peisajul local actual, fiind asociată cu perioada tranziției post-comuniste.",
-      "<strong>Clădiri reprezentative:</strong><ul><li><strong>Biblioteca Centrală Universitară — Corpul Boema | Strada Boteanu 1</strong></li><li><strong>Astoria Business Center | Strada Dionisie Lupu 64-66</strong></li><li><strong>Înalta Curte de Casație și Justiție | Bulevardul Octavian Goga 2</strong></li></ul>"
+      "<strong>Clădiri reprezentative:</strong><ul><li><strong>Astoria Business Center | Strada Dionisie Lupu 64-66</strong></li><li><strong>Înalta Curte de Casație și Justiție | Bulevardul Octavian Goga 2</strong></li></ul>"
+    ],
+    "buildings": [
+      {
+        "name": "Biblioteca Centrală Universitară — Corpul Boema",
+        "galleryDir": "postmodern_c_a_rosetti_6_extensia_bcu",
+        "photoCount": 3,
+        "html": "<strong>Biblioteca Centrală Universitară — Corpul Boema | Strada Boteanu 1</strong>"
+      }
     ]
   }
 ]

@@ -413,7 +413,7 @@
             appendGallery(el, entry.galleryDir, entry.photoCount || 1, entry.title, style);
           }
 
-          // Optional per-building galleries: [{ name, galleryDir, photoCount }],
+          // Optional per-building galleries: [{ name, galleryDir, photoCount, html? }],
           // each rendered as a bulleted item (like the "Clădiri reprezentative"
           // lists in the descriptions) with the building's name followed by its
           // photos. A building whose photos all fall past the style's first
@@ -426,9 +426,17 @@
             var buildingEl = document.createElement('li');
             buildingEl.className = 'architecture-building';
 
+            // "html" (optional) is a full text-list row (bold title + note) shown
+            // instead of the plain name, which is then only used as alt text.
             var name = document.createElement('div');
             name.className = 'architecture-building-name';
-            name.textContent = building.name;
+            if (building.html) {
+              name.innerHTML = building.html;
+            } else {
+              var nameStrong = document.createElement('strong');
+              nameStrong.textContent = building.name;
+              name.appendChild(nameStrong);
+            }
             buildingEl.appendChild(name);
 
             var firstIndex = appendGallery(buildingEl, building.galleryDir, building.photoCount, building.name, style);

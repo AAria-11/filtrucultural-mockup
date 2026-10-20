@@ -414,11 +414,12 @@ body.articles-page .page-content {
   margin-bottom: 32px;
 }
 
-/* Bold like the <strong> building names in those lists. */
+/* The name itself is a <strong>, like in those lists; a row's "html" may
+   add a regular-weight note after it. */
 .architecture-building-name {
   font-family: 'Inter', sans-serif;
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 400;
   line-height: 1.6;
   color: #25121B;
 }
