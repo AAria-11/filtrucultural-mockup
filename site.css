@@ -398,14 +398,27 @@ body.articles-page .page-content {
    "Clădiri reprezentative" (see "buildings" in arhitectura.json). The name
    uses the same size as the .archive-description body text (16px, from
    .page-content p). */
-.architecture-building {
+/* Bulleted like the description's own lists (.archive-description ul). */
+.architecture-buildings {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #25121B;
+  margin: 0;
+  padding-left: 20px;
+}
+
+/* .archive-entry raises specificity over ".archive-description li" (0.5em),
+   which also matches when the list sits inside the description. */
+.archive-entry .architecture-building {
   margin-bottom: 32px;
 }
 
+/* Bold like the <strong> building names in those lists. */
 .architecture-building-name {
   font-family: 'Inter', sans-serif;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.6;
   color: #25121B;
 }
@@ -513,7 +526,7 @@ body.arhitectura-page .page-content {
 }
 
 /* Buildings already end with 32px of margin. */
-.architecture-building ~ .arch-gallery-toggle {
+.architecture-buildings ~ .arch-gallery-toggle {
   margin-top: 0;
 }
 

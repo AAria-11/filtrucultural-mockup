@@ -227,7 +227,9 @@
       return firstIndex;
     }
 
-    function appendGalleryToggle(entryEl) {
+    // Placed right after afterEl (the last building list) when given, so it
+    // stays next to what it expands; otherwise at the end of the entry.
+    function appendGalleryToggle(entryEl, afterEl) {
       var toggle = document.createElement('button');
       toggle.type = 'button';
       toggle.className = 'arch-gallery-toggle';
@@ -241,7 +243,8 @@
         // which can leave it far above the viewport.
         if (!expanded) toggle.scrollIntoView({ block: 'nearest', behavior: scrollBehavior() });
       };
-      entryEl.appendChild(toggle);
+      if (afterEl) afterEl.after(toggle);
+      else entryEl.appendChild(toggle);
     }
 
     // ===== Sticky style menu =====
@@ -411,11 +414,16 @@
           }
 
           // Optional per-building galleries: [{ name, galleryDir, photoCount }],
-          // each rendered as the building's name followed by its photos. A
-          // building whose photos all fall past the style's first
+          // each rendered as a bulleted item (like the "Clădiri reprezentative"
+          // lists in the descriptions) with the building's name followed by its
+          // photos. A building whose photos all fall past the style's first
           // VISIBLE_PHOTOS_PER_STYLE is hidden (name included) until expanded.
+          // Listed right under the "Clădiri reprezentative:" heading, before
+          // the description's own text-only list of buildings, if any.
+          var buildingList = document.createElement('ul');
+          buildingList.className = 'architecture-buildings';
           (entry.buildings || []).forEach(function (building) {
-            var buildingEl = document.createElement('div');
+            var buildingEl = document.createElement('li');
             buildingEl.className = 'architecture-building';
 
             var name = document.createElement('div');
@@ -425,14 +433,32 @@
 
             var firstIndex = appendGallery(buildingEl, building.galleryDir, building.photoCount, building.name, style);
             if (firstIndex >= VISIBLE_PHOTOS_PER_STYLE) buildingEl.classList.add('arch-extra');
-            el.appendChild(buildingEl);
+            buildingList.appendChild(buildingEl);
           });
+          if (buildingList.children.length) {
+            var buildingsHeading = [].find.call(description.querySelectorAll('p > strong:first-child'), function (strong) {
+              return strong.textContent.indexOf('Clădiri reprezentative') === 0;
+            });
+            var textList = buildingsHeading && buildingsHeading.parentNode.querySelector('ul');
+            if (textList) {
+              textList.before(buildingList);
+              // The text-only buildings only show once "Vezi toate" is pressed.
+              textList.classList.add('arch-extra');
+            } else {
+              el.appendChild(buildingList);
+            }
+          }
 
           if (style.photos.length) {
             stylePhotoLists[style.key] = style.photos;
             picsDirToNum[style.key] = style.photos.length;
           }
-          if (style.photos.length > VISIBLE_PHOTOS_PER_STYLE) appendGalleryToggle(el);
+          if (style.photos.length > VISIBLE_PHOTOS_PER_STYLE || el.querySelector('ul.arch-extra')) {
+            // After the text-only list when there is one: collapsed, that list is
+            // hidden and the button sits right under the photos; expanded, the
+            // list opens above it.
+            appendGalleryToggle(el, el.querySelector('ul.arch-extra') || (buildingList.parentNode ? buildingList : null));
+          }
 
           timeline.appendChild(el);
           styleSections.push(el);
