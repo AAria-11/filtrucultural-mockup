@@ -87,7 +87,17 @@
       "<strong>Trăsături arhitecturale definitorii:</strong><ul><li>Geometrizarea ornamentului poate fi considerată fără îndoială elementul definitoriu al stilului. Astfel, apar compoziții create cu ajutorul zigzagurilor, triunghiurilor, liniilor paralele și motivelor în evantai, ce au îmbogățit vocabularul decorativ al orașului. Frizele orizontale cu motive în zig-zag, parapetele cu decupaje geometrice și figurile feminine stilizate sunt doar câteva exemple din vocabularul recognoscibil al acestui stil.</li><li>Similar cu stilul Art Nouveau, fațadele sunt articulate prin registre verticale continue, care își propun să accentueze înălțimea construcției. Retragerile progresive ale etajelor superioare (în zigurate) își au inspirația direct din estetica zgârie-norilor din New York. Ancadramentele ferestrelor sunt, de asemenea, dispuse în trepte succesive.</li><li>Materialele considerate nobile își găsesc și ele un rol important în estetica acestui stil. Astfel, marmura colorată, gresia polizată, bronzul turnat, aluminiul anodizat și mozaicul geometric sunt folosite atât în finisarea fațadelor exterioare, cât și în finisarea interioarelor.</li></ul>",
       "Țesutul bucureștean este punctual marcat de clădirile acestei perioade, existând și zone unde acestea sunt mai ușor de găsit. Pe Bulevardul Magheru se pot menționa Cinematograful Scala (fațadă geometrică și intrare monumentală turnată în bronz) și Hotelul Ambasador (ritm vertical accentuat, feronerie geometrizată turnată în bronz). Printre ansamblurile reprezentative pentru acest stil se numără vilele din cartierele Floreasca și Dorobanți.",
       "În compoziția urbană a orașului București, stilul Art-Deco vorbește despre caracterul efervescent, elegant și cosmopolit al perioadei interbelice. Preluat cu un decalaj de timp relativ scurt, acesta și-a lăsat amprenta în mod vizibil, creând noi repere arhitecturale în oraș.",
-      "<strong>Clădiri reprezentative:</strong><ul><li><strong>Hotelul Ambasador | 1937 | arh. Arghir Culina | Bulevardul Gheorghe Magheru 10</strong></li><li><strong>Hotelul Lido | 1930 | arh. Ernest Doneaud | Bulevardul Gheorghe Magheru 5-7</strong></li></ul>"
+      "<strong>Clădiri reprezentative:</strong>"
+    ],
+    "buildings": [
+      { "name": "Ambasada Siriei, Strada Paris 47", "galleryDir": "art_deco_ambasada_siriei_strada_paris_47", "photoCount": 2 },
+      { "name": "Bulevardul Dacia 66", "galleryDir": "art_deco_bulevardul_dacia_66", "photoCount": 4 },
+      { "name": "Strada Alexandru Constantinescu 39", "galleryDir": "art_deco_strada_alexandru_constantinescu_39", "photoCount": 5 },
+      { "name": "Strada Alexandru Philippide 1", "galleryDir": "art_deco_strada_alexandru_philippide_1", "photoCount": 4 },
+      { "name": "Strada Aviator Petre Crețu 72", "galleryDir": "art_deco_strada_aviator_petre_cretu_72", "photoCount": 5 },
+      { "name": "Strada Ion Brezoianu 11", "galleryDir": "art_deco_strada_ion_brezoianu_11", "photoCount": 5 },
+      { "name": "Strada Ion Câmpineanu 11", "galleryDir": "art_deco_strada_ion_campineanu_11", "photoCount": 4 },
+      { "name": "Strada Theodor Aman 42", "galleryDir": "art_deco_strada_theodor_aman_42", "photoCount": 6 }
     ]
   },
   {

@@ -65,6 +65,26 @@
     </div>
   </div>
 
+  <div id="lightbox" class="lightbox" style="display: none;">
+    <button class="lightbox-close" onclick="closeLightbox()">
+      <img src="Close.svg"/>
+    </button>
+    <img class="lightbox-prev" onclick="changeImage(-1)" src="lightbox-arrow-left.svg">
+    <img id="lightbox-img" src="">
+    <img class="lightbox-next" onclick="changeImage(1)" src="lightbox-arrow-right.svg">
+    <div class="lightbox-counter"></div>
+  </div>
+
+  <div id="lightbox-mobile" class="lightbox" style="display: none;">
+    <button class="lightbox-close" onclick="closeLightboxMobile()">
+      <img src="Close.svg"/>
+    </button>
+    <div class="scroll-container" id="scrollContainer">
+      <!-- Images will be dynamically inserted here -->
+    </div>
+    <div class="lightbox-counter" id="mobileLightboxCounter"></div>
+  </div>
+
   <!-- ===== Shared footer (same block as index.html) ===== -->
   <footer class="footer-container">
     <div class="footer-inner">
@@ -110,6 +130,48 @@
     // Same rendering pattern as arhiva.html/archive.json. Each entry's photo
     // gallery reads pics/<galleryDir>/0.jpg, 1.jpg, ... — defaults to just the
     // one main photo unless the entry sets a higher "photoCount".
+
+    // Thumbnail row (desktop) + single cover photo (mobile), both opening the
+    // shared lightbox from app-part2.js / app-part3.js, as on arhiva.html.
+    function appendGallery(parent, galleryDir, photoCount, alt) {
+      // openLightbox()/changeImage()/openLightboxMobile() read the photo count
+      // for a dir from the shared picsDirToNum map.
+      picsDirToNum[galleryDir] = photoCount;
+
+      var gallery = document.createElement('div');
+      gallery.className = 'archive-gallery';
+      for (let i = 0; i < photoCount; i++) {
+        const thumb = document.createElement('div');
+        thumb.className = 'thumbnail-archive';
+        const img = document.createElement('img');
+        img.src = 'pics/' + galleryDir + '/' + i + '.jpg';
+        img.alt = alt;
+        img.loading = 'lazy';
+        img.onclick = function () {
+          currentImageDir = galleryDir;
+          openLightbox(img.src, i);
+        };
+        thumb.appendChild(img);
+        gallery.appendChild(thumb);
+      }
+      parent.appendChild(gallery);
+
+      var galleryMobile = document.createElement('div');
+      galleryMobile.className = 'archive-gallery-mobile';
+      var mobileMain = document.createElement('div');
+      mobileMain.className = 'main-image';
+      var mobileImg = document.createElement('img');
+      mobileImg.src = 'pics/' + galleryDir + '/0.jpg';
+      mobileImg.alt = alt;
+      mobileImg.loading = 'lazy';
+      mobileMain.onclick = function () {
+        openLightboxMobile(galleryDir);
+      };
+      mobileMain.appendChild(mobileImg);
+      galleryMobile.appendChild(mobileMain);
+      parent.appendChild(galleryMobile);
+    }
+
     fetch('arhitectura.json')
       .then(function (r) { return r.json(); })
       .then(function (entries) {
@@ -144,35 +206,24 @@
           });
           el.appendChild(description);
 
-          var photoCount = entry.photoCount || 1;
-
-          if (entry.galleryDir && photoCount > 1) {
-            var gallery = document.createElement('div');
-            gallery.className = 'archive-gallery';
-            for (var i = 0; i < photoCount; i++) {
-              var thumb = document.createElement('div');
-              thumb.className = 'thumbnail-archive';
-              var img = document.createElement('img');
-              img.src = 'pics/' + entry.galleryDir + '/' + i + '.jpg';
-              img.alt = entry.title;
-              thumb.appendChild(img);
-              gallery.appendChild(thumb);
-            }
-            el.appendChild(gallery);
-          }
-
           if (entry.galleryDir) {
-            var galleryMobile = document.createElement('div');
-            galleryMobile.className = 'archive-gallery-mobile';
-            var mobileMain = document.createElement('div');
-            mobileMain.className = 'main-image';
-            var mobileImg = document.createElement('img');
-            mobileImg.src = 'pics/' + entry.galleryDir + '/0.jpg';
-            mobileImg.alt = entry.title;
-            mobileMain.appendChild(mobileImg);
-            galleryMobile.appendChild(mobileMain);
-            el.appendChild(galleryMobile);
+            appendGallery(el, entry.galleryDir, entry.photoCount || 1, entry.title);
           }
+
+          // Optional per-building galleries: [{ name, galleryDir, photoCount }],
+          // each rendered as the building's name followed by its photos.
+          (entry.buildings || []).forEach(function (building) {
+            var buildingEl = document.createElement('div');
+            buildingEl.className = 'architecture-building';
+
+            var name = document.createElement('div');
+            name.className = 'architecture-building-name';
+            name.textContent = building.name;
+            buildingEl.appendChild(name);
+
+            appendGallery(buildingEl, building.galleryDir, building.photoCount, building.name);
+            el.appendChild(buildingEl);
+          });
 
           timeline.appendChild(el);
         });

@@ -393,3 +393,23 @@ body.articles-page .page-content {
 .article-card:hover .article-card-title {
   color: #CC4205;
 }
+
+/* Arhitectură: per-building name + photo gallery listed under a style's
+   "Clădiri reprezentative" (see "buildings" in arhitectura.json). The name
+   uses the same size as the .archive-description body text. */
+.architecture-building {
+  margin-bottom: 32px;
+}
+
+.architecture-building-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.6;
+  color: #25121B;
+}
+
+.architecture-building .archive-gallery,
+.architecture-building .archive-gallery-mobile {
+  margin-top: 8px;
+}
