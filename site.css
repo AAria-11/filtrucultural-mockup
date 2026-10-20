@@ -298,10 +298,10 @@ body {
 
 /* Arhitectură/Idei entries (arhitectura.html / idei.html) sometimes embed a
    list inside a description paragraph (see archive-description p innerHTML
-   in styles.css). */
+   in styles.css). Same 16px as the description paragraphs (.page-content p). */
 .archive-description ul {
   font-family: 'Inter', sans-serif;
-  font-size: 17px;
+  font-size: 16px;
   line-height: 1.6;
   color: #25121B;
   margin: 0 0 1em 0;
@@ -396,14 +396,15 @@ body.articles-page .page-content {
 
 /* Arhitectură: per-building name + photo gallery listed under a style's
    "Clădiri reprezentative" (see "buildings" in arhitectura.json). The name
-   uses the same size as the .archive-description body text. */
+   uses the same size as the .archive-description body text (16px, from
+   .page-content p). */
 .architecture-building {
   margin-bottom: 32px;
 }
 
 .architecture-building-name {
   font-family: 'Inter', sans-serif;
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 600;
   line-height: 1.6;
   color: #25121B;
@@ -412,4 +413,181 @@ body.articles-page .page-content {
 .architecture-building .archive-gallery,
 .architecture-building .archive-gallery-mobile {
   margin-top: 8px;
+}
+
+/* Arhitectură: sticky style menu (one chip per style), "Vezi toate" gallery
+   toggle and back-to-top button. --arch-nav-offset is the sticky menu's
+   measured height, set by the script in arhitectura.html. Chip look follows
+   the map sidebar accordion (Inter 500, #2A1115, #CC420512 hover) and the
+   active filter pills (.dynamic-label: #CC4205 fill, 2px radius). */
+.arch-style-nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  /* Full window width (breaking out of .page-content's 900px) so the 14
+     chips fit in two rows instead of three. body.arhitectura-page clips the
+     scrollbar-width overshoot of 100vw. */
+  margin: 32px calc(50% - 50vw) 0 calc(50% - 50vw);
+  padding: 12px 24px;
+  background-color: #FBF7F2;
+  border-bottom: 1px dashed #D9C9C0;
+}
+
+body.arhitectura-page {
+  overflow-x: clip; /* clip, not hidden: hidden would break position: sticky */
+}
+
+/* .page-content is a margin:auto flex item of body, so it shrink-wraps its
+   content; the mobile single-row chip strip would make that ~1500px wide
+   (capped at 900px) and push the page wider than the phone. */
+body.arhitectura-page .page-content {
+  width: 100%;
+}
+
+.arch-style-chips {
+  position: relative; /* offsetParent for the chips' active-chip scrolling */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  max-width: 1232px;
+  margin: 0 auto;
+}
+
+.arch-style-chip {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+  color: #2A1115;
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 5px 10px;
+  border: 0.5px dashed #2A1115;
+  border-radius: 2px;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.arch-style-chip:hover {
+  background-color: #CC420512;
+}
+
+.arch-style-chip:focus-visible,
+.arch-gallery-toggle:focus-visible,
+.arch-back-to-top:focus-visible {
+  outline: 2px solid #CC4205;
+  outline-offset: 2px;
+}
+
+.arch-style-chip.is-active {
+  background-color: #CC4205;
+  border: 0.5px solid #CC4205;
+  color: #FFFDF6;
+}
+
+/* Section headings and the toggle button land just under the sticky menu
+   when scrolled to (chip click, deep link, collapsing a gallery). */
+.arch-style-nav ~ #archive-container .archive-entry,
+.arch-gallery-toggle {
+  scroll-margin-top: calc(var(--arch-nav-offset, 0px) + 16px);
+}
+
+/* Photos past a style's first six (and buildings made up only of those). */
+.archive-entry:not(.is-expanded) .arch-extra {
+  display: none;
+}
+
+.arch-gallery-toggle {
+  margin-top: 16px;
+  padding: 10px 24px;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 22px;
+  color: #25121B;
+  background-color: #f9f7f4;
+  border: 0.5px dashed #25121B;
+  cursor: pointer;
+  scroll-margin-bottom: 76px; /* clear the mobile bottom toolbar */
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Buildings already end with 32px of margin. */
+.architecture-building ~ .arch-gallery-toggle {
+  margin-top: 0;
+}
+
+.arch-gallery-toggle:hover {
+  color: #CC4205;
+  border-color: #CC4205;
+}
+
+.arch-back-to-top {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 20;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background-color: #CC4205;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease, background-color 0.2s ease;
+}
+
+.arch-back-to-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+.arch-back-to-top:hover {
+  background-color: #2A1115;
+}
+
+/* Up chevron drawn with two borders. */
+.arch-back-to-top-arrow {
+  width: 12px;
+  height: 12px;
+  margin-top: 6px;
+  border-left: 2px solid #FFFDF6;
+  border-top: 2px solid #FFFDF6;
+  transform: rotate(45deg);
+}
+
+@media (max-width: 550px) {
+  /* Edge to edge via .page-content's own 24px padding rather than 100vw,
+     which would also count any scrollbar. */
+  .arch-style-nav {
+    margin: 24px -24px 0 -24px;
+    padding: 10px 0;
+  }
+
+  /* One horizontally scrolling row, edge to edge. */
+  .arch-style-chips {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding: 0 24px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .arch-style-chips::-webkit-scrollbar {
+    display: none;
+  }
+
+  .arch-back-to-top {
+    right: 16px;
+    bottom: calc(60px + 16px); /* above the fixed mobile toolbar */
+  }
 }

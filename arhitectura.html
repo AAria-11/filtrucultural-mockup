@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="site.css" />
 </head>
 
-<body class="has-mobile-toolbar">
+<body class="has-mobile-toolbar arhitectura-page">
 
   <!-- ===== Shared nav (same block as index.html) ===== -->
   <div class="nav-container">
@@ -60,10 +60,20 @@
   <div class="page-content">
     <h1 id="arhitectura-page-title">Arhitectură</h1>
     <p id="arhitectura-page-subtitle">Stiluri arhitecturale din București.</p>
+    <!-- Sticky style menu: one chip per arhitectura.json entry, filled in by
+         the script below. Lives inside .page-content (not directly in body,
+         which is height:100% and would stop the sticky after one screen). -->
+    <nav class="arch-style-nav" id="archStyleNav" aria-label="Stiluri arhitecturale">
+      <div class="arch-style-chips" id="archStyleChips"></div>
+    </nav>
     <div id="archive-container">
       <div class="archive-timeline" id="archiveTimeline"></div>
     </div>
   </div>
+
+  <button class="arch-back-to-top" id="archBackToTop" type="button" aria-label="Înapoi sus">
+    <span class="arch-back-to-top-arrow" aria-hidden="true"></span>
+  </button>
 
   <div id="lightbox" class="lightbox" style="display: none;">
     <button class="lightbox-close" onclick="closeLightbox()">
@@ -131,25 +141,68 @@
     // gallery reads pics/<galleryDir>/0.jpg, 1.jpg, ... — defaults to just the
     // one main photo unless the entry sets a higher "photoCount".
 
+    // Photos shown per style before its "Vezi toate" button; counted across
+    // all of the style's galleries (entry galleryDir + every building).
+    var VISIBLE_PHOTOS_PER_STYLE = 6;
+
+    function scrollBehavior() {
+      return window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+    }
+
+    // "Art Nouveau/ Secession" -> "art-nouveau-secession", "Neoromânesc" ->
+    // "neoromanesc": section ids, so arhitectura.html#<id> deep-links work.
+    function slugify(text) {
+      return text.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    }
+
+    // Each style's photos (across all its galleries) form one lightbox
+    // sequence, so the arrows/swipe also reach photos hidden behind "Vezi
+    // toate". The shared lightbox (app-part2.js/app-part3.js) looks photos up
+    // via buildPicPath(currentImageDir, i), with picsDirToNum[currentImageDir]
+    // as the count, so each style registers a virtual dir key in both, and
+    // buildPicPath resolves those keys to the style's list. Plain pics/ dirs
+    // still go through the original function.
+    var stylePhotoLists = {};
+    var buildPicPathFromDir = buildPicPath;
+    buildPicPath = function (subDir, picNum) {
+      var list = stylePhotoLists[subDir];
+      return list ? list[picNum] : buildPicPathFromDir(subDir, picNum);
+    };
+
+    function openStyleLightboxMobile(styleKey, index) {
+      openLightboxMobile(styleKey);
+      // openLightboxMobile() always starts at the first photo; each slide is
+      // one container width (see the counter math in app-part3.js).
+      var container = document.getElementById('scrollContainer');
+      container.scrollLeft = index * container.clientWidth;
+      updateCounter(index + 1, stylePhotoLists[styleKey].length);
+    }
+
     // Thumbnail row (desktop) + single cover photo (mobile), both opening the
     // shared lightbox from app-part2.js / app-part3.js, as on arhiva.html.
-    function appendGallery(parent, galleryDir, photoCount, alt) {
-      // openLightbox()/changeImage()/openLightboxMobile() read the photo count
-      // for a dir from the shared picsDirToNum map.
-      picsDirToNum[galleryDir] = photoCount;
+    // Adds the photos to style.photos and returns the style-wide index of the
+    // first one.
+    function appendGallery(parent, galleryDir, photoCount, alt, style) {
+      var firstIndex = style.photos.length;
 
       var gallery = document.createElement('div');
       gallery.className = 'archive-gallery';
       for (let i = 0; i < photoCount; i++) {
+        const styleIndex = style.photos.length;
+        const src = 'pics/' + galleryDir + '/' + i + '.jpg';
+        style.photos.push(src);
+
         const thumb = document.createElement('div');
         thumb.className = 'thumbnail-archive';
+        if (styleIndex >= VISIBLE_PHOTOS_PER_STYLE) thumb.classList.add('arch-extra');
         const img = document.createElement('img');
-        img.src = 'pics/' + galleryDir + '/' + i + '.jpg';
+        img.src = src;
         img.alt = alt;
         img.loading = 'lazy';
         img.onclick = function () {
-          currentImageDir = galleryDir;
-          openLightbox(img.src, i);
+          currentImageDir = style.key;
+          openLightbox(src, styleIndex);
         };
         thumb.appendChild(img);
         gallery.appendChild(thumb);
@@ -165,20 +218,167 @@
       mobileImg.alt = alt;
       mobileImg.loading = 'lazy';
       mobileMain.onclick = function () {
-        openLightboxMobile(galleryDir);
+        openStyleLightboxMobile(style.key, firstIndex);
       };
       mobileMain.appendChild(mobileImg);
       galleryMobile.appendChild(mobileMain);
       parent.appendChild(galleryMobile);
+
+      return firstIndex;
     }
+
+    function appendGalleryToggle(entryEl) {
+      var toggle = document.createElement('button');
+      toggle.type = 'button';
+      toggle.className = 'arch-gallery-toggle';
+      toggle.textContent = 'Vezi toate';
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.onclick = function () {
+        var expanded = entryEl.classList.toggle('is-expanded');
+        toggle.setAttribute('aria-expanded', String(expanded));
+        toggle.textContent = expanded ? 'Arată mai puține' : 'Vezi toate';
+        // Collapsing removes everything above the button that was expanded,
+        // which can leave it far above the viewport.
+        if (!expanded) toggle.scrollIntoView({ block: 'nearest', behavior: scrollBehavior() });
+      };
+      entryEl.appendChild(toggle);
+    }
+
+    // ===== Sticky style menu =====
+    var styleNav = document.getElementById('archStyleNav');
+    var chipsEl = document.getElementById('archStyleChips');
+    var chipsById = {};
+    var styleSections = [];
+
+    // The main nav isn't sticky, so the menu sticks at top: 0 and its own
+    // height is all a section heading has to clear (used by scroll-margin-top
+    // in site.css and by the IntersectionObserver band below). It wraps to
+    // several rows on desktop, so it's measured rather than hardcoded.
+    function updateNavOffset() {
+      var height = styleNav.offsetHeight;
+      document.documentElement.style.setProperty('--arch-nav-offset', height + 'px');
+      return height;
+    }
+
+    function setActiveChip(id) {
+      Object.keys(chipsById).forEach(function (key) {
+        var isActive = key === id;
+        chipsById[key].classList.toggle('is-active', isActive);
+        if (isActive) chipsById[key].setAttribute('aria-current', 'true');
+        else chipsById[key].removeAttribute('aria-current');
+      });
+      // Keep the active chip visible in the single-row mobile strip. Scrolls
+      // the strip only — chip.scrollIntoView() would also move the page.
+      var chip = chipsById[id];
+      if (chip && chipsEl.scrollWidth > chipsEl.clientWidth) {
+        chipsEl.scrollTo({
+          left: chip.offsetLeft - (chipsEl.clientWidth - chip.offsetWidth) / 2,
+          behavior: scrollBehavior()
+        });
+      }
+    }
+
+    // While a chip click / deep link smooth-scrolls, the sections it passes
+    // would otherwise flash through the active state on the way.
+    var chipLock = null;
+    function lockActiveChip() {
+      clearTimeout(chipLock);
+      chipLock = setTimeout(releaseActiveChip, 1200);
+    }
+    function releaseActiveChip() {
+      if (!chipLock) return;
+      clearTimeout(chipLock);
+      chipLock = null;
+      updateActiveFromVisible();
+    }
+    window.addEventListener('scrollend', releaseActiveChip);
+
+    // Sections currently inside the band from just under the sticky menu down
+    // to 45% of the viewport; the first of them in page order is "in view".
+    var visibleSections = new Set();
+    var sectionObserver = null;
+
+    function updateActiveFromVisible() {
+      if (chipLock) return;
+      for (var i = 0; i < styleSections.length; i++) {
+        if (visibleSections.has(styleSections[i])) {
+          setActiveChip(styleSections[i].id);
+          return;
+        }
+      }
+    }
+
+    function observeSections() {
+      if (sectionObserver) sectionObserver.disconnect();
+      visibleSections.clear();
+      sectionObserver = new IntersectionObserver(function (records) {
+        records.forEach(function (record) {
+          if (record.isIntersecting) visibleSections.add(record.target);
+          else visibleSections.delete(record.target);
+        });
+        updateActiveFromVisible();
+      }, { rootMargin: '-' + (updateNavOffset() + 1) + 'px 0px -55% 0px' });
+      styleSections.forEach(function (section) { sectionObserver.observe(section); });
+    }
+
+    // rootMargin is fixed per observer, so rebuild it when the menu's height
+    // can change (chips re-wrapping on resize/rotation).
+    var resizeTimer = null;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(observeSections, 150);
+    });
+
+    function goToSection(id, smooth) {
+      var section = document.getElementById(id);
+      if (!section || styleSections.indexOf(section) === -1) return;
+      var behavior = smooth ? scrollBehavior() : 'auto';
+      setActiveChip(id);
+      if (behavior === 'smooth') lockActiveChip();
+      section.scrollIntoView({ block: 'start', behavior: behavior });
+      if (location.hash !== '#' + id) history.replaceState(null, '', '#' + id);
+    }
+
+    function addStyleChip(id, label) {
+      var chip = document.createElement('a');
+      chip.className = 'arch-style-chip';
+      chip.href = '#' + id;
+      chip.textContent = label;
+      chip.addEventListener('click', function (event) {
+        event.preventDefault();
+        goToSection(id, true);
+      });
+      chipsById[id] = chip;
+      chipsEl.appendChild(chip);
+    }
+
+    window.addEventListener('hashchange', function () {
+      goToSection(decodeURIComponent(location.hash.slice(1)), true);
+    });
+
+    // ===== Back to top =====
+    var backToTop = document.getElementById('archBackToTop');
+    function updateBackToTop() {
+      backToTop.classList.toggle('is-visible', window.scrollY > 600);
+    }
+    window.addEventListener('scroll', updateBackToTop, { passive: true });
+    updateBackToTop();
+    backToTop.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: scrollBehavior() });
+      history.replaceState(null, '', location.pathname + location.search);
+    });
 
     fetch('arhitectura.json')
       .then(function (r) { return r.json(); })
       .then(function (entries) {
         var timeline = document.getElementById('archiveTimeline');
         entries.forEach(function (entry) {
+          var id = slugify(entry.title);
+          var style = { key: 'arhitectura:' + id, photos: [] };
+
           var el = document.createElement('div');
           el.className = 'archive-entry';
+          el.id = id;
 
           var marker = document.createElement('div');
           marker.className = 'archive-timeline-marker';
@@ -207,11 +407,13 @@
           el.appendChild(description);
 
           if (entry.galleryDir) {
-            appendGallery(el, entry.galleryDir, entry.photoCount || 1, entry.title);
+            appendGallery(el, entry.galleryDir, entry.photoCount || 1, entry.title, style);
           }
 
           // Optional per-building galleries: [{ name, galleryDir, photoCount }],
-          // each rendered as the building's name followed by its photos.
+          // each rendered as the building's name followed by its photos. A
+          // building whose photos all fall past the style's first
+          // VISIBLE_PHOTOS_PER_STYLE is hidden (name included) until expanded.
           (entry.buildings || []).forEach(function (building) {
             var buildingEl = document.createElement('div');
             buildingEl.className = 'architecture-building';
@@ -221,12 +423,32 @@
             name.textContent = building.name;
             buildingEl.appendChild(name);
 
-            appendGallery(buildingEl, building.galleryDir, building.photoCount, building.name);
+            var firstIndex = appendGallery(buildingEl, building.galleryDir, building.photoCount, building.name, style);
+            if (firstIndex >= VISIBLE_PHOTOS_PER_STYLE) buildingEl.classList.add('arch-extra');
             el.appendChild(buildingEl);
           });
 
+          if (style.photos.length) {
+            stylePhotoLists[style.key] = style.photos;
+            picsDirToNum[style.key] = style.photos.length;
+          }
+          if (style.photos.length > VISIBLE_PHOTOS_PER_STYLE) appendGalleryToggle(el);
+
           timeline.appendChild(el);
+          styleSections.push(el);
+          addStyleChip(id, entry.title);
         });
+
+        observeSections();
+        // Wait for the web fonts: they reflow the long text above the target
+        // and would otherwise leave the deep-linked section off by a few
+        // hundred px.
+        if (location.hash) {
+          document.fonts.ready.then(function () {
+            observeSections();
+            goToSection(decodeURIComponent(location.hash.slice(1)), false);
+          });
+        }
       })
       .catch(function (err) {
         console.error('Could not load arhitectura.json', err);
