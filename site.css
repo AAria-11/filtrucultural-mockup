@@ -20,7 +20,7 @@ body {
 
 .page-content {
   max-width: 900px;
-  margin: 50px auto 80px auto;
+  margin: 25px auto 80px auto;
   padding: 0 24px;
   box-sizing: border-box;
   font-family: 'Inter', sans-serif;
@@ -31,6 +31,7 @@ body {
   font-family: 'Afacad', sans-serif;
   font-weight: 700;
   font-size: 40px;
+  margin-top: 0.335em; /* half the browser's default 0.67em */
   margin-bottom: 16px;
 }
 
@@ -59,7 +60,7 @@ body {
 
 @media (max-width: 550px) {
   .page-content {
-    margin-top: 74px;
+    margin-top: 37px;
   }
 
   /* Reserve room for the fixed-position bottom mobile toolbar (60px tall,
@@ -296,7 +297,7 @@ body {
   pointer-events: none;
 }
 
-/* Arhitectură/Idei entries (arhitectura.html / idei.html) sometimes embed a
+/* Arhitectură entries (arhitectura.html) sometimes embed a
    list inside a description paragraph (see archive-description p innerHTML
    in styles.css). Same 16px as the description paragraphs (.page-content p). */
 .archive-description ul {
@@ -350,7 +351,20 @@ body {
 
 .back-to-articles-link {
   display: inline-block;
-  margin-top: 32px;
+  margin-top: 16px;
+}
+
+/* Despre noi: the page's first section title sits right under the nav;
+   half of its 48px/32px margin (styles.css), like the other page titles.
+   Later section titles keep their spacing. */
+.page-content .about-us-section:first-child > .about-us-section-title:first-child {
+  margin-top: 24px;
+}
+
+@media (max-width: 550px) {
+  .page-content .about-us-section:first-child > .about-us-section-title:first-child {
+    margin-top: 16px;
+  }
 }
 
 /* Evenimente: widen .page-content just on this page so the title, filter
@@ -642,5 +656,267 @@ body.arhitectura-page .page-content {
 
   .arch-entry-content {
     padding-bottom: 24px;
+  }
+}
+
+/* Idei (idei.html): cover cards on desktop that open the book's text below
+   the grid; an accordion of books on phones. Text typography reuses the
+   article classes (.article-title, .article-authors-date,
+   .article-content-text, .article-section-title); the accordion row reuses
+   the map sidebar's .sidebar-accordion-header/.sidebar-accordion-chevron. */
+.idei-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.idei-card {
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  color: #2A1115;
+  text-decoration: none;
+  border: 1px dashed transparent; /* same hover/active frame as .article-card */
+  transition: border-color 0.2s ease;
+}
+
+.idei-card:hover,
+.idei-card.is-active {
+  border-color: #CC4205;
+}
+
+.idei-card:focus-visible {
+  outline: 2px solid #CC4205;
+  outline-offset: 2px;
+}
+
+/* 2:3 portrait frame; the cover sits inside it whole (contain), never
+   cropped, with the shadow following the cover itself (drop-shadow skips
+   the letterboxed area). Shared by the cards and the phone accordion. */
+.idei-cover,
+.idei-accordion-cover {
+  aspect-ratio: 2 / 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  box-sizing: border-box;
+  background-color: #FBF7F2;
+  min-height: 0; /* keep the 2:3 box fixed instead of growing to fit a taller cover */
+}
+
+.idei-cover img,
+.idei-accordion-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0px 4px 8px rgba(42, 17, 21, 0.2));
+}
+
+.idei-card-title {
+  margin-top: 12px;
+  font-family: 'Afacad', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  transition: color 0.2s ease;
+}
+
+.idei-card:hover .idei-card-title,
+.idei-card.is-active .idei-card-title {
+  color: #CC4205;
+}
+
+.idei-card-author {
+  margin-top: 4px;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  line-height: 1.4;
+  color: #CC4205; /* like .article-card-description */
+}
+
+/* Only the open book's text is shown (under the grid on desktop). */
+.idei-book:not(.is-open) .idei-book-content {
+  display: none;
+}
+
+.idei-book {
+  scroll-margin-top: 16px;
+}
+
+.idei-book.is-open {
+  margin-top: 56px;
+  padding-top: 8px;
+  border-top: 1px dashed #D9C9C0;
+}
+
+.idei-accordion-header {
+  display: none; /* phones only */
+}
+
+.idei-back-link {
+  display: inline-block;
+  margin-top: 24px;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+}
+
+.idei-book-title {
+  margin-bottom: 0;
+}
+
+/* Opening quote, in the site's quote style (.event-detail-quote: orange
+   left rule, italic). */
+.idei-quote {
+  margin: 40px 0 8px 0;
+  padding-left: 20px;
+  border-left: 3px solid #CC4205;
+}
+
+.idei-quote blockquote {
+  margin: 0;
+}
+
+.idei-quote blockquote p {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  font-style: italic;
+  line-height: 1.6;
+  color: #25121B;
+}
+
+.idei-quote figcaption {
+  margin-top: 12px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #5A5A5A;
+}
+
+.idei-book-text ul {
+  margin: 16px 0 0 0;
+  padding-left: 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px; /* same as the paragraphs (.page-content p) */
+  line-height: 1.6;
+  color: #25121B;
+}
+
+.idei-book-text li {
+  margin-bottom: 0.5em;
+}
+
+/* A subtitle straight after another one (Foucault: "Principiile
+   heterotopiei" then "1. ..."), keeps the pair together. */
+.idei-book-text .article-section-title + .idei-principle {
+  margin-top: 8px;
+}
+
+/* Foucault's six numbered principles. */
+.idei-principle {
+  margin: 32px 0 0 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: #2A1115;
+}
+
+@media (min-width: 551px) and (max-width: 899px) {
+  .idei-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 550px) {
+  /* Phones: the grid gives way to an accordion of books (one open at a
+     time), full width with a 16px gutter. */
+  body.idei-page .page-content {
+    padding: 0 16px;
+  }
+
+  .idei-grid {
+    display: none;
+  }
+
+  .idei-books {
+    margin-top: 32px;
+  }
+
+  .idei-book,
+  .idei-book.is-open {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+    border-bottom: 1px dashed #D9C9C0;
+  }
+
+  .idei-book:first-child {
+    border-top: 1px dashed #D9C9C0;
+  }
+
+  .idei-accordion-header {
+    display: flex;
+    gap: 12px;
+    padding: 12px 0;
+  }
+
+  /* The cover stays visible in the row, just small. */
+  .idei-accordion-cover {
+    flex: 0 0 56px;
+    padding: 4px;
+  }
+
+  .idei-accordion-label {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .idei-accordion-title {
+    font-family: 'Afacad', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  .idei-accordion-author {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #CC4205;
+  }
+
+  .idei-book.is-open .idei-accordion-title {
+    color: #CC4205;
+  }
+
+  .idei-book.is-open .sidebar-accordion-chevron {
+    transform: rotate(180deg);
+  }
+
+  /* Title/author are already in the row; "back to the grid" has no grid. */
+  .idei-back-link,
+  .idei-book-title,
+  .idei-book-author {
+    display: none;
+  }
+
+  .idei-book-content {
+    padding-bottom: 24px;
+  }
+
+  .idei-quote {
+    margin-top: 8px;
+    padding-left: 16px;
+  }
+
+  .idei-quote blockquote p {
+    font-size: 18px;
   }
 }
