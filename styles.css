@@ -357,22 +357,28 @@ body {
     text-align: left;
     color: #25121B;
     margin-bottom: 8px;
-    line-height: 16px;
+    line-height: 20px;
 }
 
+/* Height comes from the content, so titles on 1, 2 or 3 lines all keep
+   the dashed divider below the tag. */
 .gallery-item {
     cursor: pointer;
     width: 255px;
-    height: 67px;
+    height: auto;
     border: 1.5px dashed transparent; /* Set initial borders transparent */
     border-bottom: 1.5px dashed #25121B; /* Always visible border-bottom */
     font-family: Inter;
     font-size: 16px;
     font-weight: 400;
     text-align: left;
-    padding: 8px;
+    padding: 16px 8px;
     box-sizing: border-box;
-    margin-bottom: 8px;
+    margin-bottom: 0;
+}
+
+.gallery-item:last-child {
+    border-bottom-color: transparent;
 }
 
 .gallery-item.active .label, .gallery-item.active .gallery-item-title {
@@ -386,12 +392,13 @@ body {
 }
 
 .label-container {
-    display: inline-block; /* Allows for the text to be centered in the parent */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
     font-family: Inter;
     font-size: 14px;
     font-weight: 400;
     line-height: 14px;
-    height: 22px;
     text-align: left;
     color: #5A5A5A;
 }
@@ -3766,7 +3773,6 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     #mobileGalleryContainer .gallery-item {
         width: 100%;
         height: auto;
-        min-height: 67px;
     }
 
     .mobile-panel-close-button img {
