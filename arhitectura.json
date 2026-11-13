@@ -60,7 +60,10 @@
     ],
     "buildings": [
       { "name": "Calea Călărașilor 61", "galleryDir": "eclectic_calea_calarasilor_61", "photoCount": 5 },
-      { "name": "Strada Romulus 1", "galleryDir": "eclectic_strada_romulus_1", "photoCount": 6 }
+      { "name": "Strada Romulus 1", "galleryDir": "eclectic_strada_romulus_1", "photoCount": 6 },
+      { "name": "Strada Dionisie Lupu 70", "galleryDir": "eclectic_strada_dionisie_lupu_70", "photoCount": 4 },
+      { "name": "Strada Logofătul Udriște 14", "galleryDir": "eclectic_strada_logofatul_udriste_14", "photoCount": 5 },
+      { "name": "Strada Polonă 12", "galleryDir": "eclectic_strada_polona_12", "photoCount": 6 }
     ]
   },
   {
