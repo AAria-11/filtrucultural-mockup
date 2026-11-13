@@ -216,6 +216,31 @@ function initGallery() {
   });
 }
 
+// Points the existing player at the given language's recording and resets
+// its controls. The <audio> element is kept, so the listeners from
+// initAudioPlayer() stay attached.
+function swapAudioLanguage(slug, lang) {
+  var audio = document.getElementById('articleAudioPlayer');
+  if (!audio) return;
+  var src = 'articles/' + slug + '_' + lang + '.mp3';
+  if (audio.getAttribute('src') === src) return;
+  audio.pause();
+  audio.setAttribute('src', src);
+  audio.load();
+  var playPauseBtn = document.querySelector('.play-pause-button');
+  if (playPauseBtn) {
+    playPauseBtn.classList.remove('pause');
+    playPauseBtn.classList.add('play');
+  }
+  var progressBar = document.querySelector('.audio-player-container .progress-bar');
+  if (progressBar) progressBar.value = 0;
+  var currentTimeEl = document.querySelector('.current-time');
+  if (currentTimeEl) currentTimeEl.textContent = formatTime(0);
+  var narrator = document.getElementById('articleNarrator');
+  var narratorText = narrator && narrator.getAttribute('data-narrator-' + lang);
+  if (narratorText) narrator.textContent = narratorText;
+}
+
 // Called by changeLanguage() (app-part3.js) after it flips currentLang, on
 // any page that has #article-content-root. Fetches the matching RO/EN
 // content fragment (articles/{slug}_{lang}.html -- these already contain
@@ -245,6 +270,9 @@ window.refreshArticlePageLanguage = function () {
     })
     .catch(function (error) {
       console.warn('No ' + lang + ' content available for article "' + slug + '":', error);
+      // No translated text yet, but the recording may still exist in both
+      // languages (articles/{slug}_{lang}.mp3) -- swap just the audio source.
+      swapAudioLanguage(slug, lang);
     });
 
   var photosBy = document.querySelector('.photosby');
