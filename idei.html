@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="site.css" />
 </head>
 
-<body class="has-mobile-toolbar">
+<body class="has-mobile-toolbar idei-page">
 
   <!-- ===== Shared nav (same block as index.html) ===== -->
   <div class="nav-container">
@@ -59,10 +59,12 @@
 
   <div class="page-content">
     <h1 id="idei-page-title">Idei</h1>
-    <p id="idei-page-subtitle">În curând.</p>
-    <div id="archive-container">
-      <div class="archive-timeline" id="archiveTimeline"></div>
-    </div>
+    <p id="idei-page-subtitle">Rezumate ale cărților aprofundate în cadrul cercului de lectură „Spațiu. Corp. Oraș”, moderat de Raluca Bujor.</p>
+    <!-- Desktop: cover cards; clicking one opens that book's text below the
+         grid. Phones: the grid is hidden and each book is an accordion row.
+         Both are filled in from idei.json by the script below. -->
+    <div class="idei-grid" id="ideiGrid"></div>
+    <div class="idei-books" id="ideiBooks"></div>
   </div>
 
   <!-- ===== Shared footer (same block as index.html) ===== -->
@@ -107,75 +109,168 @@
       menu.style.display = menu.style.display === 'none' ? 'flex' : 'none';
     });
 
-    // Same rendering pattern as arhiva.html/archive.json. Each entry's photo
-    // gallery reads pics/<galleryDir>/0.jpg, 1.jpg, ... — defaults to just the
-    // one main photo unless the entry sets a higher "photoCount".
+    function scrollBehavior() {
+      return window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+    }
+
+    function el(tag, className, text) {
+      var node = document.createElement(tag);
+      if (className) node.className = className;
+      if (text) node.textContent = text;
+      return node;
+    }
+
+    function coverImg(book) {
+      var img = el('img');
+      img.src = book.cover;
+      img.alt = book.coverAlt;
+      img.width = book.coverWidth;
+      img.height = book.coverHeight;
+      img.loading = 'lazy';
+      return img;
+    }
+
+    // One book open at a time, on both layouts: on desktop it's the only
+    // text shown under the grid, on phones the open accordion row.
+    var books = [];
+    function setOpenBook(id) {
+      books.forEach(function (book) {
+        var open = book.id === id;
+        book.section.classList.toggle('is-open', open);
+        book.header.setAttribute('aria-expanded', String(open));
+        book.card.classList.toggle('is-active', open);
+        if (open) book.card.setAttribute('aria-current', 'true');
+        else book.card.removeAttribute('aria-current');
+      });
+    }
+
+    function findBook(id) {
+      return books.filter(function (book) { return book.id === id; })[0];
+    }
+
+    // Deep links (idei.html#bachelard), card clicks and hash changes.
+    function goToBook(id, smooth) {
+      var book = findBook(id);
+      if (!book) return;
+      setOpenBook(id);
+      book.section.scrollIntoView({ block: 'start', behavior: smooth ? scrollBehavior() : 'auto' });
+      if (location.hash !== '#' + id) history.replaceState(null, '', '#' + id);
+    }
+
+    function renderCard(book) {
+      var card = el('a', 'idei-card');
+      card.href = '#' + book.id;
+      card.setAttribute('aria-controls', book.id + '-content');
+      var cover = el('div', 'idei-cover');
+      cover.appendChild(coverImg(book));
+      card.appendChild(cover);
+      card.appendChild(el('div', 'idei-card-title', book.title));
+      card.appendChild(el('div', 'idei-card-author', book.author));
+      card.addEventListener('click', function (event) {
+        event.preventDefault();
+        goToBook(book.id, true);
+      });
+      return card;
+    }
+
+    function renderBook(book) {
+      var section = el('section', 'idei-book');
+      section.id = book.id;
+
+      // Phone-only accordion row (the map sidebar's .sidebar-accordion-header
+      // look) with a small cover, title and author.
+      var header = el('button', 'sidebar-accordion-header idei-accordion-header');
+      header.type = 'button';
+      header.setAttribute('aria-expanded', 'false');
+      header.setAttribute('aria-controls', book.id + '-content');
+      var thumb = el('span', 'idei-accordion-cover');
+      thumb.appendChild(coverImg(book));
+      header.appendChild(thumb);
+      var label = el('span', 'idei-accordion-label');
+      label.appendChild(el('span', 'idei-accordion-title', book.title));
+      label.appendChild(el('span', 'idei-accordion-author', book.author));
+      header.appendChild(label);
+      var chevron = el('img', 'sidebar-accordion-chevron');
+      chevron.src = 'CaretDown.svg';
+      chevron.alt = '';
+      header.appendChild(chevron);
+      header.addEventListener('click', function () {
+        var opening = !section.classList.contains('is-open');
+        setOpenBook(opening ? book.id : null);
+        if (opening) {
+          // Closing a book above this one moves this row, possibly out of view.
+          var top = header.getBoundingClientRect().top;
+          if (top < 0 || top > window.innerHeight - 2 * header.offsetHeight) {
+            section.scrollIntoView({ block: 'start', behavior: scrollBehavior() });
+          }
+          history.replaceState(null, '', '#' + book.id);
+        } else if (location.hash === '#' + book.id) {
+          history.replaceState(null, '', location.pathname + location.search);
+        }
+      });
+      section.appendChild(header);
+
+      // The book's text, styled like an article (articol-*.html).
+      var content = el('div', 'idei-book-content');
+      content.id = book.id + '-content';
+
+      var back = el('a', 'link-decorator idei-back-link', '↑ Toate cărțile');
+      back.href = '#';
+      back.addEventListener('click', function (event) {
+        event.preventDefault();
+        document.getElementById('ideiGrid').scrollIntoView({ block: 'start', behavior: scrollBehavior() });
+      });
+      content.appendChild(back);
+      content.appendChild(el('h2', 'article-title idei-book-title', book.title));
+      content.appendChild(el('div', 'article-authors-date idei-book-author', book.author));
+
+      if (book.quote) {
+        var figure = el('figure', 'idei-quote');
+        var blockquote = el('blockquote');
+        var quote = el('p');
+        quote.innerHTML = book.quote;
+        blockquote.appendChild(quote);
+        figure.appendChild(blockquote);
+        if (book.quoteSource) {
+          var source = el('figcaption');
+          source.innerHTML = book.quoteSource;
+          figure.appendChild(source);
+        }
+        content.appendChild(figure);
+      }
+
+      var text = el('div', 'article-content-text idei-book-text');
+      text.innerHTML = book.body.join('');
+      content.appendChild(text);
+
+      section.appendChild(content);
+      return { id: book.id, section: section, header: header };
+    }
+
+    window.addEventListener('hashchange', function () {
+      goToBook(decodeURIComponent(location.hash.slice(1)), true);
+    });
+
     fetch('idei.json')
       .then(function (r) { return r.json(); })
       .then(function (entries) {
-        var timeline = document.getElementById('archiveTimeline');
-        entries.forEach(function (entry) {
-          var el = document.createElement('div');
-          el.className = 'archive-entry';
-
-          var marker = document.createElement('div');
-          marker.className = 'archive-timeline-marker';
-          el.appendChild(marker);
-
-          var title = document.createElement('div');
-          title.className = 'archive-title';
-          title.textContent = entry.title;
-          el.appendChild(title);
-
-          if (entry.mainImage) {
-            var mainImage = document.createElement('img');
-            mainImage.className = 'archive-main-image';
-            mainImage.src = entry.mainImage;
-            mainImage.alt = entry.title;
-            el.appendChild(mainImage);
-          }
-
-          var description = document.createElement('div');
-          description.className = 'archive-description';
-          entry.description.forEach(function (paragraph) {
-            var p = document.createElement('p');
-            p.innerHTML = paragraph;
-            description.appendChild(p);
-          });
-          el.appendChild(description);
-
-          var photoCount = entry.photoCount || 1;
-
-          if (entry.galleryDir && photoCount > 1) {
-            var gallery = document.createElement('div');
-            gallery.className = 'archive-gallery';
-            for (var i = 0; i < photoCount; i++) {
-              var thumb = document.createElement('div');
-              thumb.className = 'thumbnail-archive';
-              var img = document.createElement('img');
-              img.src = 'pics/' + entry.galleryDir + '/' + i + '.jpg';
-              img.alt = entry.title;
-              thumb.appendChild(img);
-              gallery.appendChild(thumb);
-            }
-            el.appendChild(gallery);
-          }
-
-          if (entry.galleryDir) {
-            var galleryMobile = document.createElement('div');
-            galleryMobile.className = 'archive-gallery-mobile';
-            var mobileMain = document.createElement('div');
-            mobileMain.className = 'main-image';
-            var mobileImg = document.createElement('img');
-            mobileImg.src = 'pics/' + entry.galleryDir + '/0.jpg';
-            mobileImg.alt = entry.title;
-            mobileMain.appendChild(mobileImg);
-            galleryMobile.appendChild(mobileMain);
-            el.appendChild(galleryMobile);
-          }
-
-          timeline.appendChild(el);
+        var grid = document.getElementById('ideiGrid');
+        var list = document.getElementById('ideiBooks');
+        entries.forEach(function (book) {
+          var card = renderCard(book);
+          grid.appendChild(card);
+          var rendered = renderBook(book);
+          rendered.card = card;
+          list.appendChild(rendered.section);
+          books.push(rendered);
         });
+        // Wait for the web fonts before jumping to a deep-linked book, so
+        // the reflow they cause doesn't leave it off target.
+        if (location.hash) {
+          document.fonts.ready.then(function () {
+            goToBook(decodeURIComponent(location.hash.slice(1)), false);
+          });
+        }
       })
       .catch(function (err) {
         console.error('Could not load idei.json', err);

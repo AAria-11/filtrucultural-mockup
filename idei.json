@@ -1,1 +1,113 @@
-[]
+[
+  {
+    "id": "bachelard",
+    "title": "Poetica spațiului",
+    "author": "Gaston Bachelard",
+    "cover": "pics/idei/bachelard.webp",
+    "coverAlt": "Coperta cărții Poetica spațiului de Gaston Bachelard (ediția în limba engleză, The Poetics of Space)",
+    "coverWidth": 588,
+    "coverHeight": 900,
+    "body": [
+      "<p>Înaintea oricărei angoase existențiale, omul are parte de un adăpost: casa. Iar acest adăpost nu este doar un ansamblu arhitectural, ci una dintre condițiile fundamentale ale intimității noastre. Casa în care am locuit este, în primul rând, spațiul intimității noastre — locul care ne protejează și ne permite să visăm în pace. Fără acest adăpost, omul ar fi o ființă dispersată în fața furtunilor vieții.</p>",
+      "<p>Pentru a se apropia de acest înțeles al casei, Bachelard propune topoanaliza: o metodă de analiză a „spațiilor fericite” pe care le locuim afectiv și în care se țese intimitatea noastră. Miza lui este să demonstreze că locurile care devin parte din noi nu pot fi înțelese prin rigoare geometrică, ci prin experiența directă, ca spații trăite. Un exemplu simplu ne poate apropia de acest tip de analiză: când suntem mici, dimensiunile camerelor și dispunerea lor în casă nu se supun unei măsurători obiective, ci se distorsionează în funcție de felul în care folosim și trăim acel spațiu — un colț devine imens dacă acolo petrecem ore întregi jucându-ne, un coridor pare nesfârșit dacă ne este teamă să-l traversăm noaptea. Casa copilăriei nu are, așadar, o geometrie fixă, ci una modelată de afect.</p>",
+      "<p>Această distorsiune nu este o eroare de percepție, ci ține de natura imaginației așa cum o înțelege Bachelard: o facultate a spontaneității, cu vocație eminamente productivă. În acest sens, imaginația nu reflectă pur și simplu lumea, ci este activă — creează sens. Atunci când îmi amintesc casa copilăriei, nu există, pentru Bachelard, niciun interes în a o descrie corect din punct de vedere empiric. Dimpotrivă, dacă rostesc această casă dinspre imaginarul propriu, voi spune ceva mai prețios și, foarte important, la fel de real.</p>",
+      "<p>Reveria este cea care face posibilă această experiență a spațiului. Spre deosebire de visul nocturn, reveria este starea celui care visează cu ochii deschiși, ceea ce Bachelard numește un „cogito al reveriei”. Această stare este trezită prin contemplarea unor fenomene sau obiecte banale: un foc ce arde, o scară în spirală, un cuib sau o ușă întredeschisă. Numai atunci când avem parte de protecția și intimitatea casei ne putem permite această suspendare a realității, deoarece reveria are nevoie de un mediu sigur pentru a se putea desfășura.</p>",
+      "<p>Din aceste momente de reverie se naște topofilia, adică atașamentul profund față de spațiile refugiului, precum casa copilăriei sau camera proprie. Pe lângă valoarea lor evidentă de protecție, aceste spații iubite sunt investite cu valori imaginate — mărturii ale experienței celui care a trăit în ele.</p>",
+      "<p>În memorie, diversele locuințe ale vieții noastre se întrepătrund, fixând momentele de fericire și păstrând „comorile” trecutului. Locuințele în care am trăit sunt retrăite ca niște reverii actuale, readuse la viață în prezentul nostru.</p>"
+    ],
+    "quote": "„Înainte de a fi «aruncat în lume», așa cum o profesează metafizicile rapide, omul este depus în leagănul casei. Și, totdeauna, în reveriile noastre, casa este un mare leagăn.”",
+    "quoteSource": "— Gaston Bachelard, <em>Poetica spațiului</em>, trad. Irina Bădescu, Paralela 45, 2003, p. 38"
+  },
+  {
+    "id": "foucault",
+    "title": "Utopiile reale. Corpul utopic",
+    "author": "Michel Foucault",
+    "cover": "pics/idei/foucault.webp",
+    "coverAlt": "Coperta cărții Utopiile reale. Corpul utopic de Michel Foucault",
+    "coverWidth": 585,
+    "coverHeight": 900,
+    "body": [
+      "<p>Secolul al XIX-lea a fost obsedat de istorie — de dezvoltare, de criză, de analiza trecutului. Noi trăim acum într-o epocă a simultaneității, a alăturării, a rețelei — o epocă a spațiului. Iar spațiul nu e nicidecum neutru sau gol: el poartă cu sine o istorie proprie a felului în care a fost gândit.</p>",
+      "<p>Pornind de la cosmologia lui Aristotel, care împărțea lumea în sublunară și supralunară, Evul Mediu păstrează o organizare ierarhică a spațiului, fiecare lucru având locul „firesc” undeva pe această scară. Galilei este cel care sparge ierarhia: odată cu el, spațiul devine infinit și deschis, fără sus și jos absolut. Ar putea părea că am scăpat de vechile opoziții sacre. Foucault crede însă că acestea nu au fost decât mutate: spațiul privat continuă să se opună celui public, spațiul familiei celui social, spațiul cultural celui util, spațiul timpului liber celui al muncii.</p>",
+      "<h3 class=\"article-section-title\">Utopie și heterotopie</h3>",
+      "<p>Utopiile sunt amplasamente fără loc real, care propun o imagine a societății perfecționate sau inversate, dar în orice caz imaginară. Heterotopiile, în schimb, sunt reale: sunt locuri care există efectiv, dar care contestă realitatea.</p>",
+      "<h3 class=\"article-section-title\">Principiile heterotopiei</h3>",
+      "<h4 class=\"idei-principle\">1. Orice grup uman își constituie propriile heterotopii</h4>",
+      "<p>Societățile așa-zis primitive au ceea ce Foucault numește heterotopii de criză: locuri rezervate celor aflați într-un moment de tranziție existențială — adolescenții, femeile gravide, bătrânii. Modernitatea le-a înlocuit cu heterotopii de deviație — nu mai marchezi o etapă de viață, ci o abatere de la normă. Azilul, clinica psihiatrică, închisoarea, chiar și căminul de bătrâni sunt, în această logică, tot atâtea spații în care societatea își pune deoparte proprii membri „deviați”.</p>",
+      "<h4 class=\"idei-principle\">2. O heterotopie își poate schimba funcția în timp</h4>",
+      "<p>De-a lungul istoriei sale, o heterotopie poate funcționa în moduri foarte diferite, în cadrul aceleiași societăți. Exemplul paradigmatic oferit de Foucault este cel al cimitirului.</p>",
+      "<p>„Cimitirul este cu certitudine un altfel de loc [<em>un lieu autre</em>] în raport cu spațiile culturale obișnuite, el este un spațiu aflat, cu toate acestea, în legătură cu ansamblul amplasamentelor cetății, sau ale societății, sau ale satului, de vreme ce fiecare individ, fiecare familie are rude în cimitir. În cultura occidentală, cimitirul a existat practic dintotdeauna.” (p. 63)</p>",
+      "<p>Deși cimitirul rămâne același (alt)fel de loc, el este regândit de-a lungul timpului: dintr-un loc aflat în centrul comunității, lângă biserică, devine spațiul marginal de astăzi.</p>",
+      "<h4 class=\"idei-principle\">3. Heterotopia juxtapune spații incompatibile</h4>",
+      "<p>Heterotopia poate aduna, într-un singur loc real, mai multe spații care în mod normal nu ar putea coexista.</p>",
+      "<p>Exemplul ilustrativ pentru acest principiu este grădina. Grădina tradițională persană este gândită ca un microcosmos: împărțită în patru părți, reprezentând cele patru colțuri ale lumii, adunate în jurul unui punct central sacru, ca un ombilic, „ca un buric al lumii în centrul ei”, unde era plasat bazinul ornamental din care răsărea fântâna. Într-un spațiu minuscul, o astfel de grădină condensa întreg universul.</p>",
+      "<p>La fel poate fi înțeles și teatrul, care aduce pe aceeași scenă locuri și cadre străine unele de altele, sau cinematograful, care proiectează pe un ecran plat o lume vastă tridimensională.</p>",
+      "<h4 class=\"idei-principle\">4. Heterotopia scurtcircuitează curgerea timpului</h4>",
+      "<p>De cele mai multe ori, heterotopiile sunt marcate de o ruptură față de timpul „normal”, iar în acest sens ele pot fi numite heterocronii. Heterotopia funcționează din plin atunci când oamenii sunt supuși unei rupturi absolute cu timpul tradițional. Și în acest caz, cimitirul este exemplul edificator: „cimitirul este cu adevărat un loc în cel mai înalt grad heterotopic, de vreme ce cimitirul începe cu acea stranie heterocronie care este pentru un individ pierderea vieții, precum și cu acea cvasieternitate în care el nu încetează să se dizolve și să dispară.” (p. 66)</p>",
+      "<p>Dar heterotopiile nu marchează mereu un sfârșit: unele acumulează timpul la nesfârșit, fără o finalitate, ca muzeele sau bibliotecile; altele, dimpotrivă, sunt efemere, ca satul de vacanță sau bâlciul.</p>",
+      "<h4 class=\"idei-principle\">5. Într-o heterotopie poți pătrunde doar prin constrângere sau ritual</h4>",
+      "<p>Într-o heterotopie fie ești obligat să intri, ca în cazarmă sau în închisoare, fie trebuie să te supui unor rituri și unor purificări. „Heterotopiile presupun întotdeauna un sistem de deschidere și închidere care, în același timp, le izolează și le face penetrabile.” (p. 67)</p>",
+      "<h4 class=\"idei-principle\">6. Heterotopia are o funcție față de tot restul spațiului</h4>",
+      "<p>Funcția heterotopiei se desfășoară între doi poli opuși. La un capăt stau heterotopiile de iluzie, locuri care, prin însăși existența lor, demască tot restul lumii ca fiind încă și mai iluzorie. La celălalt capăt stau heterotopiile de compensație, locuri construite ca reversul perfect, ordonat, meticulos al unei lumi haotice.</p>"
+    ],
+    "quote": "„Cred, în orice caz, că neliniștea zilei de azi privește fundamental spațiul, fără îndoială mult mai mult decât timpul; timpul nu apare, probabil, decât ca unul dintre jocurile de distribuire posibile între elementele care se repartizează în spațiu.”",
+    "quoteSource": "— Michel Foucault, <em>Altfel de spații</em>, în <em>Utopiile reale. Corpul utopic</em>, trad. Bogdan Ghiu, Tact, 2024, p. 59"
+  },
+  {
+    "id": "gehl",
+    "title": "Viața între clădiri. Utilizările spațiului public",
+    "author": "Jan Gehl",
+    "cover": "pics/idei/gehl.webp",
+    "coverAlt": "Coperta cărții Viața între clădiri. Utilizările spațiului public de Jan Gehl",
+    "coverWidth": 622,
+    "coverHeight": 900,
+    "body": [
+      "<p>Arhitectura influențează direct modul în care trăim, acționăm și interacționăm zi de zi. Din acest motiv, arhitecții nu ar trebui să se preocupe doar de forme și funcții, ci și de oameni și de felul în care aceștia trăiesc — nu doar în clădiri, ci și în afara lor. În viziunea lui Jan Gehl, exteriorul este cel puțin la fel de important ca interiorul pentru o comunitate.</p>",
+      "<p>Spațiul public reprezintă zona intermediară dintre clădiri, precum aleile, piețele sau curțile. Cu toate acestea, un spațiu nu devine „cu adevărat” public doar pentru că există sau pentru că nu se află în proprietatea unui individ. El se constituie ca spațiu public abia atunci când oamenii îl populează în mod frecvent cu activitățile lor.</p>",
+      "<p>Jan Gehl împarte activitățile din spațiul public în trei tipuri: necesare (drumul spre muncă sau cumpărăturile), opționale (plimbările sau cititul pe o bancă) și sociale (joaca copiilor, salutul, conversațiile, simpla prezență a celorlalți). Un spațiu public „sănătos” ar fi cel care adună activitate umană opțională și socială, frecventă și diversă.</p>",
+      "<p>Orașele moderne sunt adesea proiectate pentru viteza mașinilor, ignorând scara umană. În ritmul natural al mersului pe jos, oamenii percep detalii, fețele altor oameni, textura materialelor. Un spațiu urban prietenos este construit pentru simțurile și viteza pietonului, oferind motive constante de oprire și observare, dar și pretexte de conectare cu ceilalți.</p>"
+    ],
+    "quote": "„Dacă prin planificarea orașelor și a zonelor rezidențiale s-ar asigura condiții optime pentru viața în spațiile publice, ar putea fi evitate multe tentative costisitoare și elucubrante de a face clădiri «interesante» și complexe prin efectele arhitecturale dramatice. Asta pentru că, pe termen lung, viața spațiilor publice este mult mai relevantă și mai interesantă de contemplat decât orice combinație arhitecturală de beton colorat și planuri înclinate.”",
+    "quoteSource": "— Jan Gehl, <em>Viața între clădiri</em>, trad. Silvia Gugu, Igloo Media, 2024, p. 22"
+  },
+  {
+    "id": "mcewen",
+    "title": "Străbunul lui Socrate",
+    "author": "Indra Kagis McEwen",
+    "cover": "pics/idei/mcewen.webp",
+    "coverAlt": "Coperta cărții Străbunul lui Socrate de Indra Kagis McEwen",
+    "coverWidth": 553,
+    "coverHeight": 900,
+    "body": [
+      "<p>Ce știm, de fapt, despre originile arhitecturii? Nu doar despre stiluri sau tehnici de construcție, ci despre gestul originar prin care oamenii au început să gândească spațiul ca pe ceva care poate fi produs, ordonat, locuit cu intenție? Aceasta este întrebarea pe care și-o pune Indra Kagis McEwen în <em>Străbunul lui Socrate</em>, mergând pe urmele gândirii lui Heidegger. Poziția ei poate părea surprinzătoare: arhitectura nu începe cu materia, nici cu planul, ci cu gestul corpului în spațiu.</p>",
+      "<p>McEwen nu este interesată de clădiri ca obiecte, ci de arhitectură ca mod de a fi în lume. Pentru asta coboară până la rădăcinile gândirii grecești arhaice, acolo unde filosofia, cosmologia, ritualul și construcția nu erau încă domenii separate, ci expresii ale aceluiași impuls: de a face lumea lizibilă, de a o ordona și de a o face locuibilă. A face ordine (<em>kosmos</em>) în haos este începutul oricărui act constructiv. Această ordine poate fi regăsită în țeserea unui veșmânt, în mișcarea coordonată a corpurilor într-un spațiu comun, în orientarea în vastul spațiu deschis al mării sau al cerului, în trasarea unei limite care separă sacrul de profan. Toate acestea sunt, în perspectiva ei, forme de arhitectură înainte de Arhitectură — moduri de a face lumea lizibilă înainte de a construi propriu-zis.</p>",
+      "<p>Unul dintre cele mai fertile argumente ale cărții este că spațiul nu există independent de corpul care îl produce. Argumentul este ilustrat prin <em>choros</em> — termenul homeric care desemnează deopotrivă dansul și locul dansului. Locul <em>choros</em>-ului nu există înainte de dans și dispare după ce acesta a luat sfârșit. Spațiul nu e un recipient neutru în care lucrurile se întâmplă — e un efect, o consecință a gestului uman.</p>",
+      "<p>Un alt fir îl reprezintă cuvântul <em>ptera</em>, „aripi”. În greaca arhaică, același cuvânt desemnează aripile unei păsări, vâslele bărcii și colonada care înconjoară templul. Vâslele bine ajustate sunt, pentru greci, expresia lui <em>eurythmia</em>: perfecta potrivire a formei la elementul ei înconjurător. Termenul derivă din <em>eu</em>, „bine”, și <em>rhythmos</em>, înțeles nu ca simplu ritm, ci ca tipar izolat în interiorul unei mișcări continue, capabil să comunice întreaga natură a mișcării. Exact asta urmăreau constructorii primelor temple periptere. Când înălțau colonade, înălțau, de fapt, războaie de țesut — structura cu pilon și grindă cea mai familiară lumii grecești, prezentă în fiecare gospodărie. Iar când templul devine peripter, el capătă <em>ptera</em>, aripi. <em>Naos</em> și <em>naus</em> — sanctuarul și nava — nu erau doar cuvinte înrudite, ci imagini suprapuse: templul peripter era o navă înrădăcinată în locul său sacru, dar gândită să zboare.</p>",
+      "<p>Argumentul atinge apogeul în Partenon: rafinamentele sale nu sunt simple corecții optice, ci expresia unei tensiuni între mișcare și fixitate — ca arcul încordat pe punctul de a elibera o săgeată, ca velele umflate de vânt. Partenonul pare să ia aripi. Arhitectura nu este „înrădăcinată”: ea a fost gândită, de la bun început, ca zbor și navigație.</p>",
+      "<p>În spatele acestui argument se află figura lui Dedal. Mitul lui Icar, fiul său, apare în două versiuni, ambele punând în lumină limita stăpânirii spațiului: în cea cunoscută, Icar zboară prea aproape de soare și cade; în cealaltă, se îneacă lângă Samos, pentru că nu este un bun navigator precum tatăl său. Aceeași neputință se manifestă în două medii diferite. Zborul și navigația sunt practici ale limitei, ale orientării corecte într-un spațiu care te poate nimici — <em>chaos</em>. Dedal le stăpânește pe amândouă.</p>",
+      "<p>De numele lui se leagă și cuvântul <em>daidalon</em>, termenul homeric pentru ceea ce este creat cu dibăcie supremă, țesut strâns ca îmbinările unei nave, înzestrat cu o suprafață scintilantă — o <em>epiphaneia</em>, o „apariție”, după cum o numește McEwen. <em>Daidalon</em> nu este un simplu obiect: are capacitatea de a apărea, de a face vizibil ceea ce altfel rămâne ascuns. Iar <em>techné</em>, meșteșugul lui Dedal, nu înseamnă abilitate tehnică în sens modern. Rădăcinile sale, <em>tiktein</em> („a da naștere”) și <em>tektein</em> („a construi”), înseamnă, la origine, același lucru: a îngădui apariția. Dedal este primul arhitect nu pentru edificiile ridicate, ci pentru că întruchipează faptul că a construi este, în fond, un gest de a face ordinea vizibilă în lume. „Meșteșugarul lasă să apară <em>kosmos</em>-ul prin artefact.”</p>"
+    ]
+  },
+  {
+    "id": "stavrides",
+    "title": "Spațiul comun. Orașul ca bun comun",
+    "author": "Stavros Stavrides",
+    "cover": "pics/idei/stavrides.webp",
+    "coverAlt": "Coperta cărții Spațiul comun. Orașul ca bun comun de Stavros Stavrides",
+    "coverWidth": 585,
+    "coverHeight": 900,
+    "body": [
+      "<p>Orașele contemporane par să se organizeze tot mai mult în funcție de prioritățile economice și după logica profitului. Felul în care sunt construite, împărțite și folosite spațiile pare să urmeze o rețea de relații economice care au ca scop final maximizarea profitului. În acest context, Stavros Stavrides își propune să cerceteze formele de rezistență și alternativele creative care apar în interiorul orașelor, sfidând această logică.</p>",
+      "<p>În multe părți ale lumii, atunci când oamenii se opun politicilor nedrepte, guvernelor corupte sau exploatării, aceștia încep să-și organizeze singuri viața în comun. Pentru a explica acest fenomen, Stavrides propune o distincție între trei tipuri de spațiu:</p>",
+      "<ul><li><strong>Spațiul privat</strong> este un spațiu eminamente închis, definit printr-o relație de proprietate și având reguli foarte clare de acces pentru cei din exterior: propriul apartament, o cafenea, un mall etc.</li><li><strong>Spațiul public</strong> este cel aflat în proprietatea și gestiunea administrației publice: străzi, piețe, piațete, scările unor instituții publice etc. Regulile de folosire a acestor spații sunt stabilite de o autoritate, și nu de cei care le folosesc.</li><li><strong>Spațiul comun</strong>, cel care îl interesează pe Stavrides, funcționează diferit: regulile sale sunt negociate în cadrul comunității care îl folosește.</li></ul>",
+      "<p>Spațiul comun nu are o poziționare exactă pe harta unui oraș sau a unui sat, ci este o „structură” mobilă, dacă putem spune astfel; el adăpostește o „lume poroasă”, al cărei contrapunct exact este lumea enclavelor urbane, a acelor cartiere bine delimitate (enclave ale mizeriei sau ale privilegiilor), sau a altor spații urbane a căror funcție este definită de sus în jos și care, implicit, impun o anumită conduită, fiind de obicei catalizatori ai reproducerii sociale.</p>",
+      "<p>Spațiul comun este un spațiu de rezistență în raport cu aceste „taxonomii preexistente”, care definesc roluri și identități. Este apropiat de heterotopie în aceea că bruiază împărțirile tradiționale și aduce în apropiere ceea ce de obicei stă separat. Este un potențial „teren al întâlnirilor”, între egali, dincolo de statutul socioeconomic al fiecăruia, dincolo de ideologii etc., cu toate diferențele lor — de aceea, un spațiu comun nu este unul în care să primeze apartenența la un grup sau la o identitate bine definită.</p>",
+      "<p>Nefiind un bun sau un loc bine delimitat, un teritoriu, spațiul comun nu există ca atare, ci emerge de fiecare dată când anumite feluri de a fi împreună se manifestă. Altfel spus, spațiul comun este mai degrabă un proces și ține de categoria activității. Stavrides numește această practică <em>commoning</em>, adică punere în comun. În relația cu definițiile și taxonomiile impuse, spațiul comun este un spațiu-prag, între lumi, un pasaj ce pune diverse identități și narațiuni personale în legătură.</p>",
+      "<p>Deși apare în mod originar prin practica faptului de a fi la comun, spațiul comun se poate stabiliza într-un loc și poate da naștere unei forme de conviețuire autonome, bazate pe autogestiune. Un exemplu discutat de Stavrides este Parcul Navarinou, din cartierul Exarcheia din Atena, unde locuitorii cartierului au revendicat o parcare pentru a o transforma într-un parc administrat împreună.</p>",
+      "<p>Stabilizarea spațiului comun într-un loc delimitat aduce cu sine riscul de a deveni o enclavă. Pentru a rămâne cu adevărat comune, astfel de spații trebuie să păstreze patru calități: (1) refuză instalarea unor relații de ierarhie; (2) practică constant traducerea și deschiderea față de „noii veniți”; (3) inventează mecanisme prin care să fie evitată acumularea de putere (rotația sarcinilor, distribuirea deciziei sau descentralizarea etc.); (4) sunt, cel mai probabil, spații în care se practică darul — definit de Stavrides drept faptul de a oferi mai mult decât ceea ce, eventual, primești înapoi.</p>",
+      "<p>Descrise astfel, spațiile comune nu sunt simple locuri de întâlnire, ci o alternativă și o formă de rezistență față de stat și de organizarea urbană bazată pe profit.</p>"
+    ],
+    "quote": "„Din perspectiva reapropierii orașului, spațiile comune sunt noduri prin care metropola devine din nou locul politicii, dacă prin «politică» putem descrie un proces deschis, prin care formele dominante de a trăi împreună sunt chestionate și eventual transformate.”",
+    "quoteSource": "— Stavros Stavrides, <em>Spațiul comun. Orașul ca bun comun</em>, trad. Deniz Otay și Ilinca Pop, Vellant, 2023, p. 72"
+  }
+]

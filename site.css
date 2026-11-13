@@ -20,7 +20,7 @@ body {
 
 .page-content {
   max-width: 900px;
-  margin: 50px auto 80px auto;
+  margin: 25px auto 80px auto;
   padding: 0 24px;
   box-sizing: border-box;
   font-family: 'Inter', sans-serif;
@@ -31,6 +31,7 @@ body {
   font-family: 'Afacad', sans-serif;
   font-weight: 700;
   font-size: 40px;
+  margin-top: 0.335em; /* half the browser's default 0.67em */
   margin-bottom: 16px;
 }
 
@@ -59,7 +60,7 @@ body {
 
 @media (max-width: 550px) {
   .page-content {
-    margin-top: 74px;
+    margin-top: 37px;
   }
 
   /* Reserve room for the fixed-position bottom mobile toolbar (60px tall,
@@ -296,12 +297,12 @@ body {
   pointer-events: none;
 }
 
-/* Arhitectură/Idei entries (arhitectura.html / idei.html) sometimes embed a
+/* Arhitectură entries (arhitectura.html) sometimes embed a
    list inside a description paragraph (see archive-description p innerHTML
-   in styles.css). */
+   in styles.css). Same 16px as the description paragraphs (.page-content p). */
 .archive-description ul {
   font-family: 'Inter', sans-serif;
-  font-size: 17px;
+  font-size: 16px;
   line-height: 1.6;
   color: #25121B;
   margin: 0 0 1em 0;
@@ -350,7 +351,20 @@ body {
 
 .back-to-articles-link {
   display: inline-block;
-  margin-top: 32px;
+  margin-top: 16px;
+}
+
+/* Despre noi: the page's first section title sits right under the nav;
+   half of its 48px/32px margin (styles.css), like the other page titles.
+   Later section titles keep their spacing. */
+.page-content .about-us-section:first-child > .about-us-section-title:first-child {
+  margin-top: 24px;
+}
+
+@media (max-width: 550px) {
+  .page-content .about-us-section:first-child > .about-us-section-title:first-child {
+    margin-top: 16px;
+  }
 }
 
 /* Evenimente: widen .page-content just on this page so the title, filter
@@ -392,4 +406,517 @@ body.articles-page .page-content {
 
 .article-card:hover .article-card-title {
   color: #CC4205;
+}
+
+/* Arhitectură: per-building name + photo gallery listed under a style's
+   "Clădiri reprezentative" (see "buildings" in arhitectura.json). The name
+   uses the same size as the .archive-description body text (16px, from
+   .page-content p). */
+/* Bulleted like the description's own lists (.archive-description ul). */
+.architecture-buildings {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #25121B;
+  margin: 0;
+  padding-left: 20px;
+}
+
+/* .archive-entry raises specificity over ".archive-description li" (0.5em),
+   which also matches when the list sits inside the description. */
+.archive-entry .architecture-building {
+  margin-bottom: 32px;
+}
+
+/* The name itself is a <strong>, like in those lists; a row's "html" may
+   add a regular-weight note after it. */
+.architecture-building-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #25121B;
+}
+
+.architecture-building .archive-gallery,
+.architecture-building .archive-gallery-mobile {
+  margin-top: 8px;
+}
+
+/* Arhitectură: sticky style menu (one chip per style), "Vezi toate" gallery
+   toggle and back-to-top button. --arch-nav-offset is the sticky menu's
+   measured height, set by the script in arhitectura.html. Chip look follows
+   the map sidebar accordion (Inter 500, #2A1115, #CC420512 hover) and the
+   active filter pills (.dynamic-label: #CC4205 fill, 2px radius). */
+.arch-style-nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  /* Full window width (breaking out of .page-content's 900px) so the 14
+     chips fit in two rows instead of three. body.arhitectura-page clips the
+     scrollbar-width overshoot of 100vw. */
+  margin: 32px calc(50% - 50vw) 0 calc(50% - 50vw);
+  padding: 12px 24px;
+  background-color: #FBF7F2;
+  border-bottom: 1px dashed #D9C9C0;
+}
+
+body.arhitectura-page {
+  overflow-x: clip; /* clip, not hidden: hidden would break position: sticky */
+}
+
+/* .page-content is a margin:auto flex item of body, so it shrink-wraps its
+   content (capped at 900px) instead of following the viewport width. */
+body.arhitectura-page .page-content {
+  width: 100%;
+}
+
+.arch-style-chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  max-width: 1232px;
+  margin: 0 auto;
+}
+
+.arch-style-chip {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+  color: #2A1115;
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 5px 10px;
+  border: 0.5px dashed #2A1115;
+  border-radius: 2px;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.arch-style-chip:hover {
+  background-color: #CC420512;
+}
+
+.arch-style-chip:focus-visible,
+.arch-gallery-toggle:focus-visible,
+.arch-back-to-top:focus-visible {
+  outline: 2px solid #CC4205;
+  outline-offset: 2px;
+}
+
+.arch-style-chip.is-active {
+  background-color: #CC4205;
+  border: 0.5px solid #CC4205;
+  color: #FFFDF6;
+}
+
+/* Section headings and the toggle button land just under the sticky menu
+   when scrolled to (chip click, deep link, collapsing a gallery). */
+.arch-style-nav ~ #archive-container .archive-entry,
+.arch-gallery-toggle {
+  scroll-margin-top: calc(var(--arch-nav-offset, 0px) + 16px);
+}
+
+/* Photos past a style's first six (and buildings made up only of those). */
+.archive-entry:not(.is-expanded) .arch-extra {
+  display: none;
+}
+
+.arch-gallery-toggle {
+  margin-top: 16px;
+  padding: 10px 24px;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 22px;
+  color: #25121B;
+  background-color: #f9f7f4;
+  border: 0.5px dashed #25121B;
+  cursor: pointer;
+  scroll-margin-bottom: 76px; /* clear the mobile bottom toolbar */
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Buildings already end with 32px of margin. */
+.architecture-buildings ~ .arch-gallery-toggle {
+  margin-top: 0;
+}
+
+.arch-gallery-toggle:hover {
+  color: #CC4205;
+  border-color: #CC4205;
+}
+
+.arch-back-to-top {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 20;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background-color: #CC4205;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease, background-color 0.2s ease;
+}
+
+.arch-back-to-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+.arch-back-to-top:hover {
+  background-color: #2A1115;
+}
+
+/* Up chevron drawn with two borders. */
+.arch-back-to-top-arrow {
+  width: 12px;
+  height: 12px;
+  margin-top: 6px;
+  border-left: 2px solid #FFFDF6;
+  border-top: 2px solid #FFFDF6;
+  transform: rotate(45deg);
+}
+
+/* Mobile-only accordion row per style (see addAccordionHeader in
+   arhitectura.html); also carries .sidebar-accordion-header for the map
+   sidebar's look, which this hides on desktop. */
+.arch-accordion-header {
+  display: none;
+}
+
+@media (max-width: 550px) {
+  .arch-back-to-top {
+    right: 16px;
+    bottom: calc(60px + 16px); /* above the fixed mobile toolbar */
+  }
+
+  /* Phones: the chip menu and the dashed timeline give way to an accordion
+     (one style open at a time) using the full width, with a 16px gutter.
+     All scoped to this page: arhiva.html shares the timeline classes. */
+  body.arhitectura-page .page-content {
+    padding: 0 16px;
+  }
+
+  .arch-style-nav {
+    display: none;
+  }
+
+  body.arhitectura-page #archive-container .archive-timeline {
+    padding-left: 0;
+    margin-top: 32px;
+  }
+
+  body.arhitectura-page #archive-container .archive-timeline::before,
+  body.arhitectura-page .archive-timeline-marker,
+  body.arhitectura-page .archive-entry .archive-title {
+    display: none;
+  }
+
+  /* Separator and open/closed behaviour copied from .sidebar-accordion-section
+     / .sidebar-accordion-content (not reused as classes: those would also
+     hide the content on desktop). */
+  body.arhitectura-page .archive-entry {
+    margin-bottom: 0;
+    border-bottom: 1px dashed #D9C9C0;
+  }
+
+  body.arhitectura-page .archive-entry:first-child {
+    border-top: 1px dashed #D9C9C0;
+  }
+
+  .arch-accordion-header {
+    display: flex;
+    padding: 16px 0;
+  }
+
+  .archive-entry.is-open .arch-accordion-header {
+    color: #CC4205;
+  }
+
+  .archive-entry.is-open .sidebar-accordion-chevron {
+    transform: rotate(180deg);
+  }
+
+  .archive-entry:not(.is-open) .arch-entry-content {
+    display: none;
+  }
+
+  .arch-entry-content {
+    padding-bottom: 24px;
+  }
+}
+
+/* Idei (idei.html): cover cards on desktop that open the book's text below
+   the grid; an accordion of books on phones. Text typography reuses the
+   article classes (.article-title, .article-authors-date,
+   .article-content-text, .article-section-title); the accordion row reuses
+   the map sidebar's .sidebar-accordion-header/.sidebar-accordion-chevron. */
+.idei-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.idei-card {
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  color: #2A1115;
+  text-decoration: none;
+  border: 1px dashed transparent; /* same hover/active frame as .article-card */
+  transition: border-color 0.2s ease;
+}
+
+.idei-card:hover,
+.idei-card.is-active {
+  border-color: #CC4205;
+}
+
+.idei-card:focus-visible {
+  outline: 2px solid #CC4205;
+  outline-offset: 2px;
+}
+
+/* 2:3 portrait frame; the cover sits inside it whole (contain), never
+   cropped, with the shadow following the cover itself (drop-shadow skips
+   the letterboxed area). Shared by the cards and the phone accordion. */
+.idei-cover,
+.idei-accordion-cover {
+  aspect-ratio: 2 / 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  box-sizing: border-box;
+  background-color: #FBF7F2;
+  min-height: 0; /* keep the 2:3 box fixed instead of growing to fit a taller cover */
+}
+
+.idei-cover img,
+.idei-accordion-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0px 4px 8px rgba(42, 17, 21, 0.2));
+}
+
+.idei-card-title {
+  margin-top: 12px;
+  font-family: 'Afacad', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  transition: color 0.2s ease;
+}
+
+.idei-card:hover .idei-card-title,
+.idei-card.is-active .idei-card-title {
+  color: #CC4205;
+}
+
+.idei-card-author {
+  margin-top: 4px;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  line-height: 1.4;
+  color: #CC4205; /* like .article-card-description */
+}
+
+/* Only the open book's text is shown (under the grid on desktop). */
+.idei-book:not(.is-open) .idei-book-content {
+  display: none;
+}
+
+.idei-book {
+  scroll-margin-top: 16px;
+}
+
+.idei-book.is-open {
+  margin-top: 56px;
+  padding-top: 8px;
+  border-top: 1px dashed #D9C9C0;
+}
+
+.idei-accordion-header {
+  display: none; /* phones only */
+}
+
+.idei-back-link {
+  display: inline-block;
+  margin-top: 24px;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+}
+
+.idei-book-title {
+  margin-bottom: 0;
+}
+
+/* Opening quote, in the site's quote style (.event-detail-quote: orange
+   left rule, italic). */
+.idei-quote {
+  margin: 40px 0 8px 0;
+  padding-left: 20px;
+  border-left: 3px solid #CC4205;
+}
+
+.idei-quote blockquote {
+  margin: 0;
+}
+
+.idei-quote blockquote p {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  font-style: italic;
+  line-height: 1.6;
+  color: #25121B;
+}
+
+.idei-quote figcaption {
+  margin-top: 12px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #5A5A5A;
+}
+
+.idei-book-text ul {
+  margin: 16px 0 0 0;
+  padding-left: 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px; /* same as the paragraphs (.page-content p) */
+  line-height: 1.6;
+  color: #25121B;
+}
+
+.idei-book-text li {
+  margin-bottom: 0.5em;
+}
+
+/* A subtitle straight after another one (Foucault: "Principiile
+   heterotopiei" then "1. ..."), keeps the pair together. */
+.idei-book-text .article-section-title + .idei-principle {
+  margin-top: 8px;
+}
+
+/* Foucault's six numbered principles. */
+.idei-principle {
+  margin: 32px 0 0 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: #2A1115;
+}
+
+@media (min-width: 551px) and (max-width: 899px) {
+  .idei-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 550px) {
+  /* Phones: the grid gives way to an accordion of books (one open at a
+     time), full width with a 16px gutter. */
+  body.idei-page .page-content {
+    padding: 0 16px;
+  }
+
+  .idei-grid {
+    display: none;
+  }
+
+  .idei-books {
+    margin-top: 32px;
+  }
+
+  .idei-book,
+  .idei-book.is-open {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+    border-bottom: 1px dashed #D9C9C0;
+  }
+
+  .idei-book:first-child {
+    border-top: 1px dashed #D9C9C0;
+  }
+
+  .idei-accordion-header {
+    display: flex;
+    gap: 12px;
+    padding: 12px 0;
+  }
+
+  /* The cover stays visible in the row, just small. */
+  .idei-accordion-cover {
+    flex: 0 0 56px;
+    padding: 4px;
+  }
+
+  .idei-accordion-label {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .idei-accordion-title {
+    font-family: 'Afacad', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  .idei-accordion-author {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #CC4205;
+  }
+
+  .idei-book.is-open .idei-accordion-title {
+    color: #CC4205;
+  }
+
+  .idei-book.is-open .sidebar-accordion-chevron {
+    transform: rotate(180deg);
+  }
+
+  /* Title/author are already in the row; "back to the grid" has no grid. */
+  .idei-back-link,
+  .idei-book-title,
+  .idei-book-author {
+    display: none;
+  }
+
+  .idei-book-content {
+    padding-bottom: 24px;
+  }
+
+  .idei-quote {
+    margin-top: 8px;
+    padding-left: 16px;
+  }
+
+  .idei-quote blockquote p {
+    font-size: 18px;
+  }
 }

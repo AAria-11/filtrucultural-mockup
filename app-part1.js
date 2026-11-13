@@ -1181,14 +1181,6 @@ function populateGalleryContainer() {
   uniqueItems.forEach(item => {
       const galleryItem = createGalleryItem(item);
       galleryContainer.appendChild(galleryItem);
-      const titleElement = galleryItem.querySelectorAll('.gallery-item-title')[0];
-      if (titleElement.offsetHeight > 20) {
-        galleryItem.style.height = '88px';
-      }
-
-      if (isMobile && titleElement.textContent.length >= 34) {
-        galleryItem.style.height = '88px';
-      }
   });
 
   const objList = document.getElementById(objListId);
