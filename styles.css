@@ -5174,14 +5174,13 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 }
 
 .audio-player-container {
-    background-color: rgba(234, 171, 200, 0.18);
+    background-color: #CC42052E; /* same as .article-card */
     border-radius: 0;
     padding: 20px 30px;
-    margin: 30px auto;
-    margin-bottom: 16px;
+    margin: 30px 0 16px; /* left-aligned like .article-photo */
     box-sizing: border-box;
-    width: 748px;
-    max-width: 100%;
+    width: 100%;
+    max-width: 1160px; /* same as .article-photo */
     box-shadow: 0 4px 8px rgba(0,0,0,0.05);
     display: flex;
     flex-direction: column;
@@ -5204,7 +5203,7 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
     -webkit-appearance: none;
     width: 100%;
     height: 8px;
-    background: #e0e0e0;
+    background: #FEFDFB;
     border-radius: 5px;
     outline: none;
     cursor: pointer;
@@ -5213,13 +5212,13 @@ a.event-card:active { /* Ensure active state on the link itself doesn't add unde
 }
 
 .progress-bar::-webkit-slider-runnable-track {
-    background: linear-gradient(to right, #CC4205 var(--progress, 0%), #e0e0e0 var(--progress, 0%)); /* Progress fill */
+    background: linear-gradient(to right, #CC4205 var(--progress, 0%), #FEFDFB var(--progress, 0%)); /* Progress fill */
     border-radius: 5px;
     height: 8px;
 }
 
 .progress-bar::-moz-range-track {
-    background: linear-gradient(to right, #CC4205 var(--progress, 0%), #e0e0e0 var(--progress, 0%));
+    background: linear-gradient(to right, #CC4205 var(--progress, 0%), #FEFDFB var(--progress, 0%));
     border-radius: 5px;
     height: 8px;
 }
