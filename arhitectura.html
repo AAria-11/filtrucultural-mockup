@@ -145,6 +145,28 @@
     // all of the style's galleries (entry galleryDir + every building).
     var VISIBLE_PHOTOS_PER_STYLE = 6;
 
+    // Page text that isn't in arhitectura.json / arhitectura_en.json.
+    // buildingsHeading must match how the JSON descriptions word it.
+    var UI_TEXT = {
+      ro: {
+        pageTitle: 'Arhitectură',
+        showAll: 'Vezi toate',
+        showLess: 'Arată mai puține',
+        buildingsHeading: 'Clădiri reprezentative',
+        styleNavLabel: 'Stiluri arhitecturale',
+        backToTop: 'Înapoi sus'
+      },
+      en: {
+        pageTitle: 'Architecture',
+        showAll: 'See all',
+        showLess: 'Show less',
+        buildingsHeading: 'Representative buildings',
+        styleNavLabel: 'Architectural styles',
+        backToTop: 'Back to top'
+      }
+    };
+    var renderedLang = null;
+
     function scrollBehavior() {
       return window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
     }
@@ -233,12 +255,12 @@
       var toggle = document.createElement('button');
       toggle.type = 'button';
       toggle.className = 'arch-gallery-toggle';
-      toggle.textContent = 'Vezi toate';
+      toggle.textContent = UI_TEXT[renderedLang].showAll;
       toggle.setAttribute('aria-expanded', 'false');
       toggle.onclick = function () {
         var expanded = entryEl.classList.toggle('is-expanded');
         toggle.setAttribute('aria-expanded', String(expanded));
-        toggle.textContent = expanded ? 'Arată mai puține' : 'Vezi toate';
+        toggle.textContent = expanded ? UI_TEXT[renderedLang].showLess : UI_TEXT[renderedLang].showAll;
         // Collapsing removes everything above the button that was expanded,
         // which can leave it far above the viewport.
         if (!expanded) toggle.scrollIntoView({ block: 'nearest', behavior: scrollBehavior() });
@@ -408,12 +430,29 @@
       history.replaceState(null, '', location.pathname + location.search);
     });
 
-    fetch('arhitectura.json')
+    // arhitectura.json is the Romanian text, arhitectura_en.json the English
+    // one; English entries carry the Romanian section "id" so #anchors work in
+    // both. Rendered once on load in the saved language, then again whenever
+    // the language is switched (app-part3.js calls window.refreshPageLanguage).
+    function renderArchitecture(lang) {
+      if (lang === renderedLang) return;
+      var isFirstRender = renderedLang === null;
+      renderedLang = lang;
+      var ui = UI_TEXT[lang];
+      document.title = ui.pageTitle + ' — Filtru Cultural București';
+      styleNav.setAttribute('aria-label', ui.styleNavLabel);
+      backToTop.setAttribute('aria-label', ui.backToTop);
+      fetch(lang === 'en' ? 'arhitectura_en.json' : 'arhitectura.json')
       .then(function (r) { return r.json(); })
       .then(function (entries) {
+        if (lang !== renderedLang) return;
         var timeline = document.getElementById('archiveTimeline');
+        timeline.innerHTML = '';
+        chipsEl.innerHTML = '';
+        chipsById = {};
+        styleSections = [];
         entries.forEach(function (entry) {
-          var id = slugify(entry.title);
+          var id = entry.id || slugify(entry.title);
           var style = { key: 'arhitectura:' + id, photos: [] };
 
           var el = document.createElement('div');
@@ -490,7 +529,7 @@
           });
           if (buildingList.children.length) {
             var buildingsHeading = [].find.call(description.querySelectorAll('p > strong:first-child'), function (strong) {
-              return strong.textContent.indexOf('Clădiri reprezentative') === 0;
+              return strong.textContent.indexOf(UI_TEXT[renderedLang].buildingsHeading) === 0;
             });
             var textList = buildingsHeading && buildingsHeading.parentNode.querySelector('ul');
             if (textList) {
@@ -519,19 +558,27 @@
         });
 
         observeSections();
-        // Wait for the web fonts: they reflow the long text above the target
-        // and would otherwise leave the deep-linked section off by a few
-        // hundred px.
-        if (location.hash) {
+        if (!location.hash) return;
+        var hashId = decodeURIComponent(location.hash.slice(1));
+        if (isFirstRender) {
+          // Wait for the web fonts: they reflow the long text above the target
+          // and would otherwise leave the deep-linked section off by a few
+          // hundred px.
           document.fonts.ready.then(function () {
             observeSections();
-            goToSection(decodeURIComponent(location.hash.slice(1)), false);
+            goToSection(hashId, false);
           });
+        } else {
+          // Language switch: keep the same section open and in view.
+          goToSection(hashId, false);
         }
       })
       .catch(function (err) {
-        console.error('Could not load arhitectura.json', err);
+        console.error('Could not load the architecture JSON', err);
       });
+    }
+    window.refreshPageLanguage = renderArchitecture;
+    renderArchitecture(getSavedLang() === 'en' ? 'en' : 'ro');
   </script>
 
   <div class="mobile-toolbar">

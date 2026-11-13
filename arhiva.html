@@ -147,10 +147,20 @@
     // photos, numbered 0.jpg through 9.jpg.
     var ARCHIVE_GALLERY_PHOTO_COUNT = 10;
 
-    fetch('archive.json')
+    // archive.json is the Romanian text, archive_en.json the English one.
+    // Rendered once on load in the saved language, then again whenever the
+    // language is switched (app-part3.js calls window.refreshPageLanguage).
+    var renderedLang = null;
+    function renderArchive(lang) {
+      if (lang === renderedLang) return;
+      renderedLang = lang;
+      document.title = (lang === 'en' ? 'Archive' : 'Arhivă') + ' — Filtru Cultural București';
+      fetch(lang === 'en' ? 'archive_en.json' : 'archive.json')
       .then(function (r) { return r.json(); })
       .then(function (entries) {
+        if (lang !== renderedLang) return;
         var timeline = document.getElementById('archiveTimeline');
+        timeline.innerHTML = '';
         entries.forEach(function (entry) {
           var el = document.createElement('div');
           el.className = 'archive-entry';
@@ -230,8 +240,11 @@
         });
       })
       .catch(function (err) {
-        console.error('Could not load archive.json', err);
+        console.error('Could not load the archive JSON', err);
       });
+    }
+    window.refreshPageLanguage = renderArchive;
+    renderArchive(getSavedLang() === 'en' ? 'en' : 'ro');
   </script>
 
   <div class="mobile-toolbar">

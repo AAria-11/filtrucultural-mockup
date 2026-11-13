@@ -1039,6 +1039,12 @@ async function changeLanguage(event, langToChangeTo = null) {
       window.refreshArticlePageLanguage();
     }
 
+    // Pages rendered from per-language JSON (arhitectura.html, idei.html,
+    // arhiva.html) re-render themselves in the new language.
+    if (typeof window.refreshPageLanguage === 'function') {
+      window.refreshPageLanguage(currentLang);
+    }
+
     const articleContainerEl = document.getElementById('article-container');
     if (articleContainerEl && articleContainerEl.style.display !== 'none') {
       var articleTitleElem = document.querySelector('.article-title');

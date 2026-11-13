@@ -214,7 +214,7 @@
       var content = el('div', 'idei-book-content');
       content.id = book.id + '-content';
 
-      var back = el('a', 'link-decorator idei-back-link', '↑ Toate cărțile');
+      var back = el('a', 'link-decorator idei-back-link', renderedLang === 'en' ? '↑ All books' : '↑ Toate cărțile');
       back.href = '#';
       back.addEventListener('click', function (event) {
         event.preventDefault();
@@ -251,30 +251,49 @@
       goToBook(decodeURIComponent(location.hash.slice(1)), true);
     });
 
-    fetch('idei.json')
-      .then(function (r) { return r.json(); })
-      .then(function (entries) {
-        var grid = document.getElementById('ideiGrid');
-        var list = document.getElementById('ideiBooks');
-        entries.forEach(function (book) {
-          var card = renderCard(book);
-          grid.appendChild(card);
-          var rendered = renderBook(book);
-          rendered.card = card;
-          list.appendChild(rendered.section);
-          books.push(rendered);
-        });
-        // Wait for the web fonts before jumping to a deep-linked book, so
-        // the reflow they cause doesn't leave it off target.
-        if (location.hash) {
-          document.fonts.ready.then(function () {
-            goToBook(decodeURIComponent(location.hash.slice(1)), false);
+    // idei.json is the Romanian text, idei_en.json the English one. Rendered
+    // once on load in the saved language, then again whenever the language is
+    // switched (app-part3.js calls window.refreshPageLanguage).
+    var renderedLang = null;
+    function renderIdei(lang) {
+      if (lang === renderedLang) return;
+      var isFirstRender = renderedLang === null;
+      renderedLang = lang;
+      document.title = (lang === 'en' ? 'Ideas' : 'Idei') + ' — Filtru Cultural București';
+      fetch(lang === 'en' ? 'idei_en.json' : 'idei.json')
+        .then(function (r) { return r.json(); })
+        .then(function (entries) {
+          if (lang !== renderedLang) return;
+          var grid = document.getElementById('ideiGrid');
+          var list = document.getElementById('ideiBooks');
+          grid.innerHTML = '';
+          list.innerHTML = '';
+          books = [];
+          entries.forEach(function (book) {
+            var card = renderCard(book);
+            grid.appendChild(card);
+            var rendered = renderBook(book);
+            rendered.card = card;
+            list.appendChild(rendered.section);
+            books.push(rendered);
           });
-        }
-      })
-      .catch(function (err) {
-        console.error('Could not load idei.json', err);
-      });
+          if (!location.hash) return;
+          var id = decodeURIComponent(location.hash.slice(1));
+          if (isFirstRender) {
+            // Wait for the web fonts before jumping to a deep-linked book, so
+            // the reflow they cause doesn't leave it off target.
+            document.fonts.ready.then(function () { goToBook(id, false); });
+          } else if (findBook(id)) {
+            // Language switch: keep the open book open, without scrolling.
+            setOpenBook(id);
+          }
+        })
+        .catch(function (err) {
+          console.error('Could not load the ideas JSON', err);
+        });
+    }
+    window.refreshPageLanguage = renderIdei;
+    renderIdei(getSavedLang() === 'en' ? 'en' : 'ro');
   </script>
 
   <div class="mobile-toolbar">
